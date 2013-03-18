@@ -1,4 +1,4 @@
-% mla.bbx v0.9 2010/02/15 * compatible with biblatex beta 0.9
+% mla-new.bbx v1.0 2012/08/30 * compatible with biblatex 2.0
 % Maintained at <http://konx.net/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
@@ -6,12 +6,11 @@
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 % File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.bbx}[2010/02/15 v0.9 biblatex bibliography style]
+\ProvidesFile{mla-new.bbx}[2012/08/30 v1.0 biblatex bibliography style]
 
 \RequireBibliographyStyle{standard}
 \DeclareLanguageMapping{american}{american-mla}
 \DeclareLanguageMapping{english}{english-mla}
-\DeclareLanguageMapping{spanish}{spanish-mla}
 
 \NewBibliographyString{byserieseditor}
 \NewBibliographyString{reviewof}
@@ -77,6 +76,7 @@
 \DeclareFieldFormat{title:booklet}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:collection}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:incollection}{\mkbibquote{#1}}%
+\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%platypus 1.0
 \DeclareFieldFormat{title:inproceedings}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:thesis}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:reviewedbook}{\bibstring{reviewof}\addspace\mkbibemph{#1}}%
@@ -102,10 +102,14 @@
 \DeclareFieldFormat{openrangevolumes}{#1~\bibstring{volstodate}}% 0.7.1 - not yet used
 \DeclareFieldFormat{volumeof}{\bibstring{volume}~#1~\bibstring{ofseries}}% 0.7.1
 \DeclareFieldFormat{mla:sentence-case}{\MakeSentenceCase{#1}}% 0.7.1
-\DeclareFieldFormat{eprint:jstor}{% 0.9
+% \DeclareFieldFormat{eprint:jstor}{% 0.9
+%   \ifhyperref%
+%     {\href{http://www.jstor.org/stable/#1}{\nolinkurl{\emph{JSTOR}}}}%
+%     {\nolinkurl{\emph{JSTOR}}}}%
+\DeclareFieldFormat{eprint:jstor}{% 0.96
   \ifhyperref%
-    {\href{http://www.jstor.org/stable/#1}{\nolinkurl{\emph{JSTOR}}}}%
-    {\nolinkurl{\emph{JSTOR}}}}%
+    {\href{http://www.jstor.org/stable/#1}{\emph{JSTOR}}}%
+    {\emph{JSTOR}}}%
 \DeclareFieldFormat{eprint:googlebooks}{% 0.9
   \ifhyperref%
     {\href{http://books.google.com/books?id=#1}{\emph{Google Books}}}%
@@ -123,7 +127,8 @@
 \DeclareBibliographyAlias{collection}{book}
 \DeclareBibliographyAlias{reference}{book}
 
-\DeclareBibliographyAlias{inbook}{customa}
+\DeclareBibliographyAlias{inbook}{incollection}% platypus 1.0
+
 \DeclareBibliographyAlias{manual}{customa}
 \DeclareBibliographyAlias{misc}{customa}
 \DeclareBibliographyAlias{online}{customa}
@@ -137,6 +142,20 @@
 \renewcommand*{\subtitlepunct}{\ifterm{}{\addcolon}\space}
 
 \newboolean{bbx@mla-incollection}
+\newbool{bbx@inset}
+% \DeclareBibliographyDriver{set}{%
+%   \booltrue{bbx@inset}%
+%   \entryset{}{}%
+%   \newunit\newblock
+%   \usebibmacro{setpageref}%
+%   \finentry}
+
+\DeclareBibliographyOption{dashed}[true]{% platypus 1.0 (from authortitle.bbx)
+  \ifstrequal{#1}{true}
+    {\ExecuteBibliographyOptions{pagetracker}%
+     \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
+    {\ExecuteBibliographyOptions{pagetracker=false}%
+     \renewbibmacro*{bbx:savehash}{}}}
 
 \newboolean{bbx@annotation}% same as biblatex-dw
 \DeclareBibliographyOption{annotation}[true]{%
@@ -202,6 +221,8 @@
 % 	 {\bibdatedash
 % 	  \csuse{mkbibdate#1}{#2endyear}{#2endmonth}{#2endday}}}}}
 
+\newbibmacro*{bbx:savehash}{%
+  \savefield{fullhash}{\bbx@lasthash}}
 
 \renewcommand*{\bibnamedash}{%
   \mbox{%
@@ -216,13 +237,15 @@
 
 \renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\ifthenelse{\iffieldequals{fullhash}{\bbx@lasthash}\AND
-                 \NOT\iffirstonpage}
+    {\usebibmacro{bbx:dashcheck}% platypus 1.0 from authortitle.bbx
+	% {\ifthenelse{\iffieldequals{fullhash}{\bbx@lasthash}\AND
+	  % \NOT\iffirstonpage} % platypus 1.0 moved to dashcheck
        {\bibnamedash}
+       % {\printnames{author}% platypus 1.0 crom authortitle.bbx, but allowing old functionality is important, so I'm keeping the previous version below
        {\ifbool{bbx@totalnames}%
          {\printnames[sortname][-\value{listtotal}]{author}}
          {\printnames{author}}%
-       \savefield{fullhash}{\bbx@lasthash}}
+       \usebibmacro{bbx:savehash}}
      \iffieldundef{nameaddon}% 0.7.1 wide support for nameaddon
        {}%
        {\setunit{\addspace}%
@@ -1135,7 +1158,7 @@
      \printfield{number}\clearfield{number}%
      \setunit*{\addcomma\space}% 0.9 added asterisk
      \usebibmacro{mla:isbn/issn+doi+eprint}%
-     \setunit*{\addspace}% 0.9 added asterisk
+     \setunit{\addspace}% platypus-1.0b removed asterisk
      \usebibmacro{issue+date}%
      \newunit\newblock
      \newunit}%
@@ -1196,5 +1219,23 @@
       \usebibmacro{mla:reprint}%
     {}%-keep-blank
 }
+
+\newbibmacro*{bbx:dashcheck}[2]{%
+  \ifboolexpr{
+    test {\iffieldequals{fullhash}{\bbx@lasthash}}
+    and
+    not test \iffirstonpage
+    and
+    (
+       not bool {bbx@inset}
+       or
+       test {\iffieldequalstr{entrysetcount}{1}}
+    )
+  }
+    {#1}
+    {#2}}
+
+\endinput
+
 
 \endinput
