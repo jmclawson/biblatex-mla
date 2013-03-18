@@ -1,0 +1,82 @@
+% portuguese-mla.lbx v0.2 2009/07/07
+% 
+% Portuguese localization in this file provided by Paulo Ferreira.
+
+\ProvidesFile{portuguese-mla.lbx}[2009/07/07 v0.1.1 biblatex style localization]
+
+\InheritBibliographyExtras{portuguese}
+
+\DeclareBibliographyStrings{%
+  inherit          = {portuguese},
+  bibliography     = {{Bibliografia}{Bibliografia}},
+  references       = {{Obras citadas}{Obras citadas}},
+  % typecompilerandeditor = {{compiler and editor}{comp\adddot\ and ed\adddot}},% 0.7 FIXME in Portuguese
+  bytranslator     = {{trad\adddot}{trad\adddot}},
+  byeditor         = {{ed\adddot}{ed\adddot}},
+  typegeneraleditor   = {{editor geral}{ed\adddotspace geral}},% 0.7.1 FIXME?
+  bytypegeneraleditor   = {{editor geral}{ed\adddotspace geral}},% 0.7.1 FIXME?
+  % byserieseditor   = {{editor geral}{editor geral}},
+  page             = {{\unskip}{\unskip}},
+  pages            = {{\unskip}{\unskip}},
+  andothers        = {{et~al\adddot}{et~al\adddot}},
+  byeditortr       = {{ed\adddot\ e trad\adddot}{ed\adddot\ e trad\adddot}}, % Capitalize Trans?
+  byeditorco       = {{ed\adddot\ e com\adddot}{ed\adddot\ e com\adddot}}, % Etc?
+  byeditoran       = {{ed\adddot\ e anot\adddot}{ed\adddot\ e anot\adddot}},
+  byeditorin       = {{ed\adddot\ e intr\adddot}{ed\adddot\ e intr\adddot}},
+  byeditorfo       = {{ed\adddot\ e pref\adddot}{ed\adddot\ e pref\adddot}},
+  byeditoraf       = {{ed\adddot\ e posf\adddot}{ed\adddot\ e posf\adddot}},
+  byeditortrco     = {{ed., trad. e com\adddot}{ed., trad. e com\adddot}},
+  byeditortran     = {{ed., trad. e anot\adddot}{ed., trad. e anot\adddot}},
+  byeditortrin     = {{ed., trad. e intro\adddot}{ed., trad. e intro\adddot}},
+  byeditortrfo     = {{ed., trad. e pref\adddot}{ed., trad. e pref\adddot}},
+  byeditortraf     = {{ed., trad. e posf\adddot}{ed., trad. e posf\adddot}},
+  byeditorcoin     = {{ed., com. e introd\adddot}{ed., com. e introd\adddot}},
+  byeditorcofo     = {{ed., com. e pref\adddot}{ed., com. e pref\adddot}},
+  byeditorcoaf     = {{ed., com. e posf\adddot}{ed., com. e posf\adddot}},
+  byeditoranin     = {{ed., anot. e introd\adddot}{ed., anot. e introd\adddot}},
+  byeditoranfo     = {{ed., anot. e pref\adddot}{ed., anot. e pref\adddot}},
+  byeditoranaf     = {{ed., anot. e posf\adddot}{ed., anot. e posf\adddot}},
+  byeditortrcoin   = {{ed., trad., com. e introd\adddot}{ed., trad., com. e introd\adddot}},
+  byeditortrcofo   = {{ed., trad., com. e pref\adddot}{ed., trad., com. e pref\adddot}},
+  byeditortrcoaf   = {{ed., trad., com. e posf\adddot}{ed., trad., com. e posf\adddot}},
+  byeditortranin   = {{ed., trad., anot. e introd\adddot}{ed., trad., anot. e introd\adddot}},
+  byeditortranfo   = {{ed., trad., anot. e pref\adddot}{ed., trad., anot. e pref\adddot}},
+  byeditortranaf   = {{ed., trad., anot. e posf\adddot}{ed., trad., anot. e posf\adddot}},
+  bytranslatorco   = {{trad\adddot\ e com\adddot}{trad\adddot\ e com\adddot}},
+  bytranslatoran   = {{trad\adddot\ e anot\adddot}{trad\adddot\ e anot\adddot}},
+  bytranslatorin   = {{trad\adddot\ e introd\adddot}{trad\adddot\ e introd\adddot}},
+  bytranslatorfo   = {{trad\adddot\ e pref\adddot}{trad\adddot\ e pref\adddot}},
+  bytranslatoraf   = {{trad\adddot\ e posf\adddot}{trad\adddot\ e posf\adddot}},
+  bytranslatorcoin = {{trad., com. e introd\adddot}{trad., com. e introd\adddot}},
+  bytranslatorcofo = {{trad., com. e pref\adddot}{trad., com. e pref\adddot}},
+  bytranslatorcoaf = {{trad., com. e posf\adddot}{trad., com. e posf\adddot}},
+  bytranslatoranin = {{trad., anot. e introd\adddot}{trad., anot. e introd\adddot}},
+  bytranslatoranfo = {{trad., anot. e pref\adddot}{trad., anot. e pref\adddot}},
+  bytranslatoranaf = {{trad., anot. e posf\adddot}{trad., anot. e posf\adddot}},
+  phdthesis        = {{Tese de Doutor\adddot}{Tese de Doutor\adddot}},
+  reviewof         = {{recens\~{a}o de}{recens\~{a}o de}},
+  volume           = {{{Vol\adddot}}{{Vol\adddot}}}, % for correct capitalization of volume reference
+  phd              = {{Tese de Doutor\adddot}{Tese de Doutor\adddot}},% 0.6
+  dphil            = {{Tese de Doutor\adddot}{Tese de Doutor\adddot}},% 0.6
+  lic              = {{Diss. de Lic\adddot}{Diss. de Lic\adddot}},% 0.6
+  ma               = {{Tese de Mestr\adddot}{Tese de Mestr\adddot}},% 0.6
+  ms               = {{Tese de Mestr\adddot}{Tese de Mestr\adddot}},% 0.6
+  msc              = {{Tese de Mestr\adddot}{Tese de Mestr\adddot}},% 0.6
+  mphil            = {{Tese de Mestr\adddot}{Tese de Mestr\adddot}},% 0.6
+  mlitt            = {{Tese de Mestr\adddot}{Tese de Mestr\adddot}},% 0.6
+  %  manuscript       = {{ms\adddot}{ms\adddot}},% FIXME
+  %  typescript       = {{ts\adddot}{ts\adddot}},% FIXME
+  %  director         = {{dir\adddot}{dir\adddot}},% FIXME
+  %  screenplay       = {{adapt\adddot}{adapt\adddot}},% FIXME
+  %  adaptation       = {{adapt\adddot}{adapt\adddot}},% FIXME
+  %  adaptor          = {{adapt\adddot}{adapt\adddot}},% FIXME
+  %  performer        = {{perf\adddot}{perf\adddot}},% FIXME
+  %  performers       = {{perf\adddot}{perf\adddot}},% FIXME
+  %  composer         = {{composer\adddot}{composer\adddot}},% FIXME
+  %  composedby       = {{composed~by}{composed~by}},% FIXME
+  %  producer         = {{prod\adddot}{prod\adddot}},% FIXME
+  %  with             = {{with}{with}},% FIXME
+  %  proceedings      = {{proc\adddot}{proc\adddot}},% FIXME
+}
+
+\endinput

@@ -1,0 +1,225 @@
+Changelog for version 0.9.5:
+- changes for compatibility with Biblatex 1.0
+- further support for latest MLA edition (now default); use "showmedium=false" 
+  package option to revert
+- added Italian localization (from Andrea Marchitelli)
+- new entry option "nodate" to trigger display of MLA-style "n.d."
+- added support and MLA formatting for eprint sources from Project Muse (using
+  "muse" as eprinttype); in the eprint field, include the full URL to the
+  article
+- preliminary conversion of documentation to Philipp Lehman's ltxdockit, as 
+  previous documentation files were lost
+
+Changelog for version 0.9:
+- many changes for compatibility with Biblatex v.0.9
+- introduced support for style from latest MLA edition (this was a major 
+  undertaking)
+- new "print", "web", and "generaleditor" bibstrings
+- formatting for eprint sources from JSTOR and Google Books, as already 
+  included in Biblatex
+- support and formatting for eprint sources from eBooks@Adelaide (using 
+  "adelaide" as eprinttype); in the eprint field, include the full URL to the
+  article
+- new package options "showmedium" and "guessmedium" for updated MLA support
+- improved support for reprints
+- improved support for multivolume entries, including change from using 
+  origyear field to using eventdate field, and added support for general 
+  editor as "generaleditor" editortype
+- converted proceedings to use eventdate field
+
+Changelog for version 0.8.1:
+- did nothing but make 0.8 beta final to upgrade CTAN
+
+Changelog for version 0.8 beta:
+- added further examples from the MLA Handbook (6th edition). Almost all of
+  the non-periodical examples in section 5.6.x (and many of the periodical
+  examples in 5.7.x) contained therein can now be successfully re-created
+  using biblatex-mla.
+- nameaddon and authortype behavior standardized across entrytypes
+- added bookauthor support for suppcollection and suppbook
+- significantly improved handling of multivolume works
+- further improved handling of "et al." There should now be a comma before 
+  "et al." only in reversed (last-first) naming schemes. Standard (first-last)
+  schemes and last-name only schemes will omit the comma.
+- improved support for maintitle
+- improved presentation of title in conference proceeding, where title ends in
+  an abbreviation dot
+- added preliminary support for "generaleditor" editortype in the language
+  (lbx) files
+- added preliminary support for "volstodate" string in the language (lbx)
+  files, theoretically to be used when indicating total volume numbers of
+  multi-volume works with open-ranged years
+- added title format for reference books
+- removed extra leading space before nameaddon brackets
+- added support for formatting of open-ranged years (as suggested by 
+  Philipp Lehman)
+- added support for limiting remote info, using methods similar to
+  biblatex-apa
+- added totalnames support for translator field
+- re-added hyperref support mistakenly disabled in version 0.7
+- fixed many citereset problems (while potentially introducing others...)
+- many citation macros tidied and future-proofed
+- footnote presentation considerably more stable
+
+Changelog for version 0.7 final:
+- added examples from the MLA Handbook (6th edition)
+- added support for origlocation, origpublisher, origtitle, and origlanguage
+  to allow for reprints and translations. Biblatex-mla only uses the
+  origlanguage field to trigger the use of \bibstring{transof} in place of
+  \bibstring{reprintof} for reprinted articles and will not actually print the
+  contents of the origlanguage field.
+- re-added support for translators in articles (mistakenly lost in 0.6)
+- added localization and bibstrings for "bytypecompilerandeditor" and
+  "transof" (in addition to "typecompilerandeditor")
+- significantly improved footnote support, bringing it inline with support for
+  entries in the bibliography. This work is currently in progress, but non-
+  periodical entries should be fully supported.
+- in addition to Spanish and Portuguese localizations (contributed by Ivan
+  Fernandez and Paulo Ferreira, respectively) and existing American
+  localizations, version 0.7 is also compatible with non-American English
+  dialects for localized punctuation patterns. In your preamble, call Babel
+  with the language of your choice: british, canadian, australian, spanish,
+  and american should all work equally well (though some newer bibstrings
+  remain untranslated in Spanish). Portuguese support is not yet included with
+  biblatex.
+
+Changelog for version 0.7 beta:
+- added partial support for @suppbook, @suppcollection
+- made style definitions independent from sample Biblatex style files
+- segregated localizations into external .lbx files
+- added comma before name affixes
+- added test for comma before "et al.": negative in citations, positive in
+  list of Works Cited
+- added test for colon before subtitle, returning negative after terminal
+  punctuation (such as exclamation point, question mark)
+- added "totalnames" entry option for listing all authors and editors in the
+  list of Works Cited for a particular entry
+- added "uniquetranslator" entry option, used for an @incollection entry with
+  its own translator not shared with the rest of the collection
+- slightly changed default name dash in Works Cited
+- added support for year editions for @inreference works
+- improved logic of @video macro
+- added support for "eds." before title when editors are plural
+- renamed "strict" package option to "footnoterulestrict"
+- added draft mode style helper for multiple citations
+- added "mladraft" package option for calling style helper outside of draft
+  mode
+- added localization for "typecompilerandeditor" editortype
+
+Changelog for version 0.6.1:
+- IMPORTANT CHANGE: because of difficulties formatting articles without volume
+  numbers as newspaper articles, I've had to regress that option sooner than I
+  expected. Updated bibtex files by adding the entrysubtype field and setting
+  it to "newspaper" or "magazine". Article entries with undefined volume
+  fields are now formatted as journal articles without any volume numbers (as
+  one might have expected biblatex-mla to have done all along...)
+- updated documentation for the above change; added link for installing
+  Biblatex from CTAN in installation instructions
+- fixed bugs with spacing, problems with spurious punctuation in Reviews, and
+  some other minor things
+- updated footnote internal macros to use native quotation marks and
+  punctuation nesting, thereby fully regressing mkbibquotepunct command
+- added "strict" package option after biblatex-chicago-notes-df; feature is
+  undocumented for now
+
+Changelog for version 0.6:
+- native support for biblatex-, csquote-, and babel-empowered American-style
+  punctuation and double quotation marks added in biblatex 0.8 (footnotes not
+  yet updated)
+- add support for @unpublished, @proceedings, @inproceedings, @periodical
+  entrytypes
+- add support for published theses
+- standardized .bib file keys, strings, fields across entrytypes
+- improve minor presentation errors, including misplaced comma before "et al,"
+  the size of the name dash in Works Cited (to match that in the Style Manual
+  more closely (redefine \mlanamedash to change)), and other things
+- simplified and made many internal macros less hack-y and more localizable
+- defined many new bibliography strings and redefined existing ones
+- commented out issn, isbn, doi, and similar fields as a temporary fix
+- allow idem after shorthands in citations
+- improved presentation of dates, dropping opening zero
+- added support for articles in special issues of journals
+- added support for annotated bibliographies using the "annotation" option
+- improved support/presentation for subtitles
+- usetranslator entry-option now stable, uses native biblatex support
+- improved documentation
+- add support for nameaddon
+
+Changelog for version 0.5 (final):
+- introduction of firstlonghand and nofullnote package options
+- changed approach of shorthand citations, defaulting to a "longhand" citation
+  for the first citation
+- introduction of usetranslator entry option
+- fixed more stupid errors
+- added support for video and booklet entrytypes
+- added hyperlinks for citations with only page numbers
+- added better support for useauthor and useeditor entry options
+- added location to newspaper articles
+- added edition ("version") to newspaper articles (ie, late, national,
+  morning, etc.)
+- added Spanish localization by Ivan Fernandez
+
+Changelog for version 0.5 (beta):
+- introduction of MLA-style footnote citation support
+- fixed many more stupid errors (made since the beginning)
+- added support for book reviews and reference articles (use "review"
+  entrytype and "inreference" entrytype, respectively)
+- tidied stylistic problems including erroneous punctuation before URLs
+  (pointed out by Stephen Brumbaugh), stray spaces, a few doubled
+  punctuations, etc.
+- added support for anonymous incollection works (for example, "Beowulf" in an
+  English literature anthology shouldn't by default be referenced by the
+  editor of that anthology)
+- added support for single-author collections (for example, a single poet's
+  Collected Poems, with or without a named editor)
+- preliminary support for "video" entrytype
+- a few other things I'm forgetting
+
+Changelog for version 0.4:
+- proper MLA-style crossref support (though Philipp Lehmann's warnings of the
+  dangers of crossrefs in Bibtex files still hold: the parent will overwrite
+  anything undefined in the child, like Title and Author)
+- fixed many stupid errors (made when converting to biblatex 0.7 in version
+  0.3)
+- introduced logic for idems, ibids, and prenotes (reduces chances of prenotes
+  and ibids obscuring the actual author's name)
+- changed style name to biblatex-mla to fit in with everything else being
+  lowercase
+- fixed compatibility with tex4ht (documents made with biblatex-mla can now be
+  converted to OpenOffice format easily)
+- added support for Newspaper articles (use "article" type, set no volume and
+  no issue number)
+- added access dates for online articles
+- got rid of a couple stray periods lurking in some places.
+- defined \fullcite command to provide examples of bibliographic citations (as
+  seen in the new samples page)
+- added samples page
+
+Changelog for version 0.3:
+- updated for compatibility to biblatex 0.7
+- incorporated improvements made by Jay Savage regarding URL presentation in
+  Works Cited and the handling of edited books lacking authors
+- added support for the starred variants of \cite* and \autocite* for citing
+  titles when the author is already named in the sentence (e.g., "Joyce says
+  many fine things (Ulysses 34)," written as "Joyce says many fine things
+  \autocite*[34]{citekey}"). This variation will basically just force skip the
+  author's name in a citation. If it's an author with multiple titles in the
+  Works Cited, it will list the title and page; otherwise it will list just
+  the page.
+- added functionality to use first name initials to differentiate among common
+  surnames (option uniquename=init made available in biblatex 0.7) in
+  citations
+- added localizations for "Ed. and trans.," etc. I'm not sure how accurate
+  these are yet, but it at least lets us have nicer Works Cited lists. You'll
+  see this change when works have a single person responsible for any
+  combination of editing, translating, introducing, annotating, or providing
+  commentary, forewards, or afterwards. With this change, the person is listed
+  only once, with the appropriate words before the name.
+- restyled the URL font in the Works Cited to be the same as the rest of the
+  documents (as suggested by Jay Savage)
+- added support for \cite (same as \autocite) to be more supportive to
+  existing programs that assume cite as the command used for references and to
+  make conversion easier for newcomers who've already been using \cite
+- improved idem handling with boolean triggers
+- cleaned up macro names to make them easier to follow
+

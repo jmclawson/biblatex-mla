@@ -1,0 +1,283 @@
+% biblatex-mla.tex v0.95 2010/12/18
+% Maintained at <http://konx.net/biblatex-mla> by James Clawson.
+%
+% This material is subject to the LaTeX Project Public License. Feel free to improve, redistribute, and adapt to your own ends, as allowed by that license. (See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for license details.) For inclusion in future versions, please share improvements in formatting and MLA standards compliance back to James Clawson: <biblatex-mla@konx.net>.
+%
+% File is in constant progress. Things are messy. Ignore platypi.
+
+\documentclass{ltxdockit}[2010/11/19]
+\usepackage{btxdockit}
+\usepackage[latin9]{inputenc}
+\usepackage[american]{babel}
+\usepackage[strict]{csquotes}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{shortvrb}
+\MakeAutoQuote{<}{>}
+\MakeAutoQuote*{«}{»}
+\MakeShortVerb{\|}
+
+\rcsid{$Id: biblatex-mla.tex,v 0.95 2010/12/18 13:01:50 clawson beta $}
+
+\newcommand*{\BiblatexMLAhome}{http://konx.net/biblatex-mla/}
+\newcommand*{\BiblatexMLAonCTAN}{http://www.ctan.org/tex-archive/help/Catalogue/entries/biblatex-mla.html}
+\newcommand*{\mycode}[1]{\texttt{\textbf{#1}}}
+\newcommand*{\mylink}[1]{$<$\url{#1}$>$}
+% \newcommand*{\mla}{\textsf{\textsc{Mla}}}
+\newcommand*{\mla}{MLA}
+\newcommand*{\mycommand}[1]{\mycode{\textbackslash{}#1}}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{\tiny{#1}}}}}
+
+\makeatletter
+\newenvironment*{commandlist}
+  {\list{}{%
+     \setlength{\labelwidth}{\marglistwidth}%
+     \setlength{\labelsep}{\marglistsep}%
+     \setlength{\leftmargin}{0pt}%
+     \renewcommand*{\makelabel}[1]{\hss\marglistfont##1}}%
+   \def\commanditem##1{%
+     \item[{\textbackslash{}##1}]%
+     \ltd@pdfbookmark{##1}{##1}}}
+  {\endlist}
+\newenvironment*{optionslist}
+  {\list{}{%
+     \setlength{\labelwidth}{\marglistwidth}%
+     \setlength{\labelsep}{\marglistsep}%
+     \setlength{\leftmargin}{0pt}%
+     \renewcommand*{\makelabel}[1]{\hss\marglistfont##1}}%
+   \def\optionitem##1{%
+     \item[{##1}]%
+     \ltd@pdfbookmark{##1}{##1}}}
+  {\endlist}
+\makeatother
+
+
+\titlepage{%
+  title={\sty{biblatex-mla}},
+  subtitle={\mla{} Style Using \sty{biblatex}},
+  url={\BiblatexMLAhome},
+  author={James Clawson},
+  email={biblatex-mla@konx.net},
+  revision={\rcsrevision},
+  date={\rcstoday}}
+
+\hypersetup{%
+  pdftitle={biblatex-mla},
+  pdfsubject={MLA Style Using biblatex},
+  pdfauthor={James Clawson},
+  pdfkeywords={mla, biblatex, bibtex, bibliography, citation}}
+
+% colors
+
+\definecolor{spot}{rgb}{1,0.5,0}
+
+% tables
+
+\newcolumntype{H}{>{\sffamily\bfseries\spotcolor}l}
+\newcolumntype{P}{>{\raggedright}p{100pt}}
+\newcolumntype{O}{>{\raggedright\ttfamily}p{40pt}}
+\newcolumntype{S}{>{\raggedright\ttfamily}X}
+\newcolumntype{N}{>{\sffamily\bfseries\spotcolor}r}
+\newcolumntype{n}{>{\raggedleft\let\\\tabularnewline}p{50pt}}
+
+\providecommand*{\numtablesetup}{\tablesetup}
+
+\newcommand*{\sorttablesetup}{%
+  \tablesetup
+  \setlength{\tabcolsep}{1pt}%
+  \def\new{\ensuremath\rightarrow}%
+  \def\alt{\ensuremath\hookrightarrow}%
+  \def\str##1{\mbox{\displayverbfont##1}}%
+  \def\altstr##1{\hfill\alt\hspace{2\tabcolsep}%
+    \str{##1}\hspace*{2\tabcolsep}}%
+  \let\fld\bibfield}
+
+% markup and misc
+
+\setcounter{secnumdepth}{4}
+
+\newrobustcmd*{\BiberOnly}{%
+  \textcolor{spot}{Biber only}}
+\newrobustcmd*{\BiberOnlyMark}{%
+  \leavevmode\marginpar{\BiberOnly}}
+
+\hyphenation{%
+  star-red
+  bib-lio-gra-phy
+  white-space
+}
+
+\begin{document}
+
+\printtitlepage
+\tableofcontents
+
+\section{Introduction}
+\label{int}
+
+The \sty{biblatex-mla} files provide support to \sty{biblatex}, \sty{bibtex}, and \sty{latex} for citations and Works Cited lists in the style established by the Modern Language Association (\mla{}). The style defaults to inline parenthetical citations, but it also offers support for \mla{}-style footnotes. For more on the commands and options for changing package defaults, see \secref{mla:subsec:commands} and \secref{mla:subsec:options}, respectively, below.
+
+The \mla{} style, a common standard for writers in the humanities, is outlined in the \emph{\mla{} Style Manual}, in its 3\superscript{rd} edition, and the \emph{\mla{} Handbook for Writers of Research Papers}, now in its 7\superscript{th} edition. By default, these files follow definitions for these latest editions, though they also offer the option of support for the previous style. \sty{Biblatex-mla} also follows the logic of the \mla{} when citing similar material repeatedly, borrowing the function---but not the form---of \emph{ibid} and \emph{idem}. \sty{Biblatex-mla} is compatible with \sty{biblatex}'s support for \sty{hyperref} and \sty{tex2ht}, and the main word in each citation (either the author's name, the title, or the page number) serves as a link to the particular entry in the Works Cited. For anything not covered by this manual, please also see the \sty{biblatex} documentation or contact me by email.
+
+\subsection{License}
+
+\sty{Biblatex-mla} is copyrighted \textcopyright\ 2007--2010, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
+
+\subsection[Feedback]{Feedback}
+\label{int:feb}
+
+If you have any questions, requests, or other feedback please email me. My email address is at the top of this document. If you end up improving the code to be more accurate to the \mla{} standard, please be kind to the rest of us and share; I'm very happy to incorporate improvements! If anything works differently than you feel it ought to work, please let me know. Apart from time and my willingness to write documentation, I'm limited only by the problems of which I'm unaware.
+
+
+\section{Use}
+\label{mla:sec:use}
+
+To ensure American-style quotation marks (if that's your thing),%
+%%
+\footnote{Other localization files, \sty{mla-spanish.lbx}, \sty{mla-portuguese.lbx}, and \sty{mla-italian.lbx}, are also available to use \sty{biblatex-mla} in languages other than English. These and other localization files are included in \sty{biblatex-mla} releases, but they will not always be the latest versions available. Updated and new localization files will be uploaded to \mylink{http://konx.net/biblatex-mla/lbx} once they are ready. There is also support for proper punctuation in non-American dialects of English. Try \mycode{british}, \mycode{canadian}, or other Babel identifiers, such as \mycode{spanish}.} %
+%%
+you need to call the \sty{babel} and \sty{csquotes} packages in the preamble
+of your Latex document:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[american]{babel}
+		\usepackage{csquotes}
+		\usepackage[style=mla]{biblatex}
+		\bibliography{<bibfile>}
+	\end{verbatim}	
+\end{quote}
+Replace <|<bibfile>|> with the name of your .bib bibliography file. The style supports footnote citations with the \mycode{autocite=footnote} package option. Other options supported by \sty{biblatex-mla} include \mycode{firstlonghand}, \mycode{mladraft}, \mycode{annotation}, \mycode{noremoteinfo}, \mycode{nofullfootnote}, \mycode{publimedium}, and \mycode{guessmedium}, all discussed below in \secref{mla:subsec:options}.
+
+
+\subsection{Commands}
+\label{mla:subsec:commands}
+
+The standard commands for \sty{biblatex-mla} generally follow those defined by \sty{biblatex}. Included below are the most typical commands. For more commands and options, reference the \sty{biblatex} manual.
+
+\begin{commandlist}
+
+\commanditem{autocite}
+	
+Insert a citation. For best results, use the command before punctuation like this \mycommand{autocite}|{x}|. \sty{Biblatex-mla} defaults to parenthetical citations for \mycommand{autocite}, but a package option---\mycode{autocite=footnote}, explained below in \secref{mla:subsec:options}---changes this default behavior. In this example, |x| represents the bibkey of the particular bibliographic entry being cited. Insert page numbers and citational prenotes using square braces: 
+\begin{quote}
+	\begin{verbatim}
+		\autocite[z][y]{x} 
+	\end{verbatim}	
+\end{quote}
+
+Here, |y| is the page number, and |z| is the prenote (such as <qtd.~in>). If indicating a prenote but no page number, you must include an empty set for the page number:
+\begin{quote}
+	\begin{verbatim}
+		\autocite[z][]{x} 
+	\end{verbatim}	
+\end{quote}
+
+When citing a page number without any prenote, only one set of square brackets are needed:
+\begin{quote}
+	\begin{verbatim}
+		\autocite[y]{x} 
+	\end{verbatim}	
+\end{quote}
+
+\commanditem{autocite*}
+
+Suppress the author's name in a citation. Use this starred variant of the above command when indicating the author's name in the sentence calling the citation.
+
+\commanditem{autocites}
+
+Insert a citation for multiple sources at once. The respective citations will be separated by semicolons.
+\begin{quote}
+	\begin{verbatim}
+		\autocites[z1][y1]{x1}[z2][y2]{x1}[z3][y3]{x3} 
+	\end{verbatim}	
+\end{quote}
+The curled braces always indicate the bibkey, and the squared braces respectively belong to the curly braces that follow them.
+
+\commanditem{printbibliography}
+
+Insert the list of Works Cited.
+	
+\end{commandlist}
+
+
+
+\subsection{Package Options}
+\label{mla:subsec:options}
+
+\sty{Biblatex-mla} defaults to the recommendations established by the \mla{}, but there may be times when you need to change some of these options for publication or other uses. As such, a number of package options have been defined to change the functionality of \sty{biblatex-mla} within reason.
+
+\begin{optionslist}
+\optionitem{autocite=footnote}
+
+Using \mycommand{autocite} with biblatex-mla defaults to MLA-preferred inline, parenthetical citations. To style citations as footnotes, set the \mycode{autocite=footnote} option in your preamble:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,autocite=footnote]{biblatex} 
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{firstlonghand}
+The first citation of a source with a shorthand defined will always print a citation with author's name and, potentially, the shorttitle field. (See section XXX, below.) Add \mycode{firstlonghand=false} to your preamble to disable this option and print only the shorthand even on the first citation:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,firstlonghand=false]{biblatex} 
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{nofullfootnote}
+When using biblatex-mla for footnotes, the style file will provide full bibliographic detail for the first citation of every source. To turn off this option, add \mycode{nofullfootnote=true} to your preamble:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,nofullfootnote=true]{biblatex} 
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{annotation}
+It is possible to print annotations to entries in the Works Cited if the \mycode{annotation} field is defined in an entry. To turn on this option, add \mycode{annotation=true} to your
+preamble:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,annotation=true]{biblatex} 
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{mladraft}
+When using MLA parenthetical citations, it is best practice to cite as seldom as is necessary to avoid ambiguity. \sty{Biblatex-mla} can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \sty{biblatex-mla} will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,mladraft=true]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{noremoteinfo}
+Modeled after the implementation in biblatex-apa to suppress remote information in the \sty{.bib} file from being printed in the bibliography, this option affects \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint} fields. It's included here mostly as a proof of concept for future expansion.
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,noremoteinfo=true]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{showmedium}
+\sty{Biblatex-mla} version 0.9 introduced support for the latest \mla{} style, defined in the 3\superscript{rd} edition of the \emph{Style Manual}, requiring the publication medium of each entry to be printed in the list of Works Cited. By default, \sty{biblatex-mla} will do the same, using the \sty{howpublished} field. Turn off this option---and the other new changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,showmedium=false]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{guessmedium}
+An entry with no defined \sty{howpublished} field will default either to a <Web> publication (if there's a defined \sty{url} field or \sty{eprint} field) or a <Print> publication (if there's not). To avoid \sty{biblatex-mla} guessing the publication medium, thereby printing nothing when the field is undefined, deactivate the \mycode{guessmedium} option:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,guessmedium=false]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\end{optionslist}
+
+\section{Database Guide}
+\label{bib}
+
+I lost my original documentation files, including original style files I created to maintain them, so I'm transitioning everything to Philipp Lehman's \sty{ltxdockit}. This part of the user guide, explaining how to create \sty{bibtex} entries for use with \sty{biblatex-mla}, will be updated shortly. Until then, please see \S{} 4 (pages 7--20) of the previous version: \mylink{http://konx.net/biblatex-mla/biblatex-mla.pdf}.
+
+\end{document}

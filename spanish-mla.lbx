@@ -1,0 +1,86 @@
+% spanish-mla.lbx v0.2 2009/07/07
+% 
+% Spanish localization in this file provided by Ivan Fernandez.
+% Abbreviations taken, whenever possible, from Appendix 2 of the
+% Diccionario Panhispánico de Dudas, http://buscon.rae.es/dpdI/
+
+\ProvidesFile{spanish-mla.lbx}[2009/07/07 v0.1.1 biblatex style localization]
+
+\InheritBibliographyExtras{spanish}
+
+\DeclareBibliographyStrings{%
+  inherit          = {spanish},
+  bibliography     = {{Obras citadas}{Obras citadas}},
+  references       = {{Obras citadas}{Obras citadas}},
+  typecompiler     = {{recopilador}{rec\adddot}}, % FIXME: is this right?
+  typecompilers    = {{recopiladors}{recs\adddot}}, % FIXME: is this right?
+  typecompilerandeditor = {{rec\adddotspace y ed\adddot}{rec\adddotspace y ed\adddot}},% 0.7 FIXME: is this right?
+  bytranslator     = {{trad\adddot}{trad\adddot}},% FIXME to read "trans. by" in the first instance
+  byeditor         = {{ed\adddot}{ed\adddot}},% FIXME "ed. by" in first instance
+  typegeneraleditor = {{editor general}{ed\adddotspace gen\adddot}},% 0.7.1 FIXME?
+  bytypegeneraleditor = {{editor general}{ed\adddotspace gen\adddot}},% 0.7.1 FIXME?
+  % byserieseditor   = {editor general},
+  page             = {{\unskip}{\unskip}},
+  pages            = {{\unskip}{\unskip}},
+  andothers        = {{et~al\adddot}{et~al\adddot}},
+  byeditortr       = {{ed\adddotspace y trad\adddot}{ed\adddotspace y trad\adddot}},
+  byeditorco       = {{ed\adddotspace y com\adddot}{ed\adddotspace y com\adddot}},
+  byeditoran       = {{ed\adddotspace y anot\adddot}{ed\adddotspace y anot\adddot}},
+  byeditorin       = {{ed\adddotspace y introd\adddot}{ed\adddotspace y introd\adddot}},
+  byeditorfo       = {{ed\adddotspace y pr\'{o}l\adddot}{ed\adddotspace y pr\'{o}l\adddot}},
+  byeditoraf       = {{ed\adddotspace y ep\'{i}l\adddot}{ed\adddotspace y ep\'{i}l\adddot}},
+  byeditortrco     = {{ed\adddot, trad\adddotspace y com\adddot}{ed\adddot, trad\adddotspace y com\adddot}},
+  byeditortran     = {{ed\adddot, trad\adddotspace y anot\adddot}{ed\adddot, trad\adddotspace y anot\adddot}},
+  byeditortrin     = {{ed\adddot, trad\adddotspace e introd\adddot}{ed\adddot, trad\adddotspace e introd\adddot}},
+  byeditortrfo     = {{ed\adddot, trad\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddotspace y pr\'{o}l\adddot}},
+  byeditortraf     = {{ed\adddot, trad\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddotspace y ep\'{i}l\adddot}},
+  byeditorcoin     = {{ed\adddot, com\adddotspace e introd\adddot}{ed\adddot, com\adddotspace e introd\adddot}},
+  byeditorcofo     = {{ed\adddot, com\adddotspace y pr\'{o}l\adddot}{ed\adddot, com\adddotspace y pr\'{o}l\adddot}},
+  byeditorcoaf     = {{ed\adddot, com\adddotspace y ep\'{i}l\adddot}{ed\adddot, com\adddotspace y ep\'{i}l\adddot}},
+  byeditoranin     = {{ed\adddot, anot\adddotspace e introd\adddot}{ed\adddot, anot\adddotspace e introd\adddot}},
+  byeditoranfo     = {{ed\adddot, anot\adddotspace y pr\'{o}l\adddot}{ed\adddot, anot\adddotspace y pr\'{o}l\adddot}},
+  byeditoranaf     = {{ed\adddot, anot\adddotspace y ep\'{i}l\adddot}{ed\adddot, anot\adddotspace y ep\'{i}l\adddot}},
+  byeditortrcoin   = {{ed\adddot, trad\adddot, com\adddotspace e introd\adddot}{ed\adddot, trad\adddot, com\adddotspace e introd\adddot}},
+  byeditortrcofo   = {{ed\adddot, trad\adddot, com\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddot, com\adddotspace y pr\'{o}l\adddot}},
+  byeditortrcoaf   = {{ed\adddot, trad\adddot, com\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddot, com\adddotspace y ep\'{i}l\adddot}},
+  byeditortranin   = {{ed\adddot, trad\adddot, anot\adddotspace e introd\adddot}{ed\adddot, trad\adddot, anot\adddotspace e introd\adddot}},
+  byeditortranfo   = {{ed\adddot, trad\adddot, anot\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddot, anot\adddotspace y pr\'{o}l\adddot}},
+  byeditortranaf   = {{ed\adddot, trad\adddot, anot\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddot, anot\adddotspace y ep\'{i}l\adddot}},
+  bytranslatorco   = {{trad\adddotspace y com\adddot}{trad\adddotspace y com\adddot}},
+  bytranslatoran   = {{trad\adddotspace y anot\adddot}{trad\adddotspace y anot\adddot}},
+  bytranslatorin   = {{trad\adddotspace e introd\adddot}{trad\adddotspace e introd\adddot}},
+  bytranslatorfo   = {{trad\adddotspace y pr\'{o}l\adddot}{trad\adddotspace y pr\'{o}l\adddot}},
+  bytranslatoraf   = {{trad\adddotspace y ep\'{i}l\adddot}{trad\adddotspace y ep\'{i}l\adddot}},
+  bytranslatorcoin = {{trad\adddot, com\adddotspace e introd\adddot}{trad\adddot, com\adddotspace e introd\adddot}},
+  bytranslatorcofo = {{trad\adddot, com\adddotspace y pr\'{o}l\adddot}{trad\adddot, com\adddotspace y pr\'{o}l\adddot}},
+  bytranslatorcoaf = {{trad\adddot, com\adddotspace y ep\'{i}l\adddot}{trad\adddot, com\adddotspace y ep\'{i}l\adddot}},
+  bytranslatoranin = {{trad\adddot, anot\adddotspace e introd\adddot}{trad\adddot, anot\adddotspace e introd\adddot}},
+  bytranslatoranfo = {{trad\adddot, anot\adddotspace y pr\'{o}l\adddot}{trad\adddot, anot\adddotspace y pr\'{o}l\adddot}},
+  bytranslatoranaf = {{trad\adddot, anot\adddotspace y ep\'{i}l\adddot}{trad\adddot, anot\adddotspace y ep\'{i}l\adddot}},
+  phdthesis        = {{Tesis}{Tesis}},
+  reviewof         = {{rese\~{n}a de}{rese\~{n}a de}},
+  volume           = {{{Vol\adddot}}{{Vol\adddot}}}, % for correct capitalization of volume reference
+  phd              = {{Tesis}{Tesis}},% 0.6
+  dphil            = {{Tesis}{Tesis}},% 0.6
+  lic              = {{Lic\adddotspace tesis}{Lic\adddotspace tesis}},% 0.6
+  ma               = {{MA\addabbrvspace tesis}{MA\addabbrvspace tesis}},% 0.6
+  ms               = {{MS\addabbrvspace tesis}{MS\addabbrvspace tesis}},% 0.6
+  msc              = {{MSc\addabbrvspace tesis}{MSc\addabbrvspace tesis}},% 0.6
+  mphil            = {{MPhil\addabbrvspace tesis}{MPhil\addabbrvspace tesis}},% 0.6
+  mlitt            = {{MLitt\addabbrvspace tesis}{MLitt\addabbrvspace tesis}},% 0.6
+  %  manuscript       = {{ms\adddot}{ms\adddot}},% FIXME
+  %  typescript       = {{ts\adddot}{ts\adddot}},% FIXME
+  %  director         = {{dir\adddot}{dir\adddot}},% FIXME
+  %  screenplay       = {{adapt\adddot}{adapt\adddot}},% FIXME
+  %  adaptation       = {{adapt\adddot}{adapt\adddot}},% FIXME
+  %  adaptor          = {{adapt\adddot}{adapt\adddot}},% FIXME
+  %  performer        = {{perf\adddot}{perf\adddot}},% FIXME
+  %  performers       = {{perf\adddot}{perf\adddot}},% FIXME
+  %  composer         = {{composer\adddot}{composer\adddot}},% FIXME
+  %  composedby       = {{composed~by}{composed~by}},% FIXME
+  %  producer         = {{prod\adddot}{prod\adddot}},% FIXME
+  %  with             = {{with}{with}},% FIXME
+  %  proceedings      = {{proc\adddot}{proc\adddot}},% FIXME
+}
+
+\endinput

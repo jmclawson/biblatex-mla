@@ -1,0 +1,119 @@
+% english-mla.lbx v0.4 2010/12/27
+
+\ProvidesFile{english-mla.lbx}[2010/12/27 v0.4 biblatex style localization] 
+\InheritBibliographyExtras{english}
+
+\DeclareBibliographyStrings{% 
+  inherit          = {english},
+  bibliography     = {{Works Cited}{Works Cited}},
+  references       = {{Works Cited}{Works Cited}},
+  compilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},% 0.95
+  bycompilerandeditor = {{compiled and edited by}{comp\adddotspace and ed\adddot}},% 0.95
+  % typecompilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},% 0.7
+  % bytypecompilerandeditor = {{compiled and edited by}{comp\adddotspace and ed\adddot}},% 0.7
+  % typegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
+  % bytypegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
+  generaleditor    = {{general editor}{gen\adddotspace ed\adddot}},
+  bytranslator     = {{translated by}{trans\adddot}},
+  byeditor         = {{edited by}{ed\adddot}},
+  % byserieseditor   = {{general editor}{general editor}},% not used?
+  page             = {{\unskip}{\unskip}},
+  pages            = {{\unskip}{\unskip}},
+  byeditortr       = {{ed\adddotspace and trans\adddot}{ed\adddotspace and trans\adddot}},
+  byeditorco       = {{ed\adddotspace and comm\adddot}{ed\adddotspace and comm\adddot}},
+  byeditoran       = {{ed\adddotspace and annot\adddot}{ed\adddotspace and annot\adddot}},
+  byeditorin       = {{ed\adddotspace and introd\adddot}{ed\adddotspace and introd\adddot}},
+  byeditorfo       = {{ed\adddotspace and forew\adddot}{ed\adddotspace and forew\adddot}},
+  byeditoraf       = {{ed\adddotspace and afterw\adddot}{ed\adddotspace and afterw\adddot}},
+  byeditortrco     = {{ed, trans\adddot, and comm\adddot}{ed, trans\adddot, and comm\adddot}},
+  byeditortran     = {{ed, trans\adddot, and annot\adddot}{ed, trans\adddot, and annot\adddot}},
+  byeditortrin     = {{ed, trans\adddot, and introd\adddot}{ed, trans\adddot, and introd\adddot}},
+  byeditortrfo     = {{ed, trans\adddot, and forew\adddot}{ed, trans\adddot, and forew\adddot}},
+  byeditortraf     = {{ed, trans\adddot, and afterw\adddot}{ed, trans\adddot, and afterw\adddot}},
+  byeditorcoin     = {{ed, comm\adddot, and introd\adddot}{ed, comm\adddot, and introd\adddot}},
+  byeditorcofo     = {{ed, comm\adddot, and forew\adddot}{ed, comm\adddot, and forew\adddot}},
+  byeditorcoaf     = {{ed, comm\adddot, and afterw\adddot}{ed, comm\adddot, and afterw\adddot}},
+  byeditoranin     = {{ed, annot\adddot, and introd\adddot}{ed, annot\adddot, and introd\adddot}},
+  byeditoranfo     = {{ed, annot\adddot, and forew\adddot}{ed, annot\adddot, and forew\adddot}},
+  byeditoranaf     = {{ed, annot\adddot, and afterw\adddot}{ed, annot\adddot, and afterw\adddot}},
+  byeditortrcoin   = {{ed, trans\adddot, comm\adddot, and introd\adddot}{ed, trans\adddot, comm\adddot, and introd\adddot}},
+  byeditortrcofo   = {{ed, trans\adddot, comm\adddot, and forew\adddot}{ed, trans\adddot, comm\adddot, and forew\adddot}},
+  byeditortrcoaf   = {{ed, trans\adddot, comm\adddot, and afterw\adddot}{ed, trans\adddot, comm\adddot, and afterw\adddot}},
+  byeditortranin   = {{ed, trans\adddot, annot\adddot, and introd\adddot}{ed, trans\adddot, annot\adddot, and introd\adddot}},
+  byeditortranfo   = {{ed, trans\adddot, annot\adddot, and forew\adddot}{ed, trans\adddot, annot\adddot, and forew\adddot}},
+  byeditortranaf   = {{ed, trans\adddot, annot\adddot, and afterw\adddot}{ed, trans\adddot, annot\adddot, and afterw\adddot}},
+  bytranslatorco   = {{trans\adddotspace and comm\adddot}{trans\adddotspace and comm\adddot}},
+  bytranslatoran   = {{trans\adddotspace and annot\adddot}{trans\adddotspace and annot\adddot}},
+  bytranslatorin   = {{trans\adddotspace and introd\adddot}{trans\adddotspace and introd\adddot}},
+  bytranslatorfo   = {{trans\adddotspace and forew\adddot}{trans\adddotspace and forew\adddot}},
+  bytranslatoraf   = {{trans\adddotspace and afterw\adddot}{trans\adddotspace and afterw\adddot}},
+  bytranslatorcoin = {{trans\adddot, comm\adddot, and introd\adddot}{trans\adddot, comm\adddot, and introd\adddot}},
+  bytranslatorcofo = {{trans\adddot, comm\adddot, and forew\adddot}{trans\adddot, comm\adddot, and forew\adddot}},
+  bytranslatorcoaf = {{trans\adddot, comm\adddot, and afterw\adddot}{trans\adddot, comm\adddot, and afterw\adddot}},
+  bytranslatoranin = {{trans\adddot, annot\adddot, and introd\adddot}{trans\adddot, annot\adddot, and introd\adddot}},
+  bytranslatoranfo = {{trans\adddot, annot\adddot, and forew\adddot}{trans\adddot, annot\adddot, and forew\adddot}},
+  bytranslatoranaf = {{trans\adddot, annot\adddot, and afterw\adddot}{trans\adddot, annot\adddot, and afterw\adddot}},
+  newseries        = {{ns}{ns}},
+  oldseries        = {{os}{os}},
+  reprintof        = {{reprint of}{rpt\adddotspace of}},% 0.7.1 fixed
+  phdthesis        = {{Diss\adddot}{Diss\adddot}},
+  reviewof         = {{rev\adddotspace of}{rev\adddotspace of}},
+  specissue        = {{spec\adddot\addspace issue of}{spec\adddot\addspace issue of}},
+  section          = {{sec\adddot}{sec\adddot}},
+  withcommentator  = {{comm\adddot}{comm\adddot}},
+  withannotator    = {{annot\adddot}{annot\adddot}},
+  withintroduction = {{introd\adddot}{introd\adddot}},
+  withforeword     = {{forew\adddot}{forew\adddot}},
+  withafterword    = {{afterw\adddot}{afterw\adddot}},
+  phd              = {{Diss\adddot}{Diss\adddot}},
+  dphil            = {{Diss\adddot}{Diss\adddot}},
+  lic              = {{Licentiate thesis}{Licentiate thesis}},
+  ma               = {{{MA}\adddotspace thesis}{{MA}\adddotspace thesis}},
+  ms               = {{{MS}\adddotspace thesis}{{MS}\adddotspace thesis}},
+  msc              = {{{MS}c\adddotspace thesis}{{MS}c\adddotspace thesis}},
+  mphil            = {{{MP}hil\adddotspace thesis}{{MP}hil\adddotspace thesis}},
+  mlitt            = {{{ML}itt\adddotspace thesis}{{ML}itt\adddotspace thesis}},
+  manuscript       = {{ms\adddot}{ms\adddot}},
+  typescript       = {{ts\adddot}{ts\adddot}},
+  director         = {{dir\adddot}{dir\adddot}},
+  screenplay       = {{adapt\adddot}{adapt\adddot}},
+  adaptation       = {{adapt\adddot}{adapt\adddot}},
+  adaptor          = {{adapt\adddot}{adapt\adddot}},
+  performer        = {{perf\adddot}{perf\adddot}},
+  performers       = {{perf\adddot}{perf\adddot}},
+  composer         = {{composer\adddot}{composer\adddot}},
+  composedby       = {{composed~by}{composed~by}},
+  producer         = {{prod\adddot}{prod\adddot}},
+  with             = {{with}{with}},
+  proceedings      = {{proc\adddot}{proc\adddot}},
+  transof          = {{translation of}{trans\adddotspace of}},% 0.7
+  volstodate       = {{volumes to date}{vols\adddotspace to date}},% 0.7.1
+  supptotitle      = {{to}{to}},% 0.7.1
+  print            = {{print}{print}},% 0.9
+  web              = {{web}{web}},% 0.9
+}%
+
+\protected\gdef\lbx@us@mkbibrangetrunc@long#1#2{%
+  \printtext{%
+    \iffieldsequal{#2year}{#2endyear}
+      {\csuse{mkbibdate#1}{}{#2month}{#2day}}
+      {\csuse{mkbibdate#1}{#2year}{#2month}{#2day}}%
+    \iffieldundef{#2endyear}
+      {}
+      {\iffieldequalstr{#2endyear}{}
+         {\mbox{\bibdatedash{ }}}
+	 {\bibdatedash
+	  \iffieldsequal{#2year}{#2endyear}
+	    {\iffieldsequal{#2month}{#2endmonth}
+               {\csuse{mkbibdate#1}{#2endyear}{}{#2endday}}
+	       {\csuse{mkbibdate#1}{#2endyear}{#2endmonth}{#2endday}}}
+	    {\csuse{mkbibdate#1}{#2endyear}{#2endmonth}{#2endday}}}}}}
+
+\endinput
+
+% ignore the below. It's a reference for me so I don't continually need to 
+% teach myself regular expressions. -JC
+% 
+% regex for find and replace (moving from mla.bbx to localized modules)
+% find: {(.*?)},
+% replace: {{$1}{$1}},

@@ -1,0 +1,40 @@
+Description:
+Biblatex-mla provides Biblatex support for references and citations in the
+style defined by the Modern Language Association (MLA). The style is a common
+standard for writers in the humanities and is outlined in the MLA Style Manual
+and the MLA Handbook for Writers of Research Papers. These files follow
+definitions for the 3rd edition of the Manual and the 7th edition of the
+Handbook.  Before using biblatex-mla, you will need to install Biblatex:
+http://www.ctan.org/tex-archive/help/Catalogue/entries/biblatex.html
+
+
+Installation:
+1. Locate your latex installation folder
+	- In OS X, it can be found at 
+		~/Library/texmf/tex/latex/
+2. Create a new folder called "biblatex-mla" if there isn't already one there
+3. Place the biblatex-mla files into this folder
+
+
+Usage:
+1. Call the MLA style in your Latex document using the following four lines in
+your Latex preface:
+		\usepackage[american]{babel} 
+		\usepackage{csquotes} 
+		\usepackage[style=mla]{biblatex}
+		\bibliography{<bibfile>}
+	- (replace "<bibfile>" with the name of your .bib bibliography file)
+	- to use MLA-style footnotes, use the "autocite=footnote" package option
+2. Cite a text with \autocite{<key>}, cite a page with
+\autocite[<page>]{<key>}, and include a citational prenote---"'To be or not to
+be,' he wrote (Shakespeare qtd. in Brown 34)"---with
+\autocite[<prenote>][<page>]{<key>}.
+	- (replace <key>, <page>, and <prenote> with their respective elements)
+3. Before the end of your document, include the following line where you want
+your bibliography to appear:
+		\printbibliography
+
+
+This material is subject to the LaTeX Project Public License. See
+http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the
+details of that license.
