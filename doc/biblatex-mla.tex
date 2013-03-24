@@ -17,11 +17,12 @@
 \MakeAutoQuote*{«}{»}
 \MakeShortVerb{\|}
 
-\rcsid{$Id: biblatex-mla.tex,v 0.95 2010/12/18 13:01:50 clawson beta $}
+\rcsid{$Id: biblatex-mla.tex,v 1.0 2011/05/20 13:01:50 clawson beta $}
 
 \newcommand*{\BiblatexMLAhome}{http://konx.net/biblatex-mla/}
 \newcommand*{\BiblatexMLAonCTAN}{http://www.ctan.org/tex-archive/help/Catalogue/entries/biblatex-mla.html}
-\newcommand*{\mycode}[1]{\texttt{\textbf{#1}}}
+\newcommand*{\mycode}[1]{\texttt{\textbf{#1}}}% things the user needs to type
+% Use \sty{} to indicate technical things the user will never type.
 \newcommand*{\mylink}[1]{$<$\url{#1}$>$}
 % \newcommand*{\mla}{\textsf{\textsc{Mla}}}
 \newcommand*{\mla}{MLA}
@@ -121,7 +122,7 @@ The \mla{} style, a common standard for writers in the humanities, is outlined i
 
 \subsection{License}
 
-\sty{Biblatex-mla} is copyrighted \textcopyright\ 2007--2010, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
+\sty{Biblatex-mla} is copyrighted \textcopyright\ 2007--2011, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
 
 \subsection[Feedback]{Feedback}
 \label{int:feb}
@@ -209,7 +210,7 @@ Insert the list of Works Cited.
 \begin{optionslist}
 \optionitem{autocite=footnote}
 
-Using \mycommand{autocite} with biblatex-mla defaults to MLA-preferred inline, parenthetical citations. To style citations as footnotes, set the \mycode{autocite=footnote} option in your preamble:
+Using \mycommand{autocite} with biblatex-mla defaults to \mla{}-preferred inline, parenthetical citations. To style citations as footnotes, set the \mycode{autocite=footnote} option in your preamble:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,autocite=footnote]{biblatex} 
@@ -242,7 +243,7 @@ preamble:
 \end{quote}
 
 \optionitem{mladraft}
-When using MLA parenthetical citations, it is best practice to cite as seldom as is necessary to avoid ambiguity. \sty{Biblatex-mla} can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \sty{biblatex-mla} will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
+When using \mla{} parenthetical citations, it is best practice to cite as seldom as is necessary to avoid ambiguity. \sty{Biblatex-mla} can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \sty{biblatex-mla} will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,mladraft=true]{biblatex}
@@ -279,5 +280,213 @@ An entry with no defined \sty{howpublished} field will default either to a <Web>
 \label{bib}
 
 I lost my original documentation files, including original style files I created to maintain them, so I'm transitioning everything to Philipp Lehman's \sty{ltxdockit}. This part of the user guide, explaining how to create \sty{bibtex} entries for use with \sty{biblatex-mla}, will be updated shortly. Until then, please see \S{} 4 (pages 7--20) of the previous version: \mylink{http://konx.net/biblatex-mla/biblatex-mla.pdf}.
+
+\sty{Biblatex} (and, thus, \sty{biblatex-mla}) uses bibtex databases to manage the citations and list of works cited. While these databases are just flat text files, there are many good programs available to help you manage them. Zotero, for example, can export as \sty{bibtex}, as can Endnote and other commercial programs; each of these will nevertheless export with varying degrees of success. Standalone \sty{bibtex} managers such as JabRef and (on the Mac) BibDesk use \sty{.bib} files as their native filetype and are much more reliable for managing your list of sources.
+
+Whether exporting from Zotero or another program, whether managing your .bib files in a standalone editor or manipulating them in a text editor, you will at some point have to know the fields available to \sty{biblatex-mla}---especially as some of these are unique to \sty{biblatex}, and as I've had to repurpose some of the fields to suit \sty{biblatex-mla}. Below are the different \sty{@types} and the fields available to them. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (for example, \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
+
+\subsection{Unusual Fields}
+\sty{Biblatex} supports the following fields, usually concerned more with presentation than bibliographic merit, in all entrytypes. Define these in your \mycode{.bib} files:
+
+\begin{optionslist}
+	
+	\optionitem{crossref}
+	the \sty{key} of a parent source in which a shorter source is found. The \sty{crossref} field is handy to avoid spending time re-inputting similar data, but it is also useful for including \mla{}-style cross-references in the list of Works Cited. Keep in mind the problems inherent in using the \sty{crossref} field, outlined in section 2.4.1 of the \sty{biblatex} manual. In the future, \sty{biblatex-mla} may provide further support for the \sty{biblatex} \sty{xref} field, making \sty{crossref} secondary in importance.
+	
+	\optionitem{shorttitle}
+	the shortened title to be printed in citations to disambiguate among multiple titles by one author
+	
+	\optionitem{shorthand}
+	when defined, a unique label to be printed in citations instead of the author and shorttitle. By default, \sty{biblatex-mla} will only use the \sty{shorthand} label after a first citation with author (and title, if necessary). See the \mycode{firstlonghand} option in section XXXXXXX to disable this feature.
+	
+	\optionitem{options}
+	separate the following options with a comma:
+	\begin{description}
+		\item[\mycode{useauthor=false}] allows the label of the entry to default to something other than the author, when the author field is defined. If the editor is defined, the label will default to that. The \mycode{useauthor} option defaults to true.
+		\item[\mycode{useeditor=false}] allows the label of the entry default to something other than the editor in the case of the author field being undefined or the \mycode{useauthor} option set to false. The \mycode{useeditor} option defaults to true.
+		\item[\mycode{usetranslator=true}] allows the label of the entry to inherit the name of the translator when the author and editor fields are undefined or the \mycode{useauthor} and \mycode{useeditor} options are set to false. The \mycode{usetranslator} option defaults to false.
+		\item[\mycode{totalnames=true}] allows the label to include all the names in its list, rather than maxing out at three.
+		\item[\mycode{uniquetranslator=true}] indicates that the translator of an \sty{@incollection} entry is unique to the particular work, rather than the collection at large.
+		\item[\mycode{noremoteinfo=false}] indicates that the ``remote'' information of an entry is to be printed, including the fields \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint}. These fields are usually omitted. See also the global option also called \mycode{noremote-info}, on page XXXX above, for defining this option on a per-document basis.
+	\end{description}	
+\end{optionslist}
+
+\subsection{Standalone Sources}
+The following entrytypes are for long sources not part of any other publication except, potentially, multivolume sets or publishers' series.
+
+\subsubsection*{@book}
+A book, usually with one author. \mla{}-style book entries are straightforward, and the \sty{biblatex-mla} files style all the potential fields for a typical book
+
+\begin{optionslist}
+	\optionitem{author}
+	the author of the book
+	
+	\optionitem{title}
+	book title; when using \sty{crossref}, also define \sty{booktitle} and be sure to define \sty{title} of the child entry
+	
+	\optionitem{subtitle}
+	book subtitle; when using \sty{crossref}, also define \sty{booksubtitle} and be sure to define \sty{subtitle} of the child
+	
+	\optionitem{location}
+	entryplace of publication
+	
+	\optionitem{publisher}
+	publishing house
+	
+	\optionitem{year}
+	year of publication
+\end{optionslist}
+
+Other fields might come in handy for further granularity:
+
+\begin{optionslist}
+	\optionitem{origyear}
+	original publication year, for reprints
+	
+	\optionitem{edition}
+	edition number
+	
+	\optionitem{volume}
+	volume number of book
+	
+	\optionitem{volumes}
+	total number of volumes
+	
+	\optionitem{maintitle}
+	title of multi-volume collection of which this book is one volume
+	
+	\optionitem{mainsubtitle}
+	subtitle of the above \sty{maintitle}
+	
+	\optionitem{series}
+	name of a publication series
+	
+	\optionitem{number}
+	number of the above \sty{series} represented by this book
+	
+\end{optionslist}
+
+Additionally, the style files support more name types for situations needing them:
+
+\begin{optionslist}
+	\optionitem{editor}
+	editor of a book	
+	
+	\optionitem{editortype}
+	to indicate if the named \sty{editor} is actually an \mycode{editor} (``ed.''), a \mycode{compiler} (``comp.'') or a \mycode{compilerandeditor} (``comp. and ed.''). Default value is \mycode{editor}.
+	
+	\optionitem{translator}
+	translator of a work
+	
+	\optionitem{introduction}
+	author of a book's introduction
+	
+	\optionitem{foreword}
+	author of a book's foreword
+	
+	\optionitem{afterword}
+	author of a book's afterword
+	
+	\optionitem{redactor}
+	name of redactor
+	
+	\optionitem{commentator}
+	name of commentator
+	
+	\optionitem{annotator}
+	name of annotator
+	
+\end{optionslist}
+
+Finally, the style files also define the following note fields for further clarification:
+
+\begin{optionslist}
+	\optionitem{nameaddon}
+	pseudonym, misattribution, or other note (printed in brackets after \sty{author})
+	
+	\optionitem{booktitleaddon}
+	note after the \sty{booktitle}
+	
+	\optionitem{maintitleaddon}
+	note after the \sty{maintitle}
+	
+	\optionitem{note}
+	miscellaneous data printed before \sty{publisher}
+	
+	\optionitem{addendum}
+	miscellaneous data printed at the end of the entry
+	
+\end{optionslist}
+
+Fields not yet supported in biblatex-mla (but which should be supported in future versions) include the following:
+
+\begin{optionslist}
+	\optionitem{howpublished}
+	to be used in support of the MLA-style revisions in the third edition of the \emph{MLA Style Manual} and the (upcoming) 7th edition of the \emph{MLA Handbook}; will default to ``Print''  when undefined
+	
+	\optionitem{origlocation}
+	original place of publication (for reprints)
+	
+	\optionitem{origpublisher}
+	original publisher (for reprints)
+	
+	\optionitem{origtitle}
+	original title (for reprints)
+	
+	\optionitem{origlanguage}
+	the original language of a translated, reprinted work. Biblatex-mla will not print information in this field, but if the field has information in it, it will use the phrase ``Trans. of''  before the original title, instead of ``Rept. of''.
+	
+\end{optionslist}
+
+\subsubsection*{@booklet}
+Small pamphlet, often without an author listed. In \sty{biblatex-mla}, \mycode{@booklet} is an alias for \mycode{@book} (see above), and is styled similarly.
+
+\subsubsection*{@collection}
+A book that is a collection of self-contained essays, stories, or poems, usually with multiple unique authors and collectively edited by a single editorial body. In \sty{biblatex-mla}, \mycode{@collection} is an an alias for \mycode{@book} (see above), and is styled similarly. To accurately support \mycode{@incollection} entries using \mycode{crossref}, be sure to define the following fields instead of \mycode{title} and \mycode{subtitle} in the parent \mycode{@collection} entry:
+
+\begin{optionslist}
+	\optionitem{booktitle}
+	the title of a book or collection
+	
+	\optionitem{booksubtitle}
+	the subtitle of a book or collection	
+	
+\end{optionslist}
+
+\subsubsection*{@periodical}
+An entire issue of a journal, usually cited by editor. \sty{Biblatex-mla} accepts the following fields:
+
+\begin{optionslist}
+	\optionitem{editor}
+	the editor or editors of an issue
+	
+	\optionitem{issuetitle}
+	title of a special issue
+	
+	\optionitem{issuesubtitle}
+	subtitle of a special issue
+	
+	\optionitem{title}
+	title of a journal
+	
+	\optionitem{subtitle}
+	subtitle of a journal
+	
+	\optionitem{volume}
+	volume number of a journal
+	
+	\optionitem{number}
+	issue number of a journal
+	
+	\optionitem{issue}
+	season, when used in place of month (as in the ``spring'' issue of a journal)
+	
+	\optionitem{}
+	
+	\optionitem{}
+	
+	\optionitem{}
+	
+\end{optionslist}
 
 \end{document}
