@@ -794,7 +794,7 @@
       {\usebibmacro{cite:mla:shorthand}}}}
 
 \newbibmacro*{cite:mla:title:alone}{%
-  \unspace\printtext[bibhyperref]{%
+  \printtext[bibhyperref]{% suggested by StackExchange user Audrey
   \printfield[citetitle:\strfield{entrytype}]{labeltitle}}%
   \ifthenelse{\iffieldequalstr{entrytype}{suppbook}\and\iffieldundef{title}}%
     {\printtext[bibhyperref]{%
