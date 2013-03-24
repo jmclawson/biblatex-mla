@@ -68,6 +68,7 @@
   {\endlist}
 
 \DeclareFieldFormat{title:article}{\mkbibquote{#1}}%
+\DeclareFieldFormat{title:online}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:inreference}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:book}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:booklet}{\mkbibemph{#1}}
@@ -85,9 +86,13 @@
 \DeclareListFormat[article]{location}%
   {\unspace\mkbibbrackets{#1}\addspace}%
 \DeclareFieldFormat[article]{version}{#1\isdot}%
-\DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}
-\DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}
-\DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}
+\DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
+\DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}%
+\DeclareFieldFormat{mla:capital:web}{%
+  \ifhyperref%
+    {\href{#1}{\MakeCapital{\bibstring{web}}}}%
+    {\MakeCapital{\bibstring{web}}}}%
+\DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
 \DeclareFieldFormat{nameaddon}{\mkbibbrackets{#1}}%
 \DeclareFieldFormat{issuetitle}{\mkbibemph{#1}}
 \DeclareFieldFormat{mla:newspaper:section}{\bibstring{section}\addspace#1}%
@@ -114,6 +119,7 @@
   \ifhyperref%
     {\href{#1}{\emph{Project Muse}}}%
     {\emph{Project Muse}}}
+\DeclareFieldFormat{urldate}{#1}%
 
 \DeclareBibliographyAlias{booklet}{book}
 \DeclareBibliographyAlias{collection}{book}
@@ -123,10 +129,12 @@
 
 \DeclareBibliographyAlias{manual}{customa}
 \DeclareBibliographyAlias{misc}{customa}
-\DeclareBibliographyAlias{online}{customa}
+\DeclareBibliographyAlias{online}{article}
 \DeclareBibliographyAlias{patent}{customa}
 \DeclareBibliographyAlias{report}{customa}
 \DeclareBibliographyAlias{suppcollection}{suppbook}
+
+\DeclareFieldAlias[online]{maintitle}{journaltitle}
 
 \renewcommand*{\newunitpunct}{\addperiod\space}
 \renewcommand*{\andothersdelim}{\ifcitation{}{\addcomma}\addspace}
@@ -318,16 +326,21 @@
   \addcolon\addspace
   \printfield{pages}}
 
+\renewbibmacro*{date}{\printdate}%
+
 \renewbibmacro*{url+urldate}{%
   \ifthenelse{\boolean{bbx@publimedium}\AND\NOT \(\iffieldundef{url} \AND \iffieldundef{eprint}\)}% 0.9 platypus - check the logic here! should it be and or or between url and eprint?
-    {\printtext[mla:capital]{\bibstring{web}}\newunit}%
+    {\printfield[mla:capital:web]{url}\newunit}%
     {\iffieldundef{urlyear}{}{\setunit{\addspace}}}%
   \iffieldundef{urlyear}%
     {}%
-    {\printtext{\biburldatelong}%
+    {\printtext{\printurldate}%
      \setunit{\addspace}}% Suggested by Stephen Brumbaugh
   \ifthenelse{\boolean{bbx@publimedium}\AND\NOT\iffieldundef{url}}%
-    {}%
+    {\ifthenelse{\boolean{bbx:gnoreminfo}}%
+	  {}%
+	  {\setunit{\newunitpunct}%
+	   \printfield{url}}}%
     {\printfield{url}}%
   }
 
@@ -442,7 +455,7 @@
   \setunit*{\addcomma\addspace}%
   \ifbool{bbx@mla-incollection}%
     {\printfield[bibliography:origyear]{origyear}\clearfield{origyear}}%
-    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}% 2.0 cleared up spurious punct
+    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}% 2.0 cleared up most spurious punct
       {\printorigdate\clearfield{origyear}}%
       {}%
 	}%
@@ -752,7 +765,7 @@
   \setunit*{\addspace}%
   \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
     {\printfield[brackets]{location}%
-     \printtext{\bibdatelong}%
+     \printtext{\printdate}%
      \newunit}%
     {\printfield{series}%
      \setunit{\addspace}%
@@ -1109,7 +1122,7 @@
      \newunit%
      \printfield[noformat]{titleaddon}%
      \newunit%
-     \usebibmacro{mla:reprint}%
+     \setboolean{bbx@mla-incollection}{true}\usebibmacro{mla:reprint}\setboolean{bbx@mla-incollection}{false}%
      \newunit\newblock}}
 
 \newbibmacro*{mla:article:journal+issuetitle}{%
@@ -1123,10 +1136,10 @@
   \ifthenelse{\iffieldequalstr{entrytype}{periodical} \AND \iffieldundef{journaltitle}}%
     {\usebibmacro{periodical}}%
     {\usebibmacro{journal}}%
-  \setunit*{\addspace}%
-  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
+  \ifthenelse{\iffieldequalstr{entrytype}{online}}{\usebibmacro{mla:online}}{\setunit*{\addspace}}%
+  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine} \or \iffieldequalstr{entrytype}{online}}%
     {\printlist[brackets]{location}%
-     \printtext{\bibdatelong}%
+     \printtext{\printdate}%
      \setunit*{\addcomma\addspace}%
      \printfield{version}%
      \setunit*{\addcomma\addspace}%
@@ -1145,12 +1158,24 @@
      \newunit}%
 }
 
+\newbibmacro*{mla:online}{%
+  \iffieldundef{maintitle}%
+    {}%
+    {\printtext[maintitle]{%
+       \printfield[titlecase]{maintitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{mainsubtitle}}}%
+  \newunit\newblock%
+  \printlist{publisher}%
+  \setunit*{\addcomma\addspace}%
+}
+
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
   \setunit*{\addspace}%
   \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
     {\printlist[brackets]{location}%
-     \printtext{\bibdatelong}%
+     \printtext{\printdate}%
      \setunit{\addcomma\addspace}%
      \printfield{version}%
      \setunit{\addcomma\addspace}%

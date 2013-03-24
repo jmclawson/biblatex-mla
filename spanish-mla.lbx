@@ -1,12 +1,35 @@
-% spanish-mla.lbx v0.2 2009/07/07
+% spanish-mla.lbx v0.2.5 2013/03/24
 % 
 % Spanish localization in this file provided by Ivan Fernandez.
 % Abbreviations taken, whenever possible, from Appendix 2 of the
 % Diccionario Panhispánico de Dudas, http://buscon.rae.es/dpdI/
 
-\ProvidesFile{spanish-mla.lbx}[2009/07/07 v0.1.1 biblatex style localization]
+\ProvidesFile{spanish-mla.lbx}[2013/03/24 v0.2.5 biblatex style localization]
 
 \InheritBibliographyExtras{spanish}
+
+\DeclareBibliographyExtras{%
+  \protected\def\mkbibdatelong#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\thefield{#3}%
+       \iffieldundef{#2}{}{\nobreakspace}}%
+    \iffieldundef{#2}
+      {}
+      {\mkbibmonth{\thefield{#2}}%
+       \iffieldundef{#1}{}{\space}}%
+    \stripzeros{\thefield{#1}}}%
+  \protected\def\mkbibdateshort#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\mkdatezeros{\thefield{#3}}%
+       \iffieldundef{#2}{}{/}}%
+    \iffieldundef{#2}
+      {}
+      {\mkdatezeros{\thefield{#2}}%
+       \iffieldundef{#1}{}{/}}%
+    \mkdatezeros{\thefield{#1}}}%
+}
 
 \DeclareBibliographyStrings{%
   inherit          = {spanish},

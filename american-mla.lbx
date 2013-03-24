@@ -1,22 +1,30 @@
-% american-mla.lbx v1.0 2012/08/30
+% american-mla.lbx v0.2.5 2013/03/24
 
-\ProvidesFile{american-mla.lbx}[2012/08/30 v1.0 biblatex style localization]
+\ProvidesFile{american-mla.lbx}[2013/03/24 v0.2.5 biblatex style localization]
 
 \InheritBibliographyExtras{american}
 
 \DeclareBibliographyExtras{%
-  \def\bibdatelong{%
-    \@tempcnta0\thefield{day} \the\@tempcnta\nobreakspace%
-    \mkbibmonth{\thefield{month}}\nobreakspace
-    \thefield{year}}%
-  \def\bibdateshort{%
-    \thefield{day}/\thefield{month}/\thefield{year}}%
-  \def\biburldatelong{%
-    \@tempcnta0\thefield{urlday} \the\@tempcnta\nobreakspace%
-    \mkbibmonth{\thefield{urlmonth}}\nobreakspace
-    \thefield{urlyear}}%
-  \def\biburldateshort{%
-    \thefield{urlday}/\thefield{urlmonth}/\thefield{urlyear}}%
+  \protected\def\mkbibdatelong#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\thefield{#3}%
+       \iffieldundef{#2}{}{\nobreakspace}}%
+    \iffieldundef{#2}
+      {}
+      {\mkbibmonth{\thefield{#2}}%
+       \iffieldundef{#1}{}{\space}}%
+    \stripzeros{\thefield{#1}}}%
+  \protected\def\mkbibdateshort#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\mkdatezeros{\thefield{#3}}%
+       \iffieldundef{#2}{}{/}}%
+    \iffieldundef{#2}
+      {}
+      {\mkdatezeros{\thefield{#2}}%
+       \iffieldundef{#1}{}{/}}%
+    \mkdatezeros{\thefield{#1}}}%
 }
 
 \DeclareBibliographyStrings{% 

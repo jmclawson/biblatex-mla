@@ -1,11 +1,34 @@
-% italian-mla.lbx v0.1 2010/09/05
+% italian-mla.lbx v0.1.5 2013/03/24
 % 
 % Italian localization in this file provided by Andrea Marchitelli.
 % Abbreviations taken, whenever possible, from Italian Cataloguing Rules
 
-\ProvidesFile{italian-mla.lbx}[2010/09/05 v0.1 biblatex style localization]
+\ProvidesFile{italian-mla.lbx}[2013/03/24 v0.1.5 biblatex style localization]
 
 \InheritBibliographyExtras{italian}
+
+\DeclareBibliographyExtras{%
+  \protected\def\mkbibdatelong#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\thefield{#3}%
+       \iffieldundef{#2}{}{\nobreakspace}}%
+    \iffieldundef{#2}
+      {}
+      {\mkbibmonth{\thefield{#2}}%
+       \iffieldundef{#1}{}{\space}}%
+    \stripzeros{\thefield{#1}}}%
+  \protected\def\mkbibdateshort#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\mkdatezeros{\thefield{#3}}%
+       \iffieldundef{#2}{}{/}}%
+    \iffieldundef{#2}
+      {}
+      {\mkdatezeros{\thefield{#2}}%
+       \iffieldundef{#1}{}{/}}%
+    \mkdatezeros{\thefield{#1}}}%
+}
 
 \DeclareBibliographyStrings{%
   inherit          = {italian},
