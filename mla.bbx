@@ -224,14 +224,9 @@
 \newbibmacro*{bbx:savehash}{%
   \savefield{fullhash}{\bbx@lasthash}}
 
-\renewcommand*{\bibnamedash}{%
-  \mbox{%
-    \mlanamedash%
-    \iffieldundef{nameaddon}%
-      {\unspace\newunitpunct}%
-      {\unspace\addspace}%
-  }%
-}%
+\renewcommand*{\bibnamedash}{% suggested by StackExchange user Audrey
+  \mlanamedash%
+  \iffieldundef{nameaddon}{\adddot}{\nopunct}}%
 
 \newcommand*{\mlanamedash}{\textendash\textendash\textendash}
 
