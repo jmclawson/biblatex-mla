@@ -15,14 +15,16 @@
 \DeclareBibliographyOption{nofullfootnote}[true]{\setboolean{cbx@nofullfootnote}{#1}}
 
 \DeclareBibliographyOption{mancitepar}[true]{%
-\let\mypkg@@everypar\everypar
-\newtoks\mypkg@everypar
-\mypkg@everypar\expandafter{\the\everypar}
-\mypkg@@everypar{\mypkgs@ownstuff\the\mypkg@everypar}
-\def\mypkgs@ownstuff{%
-  \mancite
-}
-\let\everypar\mypkg@everypar}
+  \ifstrequal{#1}{true}{%
+    \let\mypkg@@everypar\everypar
+    \newtoks\mypkg@everypar
+    \mypkg@everypar\expandafter{\the\everypar}
+    \mypkg@@everypar{\mypkgs@ownstuff\the\mypkg@everypar}
+    \def\mypkgs@ownstuff{%
+    \mancite
+    }%
+    \let\everypar\mypkg@everypar
+  }{}}
 
 % The following is taken from biblatex-chicago-notes-df for parity of feature set.  I don't like the naming of the option there ("strict"), so even though consistency trumps (or defines) clarity, I changed the name for now.
 \DeclareBibliographyOption{footnoterulestrict}[true]{% 0.7 renamed
@@ -41,7 +43,7 @@
   }}
 
 
-\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long}%
+\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long,mancitepar}%
 
 \newbool{cbx@named}%
 \newbool{cbx@mlafootnotes}%
@@ -156,40 +158,33 @@
     % \ifbool{bbx@totalnames}% platypus - still need to add support for option totalnames in citations
     \printnames{labelname}}%
     \savefield{namehash}{\cbx@lasthash}%
-    \global\booltrue{cbx@named}}%\printnames{labelname}
+    \global\booltrue{cbx@named}}%
   {\printnames{labelname}%
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}}%
 
-\newbibmacro*{cite:mla:title}{% 0.7.1 tidied up
-  \unspace%
+\newbibmacro*{cite:mla:title}{% 2.0 platypus testing
   \ifnameundef{labelname}%
-    {\unspace%
-     \printtext[bibhyperref]{%
-       \printfield[citetitle:\strfield{entrytype}]{labeltitle}}%
-     \iffieldundef{postnote}%
-       {}%
-       {\addspace}}%
+    {\printtext[bibhyperref]{%
+       \printfield[citetitle:\strfield{entrytype}]{labeltitle}}}%
     {\ifsingletitle%
       {}%
-      {\usebibmacro{cite:mla:title:internal}}}
+      {\usebibmacro{cite:mla:title:internal}}}%
   \ifthenelse{\iffieldequalstr{entrytype}{review}%
       \and\ifnameundef{author}%
       \and\iffieldundef{title}}%
     {\printtext[bibhyperref]%
-      {\unspace\printtext{\bibcpstring{reviewof}%
-       \addspace\printfield{booktitle}}}}%
-    {}}%
+      {\printtext{\bibcpstring{reviewof}%
+	   \printfield{booktitle}}}}%
+    {}%
+	\setunit{\addspace}}% 2.0 platypus testing
 
-\newbibmacro*{cite:mla:title:internal}{% 0.7.1 new internal macro
-  \ifbool{cbx@named}%
-    {\unspace\addcomma\addspace}%
-    {\unspace}%
+\newbibmacro*{cite:mla:title:internal}{% 2.0 platypus testing
+  \ifbool{cbx@named}{\setunit{\addcomma\addspace}}{}%
   \iffieldundef{title}%
     {\iffieldequalstr{entrytype}{review}%
-      {\printtext[bibhyperref]{\printtext{\bibstring{reviewof}%
-       \addspace\printfield{booktitle}}}}%
-      {\ifthenelse{\iffieldequalstr{entrytype}{suppbook}% 0.7.1
+      {\printtext[bibhyperref]{\printtext{\bibstring{reviewof}\setunit*{\addspace}\printfield{booktitle}}}}%
+      {\ifthenelse{\iffieldequalstr{entrytype}{suppbook}%
          \OR\iffieldequalstr{entrytype}{suppcollection}}%
         {\printtext[bibhyperref]{%
          \printfield[mla:capital]{entrysubtype}}}%
@@ -199,24 +194,26 @@
 
 % %%%%%%%%%% for ibid, idem, opcit %%%%%%%%
 
-\newbibmacro*{cite:idem}{%
+\newbibmacro*{cite:idem}{% 2.0 platypus testing removing unspaces
   \ifsingletitle%
-    {\iffieldundef{postnote}%
-      {\usebibmacro{cite:name}}%
-      {\unspace\global\boolfalse{cbx@named}}}%
-    {\unspace\global\boolfalse{cbx@named}}}
+    % {\iffieldundef{postnote}%
+    %   {\usebibmacro{cite:name}}%
+    %   {\global\boolfalse{cbx@named}}}% This condition could never be met; that's ibid.
+    {\usebibmacro{cite:name}}%
+    {\global\boolfalse{cbx@named}}}
 
 \newbibmacro*{cite:opcit}{%
   \usebibmacro{cite:mla:title}\addspace}
 
-\newbibmacro*{cite:ibid}{%
+\newbibmacro*{cite:ibid}{% 2.0 platypus testing
   \iffieldundef{postnote}%
-    {\unspace\usebibmacro{cite:mla:noibid}}%
-    {\unspace\global\booltrue{cbx@hyperpages}}%
+    {\usebibmacro{cite:mla:noibid}}%
+    {\global\booltrue{cbx@hyperpages}}%
   \usebibmacro{cite:save}%
-  \iffieldundef{prenote}
-    {}
-    {\usebibmacro{cite:reset}}}
+  \iffieldundef{prenote}%
+    {}%
+    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}% 2.0 platypus rethink this
+    % {\usebibmacro{cite:reset}}}% 2.0 platypus rethink this
 
 \renewcommand*{\postnotedelim}{\addspace}%
 
@@ -679,7 +676,7 @@
 \DeclareFieldFormat{citetitle:video}{\mkbibemph{#1}}
 \DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}% 0.7
 \DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
-\DeclareFieldFormat{ibidpostnote}{#1}%platypus 1.0 removed unspace before the #1, getting rid of an old hack that is no longer needed.
+\DeclareFieldFormat{ibidpostnote}{#1}%
 \DeclareFieldFormat{footpostnote}{#1}%
 \DeclareFieldFormat{mlarepeatedcites}{\fbox{#1}%
   \marginpar{\hfill\footnotesize{$\clubsuit$}}}%
@@ -773,7 +770,7 @@
   {\end{thebibliography}\citereset}
 %\end{nothing}
 
-\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]% platypus 1.0
+\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]%
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
