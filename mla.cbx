@@ -43,7 +43,7 @@
   }}
 
 
-\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long,mancitepar}%
+\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long,mancitepar,datezeros=false}%
 
 \newbool{cbx@named}%
 \newbool{cbx@mlafootnotes}%
@@ -135,11 +135,11 @@
      {\ifnameundef{labelname}%
         {\global\boolfalse{cbx@named}\usebibmacro{cite:mla:title}}%
         {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}} % 0.5, avoiding using editor's name in citations when incollection is an anonymous work: ie, citing Beowulf from the Norton Anthology
-           {\ifnameundef{author}
-               {\global\boolfalse{cbx@named}
-                \usebibmacro{cite:mla:title}}
+           {\ifnameundef{author}%
+               {\global\boolfalse{cbx@named}%
+                \usebibmacro{cite:mla:title}}%
                {\usebibmacro{cite:name}%
-                \usebibmacro{cite:mla:title}\addspace}}
+                \usebibmacro{cite:mla:title}\addspace}}%
            {\usebibmacro{cite:name}%
             \usebibmacro{cite:mla:title}}}}}%
 
@@ -175,6 +175,7 @@
       \and\iffieldundef{title}}%
     {\printtext[bibhyperref]%
       {\printtext{\bibcpstring{reviewof}%
+	   \setunit{\addspace}%
 	   \printfield{booktitle}}}}%
     {}%
 	\setunit{\addspace}}% 2.0 platypus testing
@@ -183,7 +184,10 @@
   \ifbool{cbx@named}{\setunit{\addcomma\addspace}}{}%
   \iffieldundef{title}%
     {\iffieldequalstr{entrytype}{review}%
-      {\printtext[bibhyperref]{\printtext{\bibstring{reviewof}\setunit*{\addspace}\printfield{booktitle}}}}%
+      {\printtext[bibhyperref]%
+        {\printtext{\bibcpstring{reviewof}%
+  	   \setunit{\addspace}%
+  	   \printfield{booktitle}}}}%
       {\ifthenelse{\iffieldequalstr{entrytype}{suppbook}%
          \OR\iffieldequalstr{entrytype}{suppcollection}}%
         {\printtext[bibhyperref]{%
@@ -734,14 +738,14 @@
   {\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}%
-  {}
+  {}%
   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand*{\cite}[\mkbibparens]
   {\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
-  {}
+  {}%
   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand{\footcite}[\mkbibfootnote]
