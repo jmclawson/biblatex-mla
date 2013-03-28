@@ -55,7 +55,6 @@
   \iffirstinits
     {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
     {\usebibmacro{name:first-last}{#1}{#3}{#5}{#7}}%
-  % \usebibmacro{name:first-last:andothers}}
   \usebibmacro{name:andothers}}
 
 \renewenvironment*{thebibliography}
@@ -87,6 +86,8 @@
   {\unspace\mkbibbrackets{#1}\addspace}%
 \DeclareFieldFormat[article]{version}{#1\isdot}%
 \DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
+\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}% 2.0 platypus don't forget to localize
+\DeclareFieldFormat{mla:publimedium}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital:web}{%
   \ifhyperref%
@@ -143,12 +144,6 @@
 
 \newboolean{bbx@mla-incollection}
 \newbool{bbx@inset}
-% \DeclareBibliographyDriver{set}{%
-%   \booltrue{bbx@inset}%
-%   \entryset{}{}%
-%   \newunit\newblock
-%   \usebibmacro{setpageref}%
-%   \finentry}
 
 \DeclareBibliographyOption{dashed}[true]{% platypus 1.0 (from authortitle.bbx)
   \ifstrequal{#1}{true}
@@ -170,11 +165,11 @@
 \DeclareEntryOption{uniquetranslator}[true]{%
   \setboolean{bbx@uniquetranslator}{#1}}
 
-\newbool{bbx:gnoreminfo}% 0.7.1 - same as biblatex-apa
+\newbool{bbx:gnoreminfo}%
 \setboolean{bbx:gnoreminfo}{false}
 \DeclareBibliographyOption{noremoteinfo}[true]{\setboolean{bbx:gnoreminfo}{#1}}
 
-\newbool{bbx:lnoreminfo}% 0.7.1 - same as biblatex-apa
+\newbool{bbx:lnoreminfo}%
 \setboolean{bbx:lnoreminfo}{false}
 \DeclareEntryOption{noremoteinfo}[true]{\setboolean{bbx:lnoreminfo}{#1}}
 
@@ -233,14 +228,11 @@
 \renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
     {\usebibmacro{bbx:dashcheck}% platypus 1.0 from authortitle.bbx
-	% {\ifthenelse{\iffieldequals{fullhash}{\bbx@lasthash}\AND
-	  % \NOT\iffirstonpage} % platypus 1.0 moved to dashcheck
-       {\bibnamedash}
-       % {\printnames{author}% platypus 1.0 from authortitle.bbx, but allowing old functionality is important, so I'm keeping the previous version below
+       {\bibnamedash}%
        {\ifbool{bbx@totalnames}%
          {\printnames[sortname][-\value{listtotal}]{author}}
          {\printnames{author}}%
-       \usebibmacro{bbx:savehash}}
+       \usebibmacro{bbx:savehash}}%
      \iffieldundef{nameaddon}%
        {}%
        {\setunit{\addspace}%
@@ -248,7 +240,7 @@
      \iffieldundef{authortype}%
        {}%
        {\setunit{\addcomma\space}%
-        \usebibmacro{authorstrg}}}
+        \usebibmacro{authorstrg}}}%
     {\global\undef\bbx@lasthash}}
 
 \renewbibmacro*{editor}{%
@@ -257,7 +249,7 @@
                  \iffirstonpage}%
       {\mbox{\mlanamedash\unspace\addcomma\addspace}}%
       {\ifbool{bbx@totalnames}%
-        {\printnames[sortname][-\value{listtotal}]{editor}}
+        {\printnames[sortname][-\value{listtotal}]{editor}}%
         {\printnames{editor}}%
        \setunit{\addcomma\space}%
        \savefield{namehash}{\bbx@lasthash}}%
@@ -270,7 +262,7 @@
                  \iffirstonpage}%
       {\mbox{\mlanamedash\unspace\addcomma\addspace}}%
       {\ifbool{bbx@totalnames}%
-        {\printnames[sortname][-\value{listtotal}]{editor}}
+        {\printnames[sortname][-\value{listtotal}]{editor}}%
         {\printnames[sortname]{editor}}%
        \setunit{\addcomma\space}%
        \savefield{namehash}{\bbx@lasthash}}%
@@ -278,7 +270,7 @@
     {\global\undef\bbx@lasthash}}
 
 \renewbibmacro*{translator}{%
-  \ifthenelse{\ifusetranslator\AND\NOT\ifnameundef{translator}}
+  \ifthenelse{\ifusetranslator\AND\NOT\ifnameundef{translator}}%
     {\ifthenelse{\iffieldequals{namehash}{\bbx@lasthash}\AND\NOT
                \iffirstonpage}%
       {\mbox{\mlanamedash\unspace\addcomma\addspace}}%
@@ -291,7 +283,7 @@
     {\global\undef\bbx@lasthash}}
 
 \renewbibmacro*{translator+others}{%
-  \ifthenelse{\ifusetranslator\AND\NOT\ifnameundef{translator}}
+  \ifthenelse{\ifusetranslator\AND\NOT\ifnameundef{translator}}%
     {\ifthenelse{\iffieldequals{namehash}{\bbx@lasthash}\AND\NOT
                \iffirstonpage}%
       {\mbox{\mlanamedash\unspace\addcomma\addspace}}%
@@ -391,8 +383,6 @@
   \usebibmacro{mlabelnamepunct}%
   \usebibmacro{maintitle+title}%
   \newunit\newblock%
-  %\printlist{language}% 0.9 is this necessary?
-  % \newunit\newblock%
   \usebibmacro{byeditor+others}%
   \newunit\newblock%
   \printfield{edition}\isdot%
@@ -567,18 +557,8 @@
   \newunit\newblock%
   \ifbool{bbx@uniquetranslator}%
     {\usebibmacro{bytranslator+others}\newunit}%
-    % {\usebibmacro{bytranslator+others}}%
     {}%
   \newunit\newblock%
-  % \iffieldundef{crossref}%
-  %   {\iffieldundef{xref}%
-  %     {\usebibmacro{mla:incollection:internal}}%
-  %     {\bbx@crossref{\thefield{xref}}%
-  %     \setunit{\addspace}%
-  %     \printfield{pages}}}%
-  %   {\bbx@crossref{\thefield{crossref}}%
-  %   \setunit{\addspace}%
-  %   \printfield{pages}}%
   \iffieldundef{crossref}%
     {\iffieldundef{xref}%
       {\usebibmacro{mla:incollection:internal}}%
@@ -607,8 +587,6 @@
     {}%
   \newunit\newblock%
   \usebibmacro{byauthor}%
-  \newunit\newblock
-  %\printlist{language}% 0.9 is this necessary?
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
@@ -723,7 +701,7 @@
   \printlist{institution}%
   \setunit*{\addcomma\space}%
   \iffieldequalstr{entrysubtype}{published}%
-    {\printfield{origyear}}%
+    {\printfield{origyear}\clearfield{origyear}}% 2.0 cleared origyear
     {\printfield{year}}%
   \newunit\newblock
   \iffieldequalstr{entrysubtype}{published}%
@@ -774,14 +752,11 @@
      \newunit\newblock%
      \usebibmacro{issue}%
      \newunit}%
-  \iffieldundef{pages}%
-    {\iffieldundef{url}%
-      {}%
-      {\addcolon\usebibmacro{url+urldate}}%
-    }%
-    {\addcolon\printfield{pages}}%
-  \usebibmacro{finentry}%
-}
+  \setunit{\addcolon\addspace}%
+  \printfield{pages}%
+  \newunit\newblock%
+  \usebibmacro{publimedium}% 2.0 updated
+  \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{inreference}{%
   \usebibmacro{bibindex}%
@@ -793,8 +768,6 @@
     {\iffieldundef{xref}%
       {\newunit\newblock
       \usebibmacro{maintitle+booktitle}%
-      \newunit
-      %\printlist{language}% 0.9 is this necessary?
       \newunit\newblock
       \usebibmacro{byeditor+others}%
       \newunit\newblock
@@ -908,15 +881,14 @@
   \usebibmacro{mla:video:localized:first-last}{namea}%
   \usebibmacro{mla:video:localized:first-last}{nameb}%
   \usebibmacro{mla:video:localized:first-last}{namec}%
-  \printfield{origyear}%
-  \newunit\newblock%
-  \printfield{howpublished}%
+  \printfield{origyear}\clearfield{origyear}%
   \newunit\newblock%
   \printlist{publisher}%
   \setunit{\addcomma\addspace}%
   \printfield{year}%
-  \usebibmacro{finentry}%
-}
+  \newunit\newblock%
+  \usebibmacro{publimedium}% 2.0 updated to most recent MLA format
+  \usebibmacro{finentry}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % % % % % % % % % % % % % % % % % % % % % 
@@ -1205,7 +1177,7 @@
     {\printfield[mla:capital]{howpublished}%
       \ifthenelse{\iffieldundef{howpublished}\AND\boolean{bbx@guessmedium}}%
         {\ifthenelse{\iffieldundef{url}\AND\iffieldundef{eprinttype}}%
-          {\printtext[mla:capital]{\bibstring{print}}}%
+          {\printtext[mla:publimedium]{\bibstring{print}}}%
           {\iffieldundef{eprinttype}%
             {\printfield{eprint}}%
             {\printfield[eprint:\strfield{eprinttype}]{eprint}}%

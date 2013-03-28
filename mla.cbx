@@ -87,7 +87,6 @@
 
 \newbibmacro*{cite:reset}{%
   \global\undef\cbx@lasthash}%
-  % \global\undef\cbx@mlaincollection} 0.7.1 - commented out
 
 \newbibmacro*{cite:save}{%
   \savefield{entrykey}{\cbx@lastkey}%
@@ -95,7 +94,6 @@
   \savefieldcs{entrykey}{cbx@lastkey@\thefield{namehash}}%
   \csxdef{cbx@lastcite@\thefield{entrykey}}{\the\value{instcount}}}
 
-% \begin{inlines}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% In-Line Citations %%%%%%%%%%%%%%%%%%%
@@ -134,23 +132,23 @@
       \usebibmacro{cite:mla:title}}%
      {\ifnameundef{labelname}%
         {\global\boolfalse{cbx@named}\usebibmacro{cite:mla:title}}%
-        {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}} % 0.5, avoiding using editor's name in citations when incollection is an anonymous work: ie, citing Beowulf from the Norton Anthology
+        {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}} %
            {\ifnameundef{author}%
                {\global\boolfalse{cbx@named}%
                 \usebibmacro{cite:mla:title}}%
                {\usebibmacro{cite:name}%
-                \usebibmacro{cite:mla:title}\addspace}}%
+                \usebibmacro{cite:mla:title}\setunit{\addspace}}}%
            {\usebibmacro{cite:name}%
             \usebibmacro{cite:mla:title}}}}}%
 
 \newbibmacro*{cite:mla:shorthand}{%
   \ifciteibid%
-    {\ifbool{cbx@mlafootnotes}% 0.5 -- no ibid for MLA footnotes
+    {\ifbool{cbx@mlafootnotes}%
       {\printtext[bibhyperref]{%
-        \printfield[citetitle:\strfield{entrytype}]{shorthand}}\addspace}%
+        \printfield[citetitle:\strfield{entrytype}]{shorthand}}\setunit{\addspace}}%
       {\usebibmacro{cite:ibid}}}%
     {\global\boolfalse{cbx@hyperpages}\printtext[bibhyperref]{%
-      \printfield[citetitle:\strfield{entrytype}]{shorthand}}\addspace}}
+      \printfield[citetitle:\strfield{entrytype}]{shorthand}}\setunit{\addspace}}}
 
 \newbibmacro*{cite:name}{%
  \ifsingletitle%
@@ -207,7 +205,7 @@
     {\global\boolfalse{cbx@named}}}
 
 \newbibmacro*{cite:opcit}{%
-  \usebibmacro{cite:mla:title}\addspace}
+  \usebibmacro{cite:mla:title}\setunit{\addspace}}
 
 \newbibmacro*{cite:ibid}{% 2.0 platypus testing
   \iffieldundef{postnote}%
@@ -241,8 +239,6 @@
         {}}%
     {\usebibmacro{postnote}}}
 
-% \end{inlines}
-% \begin{footnotes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% Footnote Citations %%%%%%%%%%%%%%%%%%
@@ -425,7 +421,7 @@
   \newunit%
   \usebibmacro{cite:foot:byeditor}% ...check for spacing
   \newunit%
-  \iffieldsequal{year}{edition}% 0.7
+  \iffieldsequal{year}{edition}%
     {\printfield{year}~\bibstring{edition}\clearfield{year}}%
     {\printfield[foot:cite:edition:format]{edition}\isdot}%
   \newunit%
@@ -451,7 +447,6 @@
   \usedriver{}{footcite:thesis}}
 
 \DeclareBibliographyDriver{footcite:thesis}{%
-  % \unspace
   \usebibmacro{cite:foot:name}%
   \newunit%
   \usebibmacro{title}%
@@ -474,7 +469,7 @@
 
 \DeclareBibliographyDriver{footcite:review}{%
   \usebibmacro{cite:foot:author:review}%
-  \ifbool{cbx@named}% 0.7.1
+  \ifbool{cbx@named}%
     {\setunit{\newunitpunct}}%
     {\setunit{}}%
   \usebibmacro{cite:foot:title}%
@@ -584,7 +579,6 @@
   \newunit%
   \usebibmacro{mla:title:unpublished}%
   \newunit%
-  % \printfield[mla:lowercase]{titleaddon}%
   \newunit%
   \printfield{note}%
   \newunit%
@@ -659,8 +653,6 @@
 % - articles
 % - proceedings
 
-% \end{footnotes}
-% \begin{formats}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Format Declarations %%%%%%%%%%%%%%%%%%
@@ -670,15 +662,16 @@
 \DeclareFieldFormat{citetitle:article}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:inreference}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:book}{\mkbibemph{#1}}
-\DeclareFieldFormat{citetitle:booklet}{\mkbibemph{#1}}% 0.7
-\DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}% 0.7
-\DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}% 0.7
+\DeclareFieldFormat{citetitle:booklet}{\mkbibemph{#1}}%
+\DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}%
+\DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:incollection}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}% 2.0
 \DeclareFieldFormat{citetitle:inproceedings}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:unpublished}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:thesis}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:video}{\mkbibemph{#1}}
-\DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}% 0.7
+\DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}%
 \DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
 \DeclareFieldFormat{ibidpostnote}{#1}%
 \DeclareFieldFormat{footpostnote}{#1}%
@@ -698,8 +691,6 @@
   {\bibstring{supptotitle}\addspace\mkbibemph{#1}}
 
 
-% \end{formats}
-% \begin{cites}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% Cite Commands %%%%%%%%%%%%%%%%%%%%%
@@ -711,7 +702,6 @@
     {\global\undef\cbx@lastprenote}
     {\printfield{prenote}%
      \prenotedelim%
-     % \cbx@lastprenote
      \ifthenelse{\iffieldequals{prenote}{\cbx@lastprenote} \and \iffieldequals{entrykey}{\cbx@lastkey}}%
        {}%
        {\usebibmacro{cite:reset}}%
@@ -772,7 +762,6 @@
   {\usedriver{}{\thefield{entrytype}}\addperiod}
   {\thebibitem}
   {\end{thebibliography}\citereset}
-%\end{nothing}
 
 \DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]%
   {\usebibmacro{prenote}}
@@ -791,7 +780,7 @@
           {\iffieldundef{postnote}
                   {\usebibmacro{cite:mla:title:alone}}
                   {\global\booltrue{cbx@hyperpages}}}%
-          {\usebibmacro{cite:mla:title:alone}\addspace}}
+          {\usebibmacro{cite:mla:title:alone}\setunit{\addspace}}}
       {\usebibmacro{cite:mla:shorthand}}}}
 
 \newbibmacro*{cite:mla:title:alone}{%
@@ -802,6 +791,5 @@
       \printfield[mla:capital]{entrysubtype}}}%
     {}}
 
-% \end{cites}
 
 \endinput
