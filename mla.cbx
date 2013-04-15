@@ -1,4 +1,4 @@
-% mla.cbx, v2.0 2013/03/23 * compatible with biblatex 2.5
+% mla.cbx, v1.4.9 2013/03/23 * compatible with biblatex 2.5
 % Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
@@ -7,7 +7,7 @@
 %
 % File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.cbx}[2013/03/23 v2.0 biblatex citation style]
+\ProvidesFile{mla.cbx}[2013/03/23 v1.4.9 biblatex citation style]
 
 \newboolean{cbx@firstlonghand}%
 \DeclareBibliographyOption{firstlonghand}[true]{\setboolean{cbx@firstlonghand}{#1}}
@@ -161,7 +161,7 @@
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}}%
 
-\newbibmacro*{cite:mla:title}{% 2.0 platypus testing
+\newbibmacro*{cite:mla:title}{% 1.4.9 platypus testing
   \ifnameundef{labelname}%
     {\printtext[bibhyperref]{%
        \printfield[citetitle:\strfield{entrytype}]{labeltitle}}}%
@@ -176,9 +176,9 @@
 	   \setunit{\addspace}%
 	   \printfield{booktitle}}}}%
     {}%
-	\setunit{\addspace}}% 2.0 platypus testing
+	\setunit{\addspace}}% 1.4.9 platypus testing
 
-\newbibmacro*{cite:mla:title:internal}{% 2.0 platypus testing
+\newbibmacro*{cite:mla:title:internal}{% 1.4.9 platypus testing
   \ifbool{cbx@named}{\setunit{\addcomma\addspace}}{}%
   \iffieldundef{title}%
     {\iffieldequalstr{entrytype}{review}%
@@ -196,7 +196,7 @@
 
 % %%%%%%%%%% for ibid, idem, opcit %%%%%%%%
 
-\newbibmacro*{cite:idem}{% 2.0 platypus testing removing unspaces
+\newbibmacro*{cite:idem}{% 1.4.9 platypus testing removing unspaces
   \ifsingletitle%
     % {\iffieldundef{postnote}%
     %   {\usebibmacro{cite:name}}%
@@ -207,23 +207,25 @@
 \newbibmacro*{cite:opcit}{%
   \usebibmacro{cite:mla:title}\setunit{\addspace}}
 
-\newbibmacro*{cite:ibid}{% 2.0 platypus testing
+\newbibmacro*{cite:ibid}{% 1.4.9 platypus testing
   \iffieldundef{postnote}%
     {\usebibmacro{cite:mla:noibid}}%
     {\global\booltrue{cbx@hyperpages}}%
   \usebibmacro{cite:save}%
   \iffieldundef{prenote}%
     {}%
-    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}% 2.0 platypus rethink this
-    % {\usebibmacro{cite:reset}}}% 2.0 platypus rethink this
+    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}% 1.4.9 platypus rethink this
+    % {\usebibmacro{cite:reset}}}% 1.4.9 platypus rethink this
 
 \renewcommand*{\postnotedelim}{\addspace}%
 
 \renewbibmacro*{postnote}{%
-  \iffieldundef{postnote}{\unspace}{%
-    {\ifbool{cbx@hyperpages}%
+  \iffieldundef{postnote}
+    {}
+	{\setunit{\addspace}%
+	\ifbool{cbx@hyperpages}%
       {\printtext[bibhyperref]{\printfield[ibidpostnote]{postnote}}}%
-      {\printfield[ibidpostnote]{postnote}}}}}%
+      {\printfield[ibidpostnote]{postnote}}}}%
 
 \newbibmacro*{locpostnote}{%
   \ifbool{cbx@mladraft}%
@@ -666,7 +668,7 @@
 \DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:incollection}{\mkbibquote{#1}}
-\DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}% 2.0
+\DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}% 1.4.9
 \DeclareFieldFormat{citetitle:inproceedings}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:unpublished}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:thesis}{\mkbibquote{#1}}
@@ -749,19 +751,37 @@
   {}
   {\usebibmacro{mla:foot:postnote}}
 
-\DeclareCiteCommand{\fullcite}
-  {\citereset\renewbibmacro*{author}{%
+% \DeclareCiteCommand{\fullcite}
+%   {\citereset\renewbibmacro*{author}{%
+%   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
+%     {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
+%                  \iffirstonpage}
+%        {\mbox{\mlanamedash\unspace\newunitpunct}}
+%        {\printnames{author}%
+%         \savefield{namehash}{\cbx@lasthash}}}
+%     {\let\cbx@lasthash\undefined}}
+% \begin{thebibliography}\thebibitem}
+%   {\usedriver{}{\thefield{entrytype}}\addperiod}
+%   {\thebibitem}
+%   {\end{thebibliography}\citereset}
+
+\newbibmacro{mla:fullcite:prenote}{%
+\citereset\renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
+    {\DeclareNameAlias{author}{default}\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
                  \iffirstonpage}
        {\mbox{\mlanamedash\unspace\newunitpunct}}
        {\printnames{author}%
         \savefield{namehash}{\cbx@lasthash}}}
-    {\let\cbx@lasthash\undefined}}
-\begin{thebibliography}\thebibitem}
-  {\usedriver{}{\thefield{entrytype}}\addperiod}
-  {\thebibitem}
-  {\end{thebibliography}\citereset}
+    {\let\cbx@lasthash\undefined}}}
+
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{mla:fullcite:prenote}\usebibmacro{prenote}}
+  {\usedriver
+     {\DeclareNameAlias{sortname}{default}\DeclareNameAlias{default}{last-first}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
 
 \DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]%
   {\usebibmacro{prenote}}

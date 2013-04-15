@@ -1,4 +1,4 @@
-% mla.cbx, v2.0 2013/03/23 * compatible with biblatex 2.5
+% mla.cbx, v1.4.9 2013/03/23 * compatible with biblatex 2.5
 % Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
@@ -7,7 +7,7 @@
 %
 % File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.bbx}[2013/03/23 v2.0 biblatex bibliography style]
+\ProvidesFile{mla.bbx}[2013/03/23 v1.4.9 biblatex bibliography style]
 
 \RequireBibliographyStyle{standard}
 \DeclareLanguageMapping{american}{american-mla}
@@ -86,7 +86,7 @@
   {\unspace\mkbibbrackets{#1}\addspace}%
 \DeclareFieldFormat[article]{version}{#1\isdot}%
 \DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
-\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}% 2.0 platypus don't forget to localize
+\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}% 1.4.9 platypus don't forget to localize
 \DeclareFieldFormat{mla:publimedium}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital:web}{%
@@ -123,6 +123,7 @@
 \DeclareFieldFormat{urldate}{#1}%
 
 \DeclareBibliographyAlias{booklet}{book}
+\DeclareBibliographyAlias{bookinbook}{incollection}% platypus 1.5
 \DeclareBibliographyAlias{collection}{book}
 \DeclareBibliographyAlias{reference}{book}
 
@@ -440,7 +441,7 @@
   \setunit*{\addcomma\addspace}%
   \ifbool{bbx@mla-incollection}%
     {\printfield[bibliography:origyear]{origyear}\clearfield{origyear}}%
-    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}% 2.0 cleared up most spurious punct
+    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}% 1.4.9 cleared up most spurious punct
       {\printorigdate\clearfield{origyear}}%
       {}%
 	}%
@@ -549,7 +550,9 @@
   \ifthenelse{%
     \iffieldequalstr{entrysubtype}{book}%
     \OR%
-    \iffieldequalstr{entrysubtype}{play}}%
+    \iffieldequalstr{entrysubtype}{play}%
+	\OR%
+	\iffieldequalstr{entrytype}{bookinbook}}% 1.5 platypus 
       {\usebibmacro{title:incollection:italics}}%
       {\setboolean{bbx@mla-incollection}{true}%
        \usebibmacro{title}%
@@ -701,7 +704,7 @@
   \printlist{institution}%
   \setunit*{\addcomma\space}%
   \iffieldequalstr{entrysubtype}{published}%
-    {\printfield{origyear}\clearfield{origyear}}% 2.0 cleared origyear
+    {\printfield{origyear}\clearfield{origyear}}% 1.4.9 cleared origyear
     {\printfield{year}}%
   \newunit\newblock
   \iffieldequalstr{entrysubtype}{published}%
@@ -755,7 +758,7 @@
   \setunit{\addcolon\addspace}%
   \printfield{pages}%
   \newunit\newblock%
-  \usebibmacro{publimedium}% 2.0 updated
+  \usebibmacro{publimedium}% 1.4.9 updated
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{inreference}{%
@@ -887,7 +890,7 @@
   \setunit{\addcomma\addspace}%
   \printfield{year}%
   \newunit\newblock%
-  \usebibmacro{publimedium}% 2.0 updated to most recent MLA format
+  \usebibmacro{publimedium}% 1.4.9 updated to most recent MLA format
   \usebibmacro{finentry}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
