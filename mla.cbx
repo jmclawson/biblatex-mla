@@ -1,12 +1,13 @@
-% mla.cbx, v0.9 2010/02/15 * compatible with biblatex beta 0.9
-% Maintained at <http://konx.net/biblatex-mla> by James Clawson.
+% mla.cbx, v1.4.9 2013/03/23 * compatible with biblatex 2.5
+% Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
-% File is in constant progress. Things are messy.
+%
+% File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.cbx}[2010/02/15 v0.9 biblatex citation style]
+\ProvidesFile{mla.cbx}[2013/03/23 v1.4.9 biblatex citation style]
 
 \newboolean{cbx@firstlonghand}%
 \DeclareBibliographyOption{firstlonghand}[true]{\setboolean{cbx@firstlonghand}{#1}}
@@ -14,14 +15,16 @@
 \DeclareBibliographyOption{nofullfootnote}[true]{\setboolean{cbx@nofullfootnote}{#1}}
 
 \DeclareBibliographyOption{mancitepar}[true]{%
-\let\mypkg@@everypar\everypar
-\newtoks\mypkg@everypar
-\mypkg@everypar\expandafter{\the\everypar}
-\mypkg@@everypar{\mypkgs@ownstuff\the\mypkg@everypar}
-\def\mypkgs@ownstuff{%
-  \mancite
-}
-\let\everypar\mypkg@everypar}
+  \ifstrequal{#1}{true}{%
+    \let\mypkg@@everypar\everypar
+    \newtoks\mypkg@everypar
+    \mypkg@everypar\expandafter{\the\everypar}
+    \mypkg@@everypar{\mypkgs@ownstuff\the\mypkg@everypar}
+    \def\mypkgs@ownstuff{%
+    \mancite
+    }%
+    \let\everypar\mypkg@everypar
+  }{}}
 
 % The following is taken from biblatex-chicago-notes-df for parity of feature set.  I don't like the naming of the option there ("strict"), so even though consistency trumps (or defines) clarity, I changed the name for now.
 \DeclareBibliographyOption{footnoterulestrict}[true]{% 0.7 renamed
@@ -40,7 +43,7 @@
   }}
 
 
-\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true}%
+\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long,mancitepar,datezeros=false}%
 
 \newbool{cbx@named}%
 \newbool{cbx@mlafootnotes}%
@@ -84,7 +87,6 @@
 
 \newbibmacro*{cite:reset}{%
   \global\undef\cbx@lasthash}%
-  % \global\undef\cbx@mlaincollection} 0.7.1 - commented out
 
 \newbibmacro*{cite:save}{%
   \savefield{entrykey}{\cbx@lastkey}%
@@ -92,7 +94,6 @@
   \savefieldcs{entrykey}{cbx@lastkey@\thefield{namehash}}%
   \csxdef{cbx@lastcite@\thefield{entrykey}}{\the\value{instcount}}}
 
-% \begin{inlines}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% In-Line Citations %%%%%%%%%%%%%%%%%%%
@@ -131,23 +132,23 @@
       \usebibmacro{cite:mla:title}}%
      {\ifnameundef{labelname}%
         {\global\boolfalse{cbx@named}\usebibmacro{cite:mla:title}}%
-        {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}} % 0.5, avoiding using editor's name in citations when incollection is an anonymous work: ie, citing Beowulf from the Norton Anthology
-           {\ifnameundef{author}
-               {\global\boolfalse{cbx@named}
-                \usebibmacro{cite:mla:title}}
+        {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}} %
+           {\ifnameundef{author}%
+               {\global\boolfalse{cbx@named}%
+                \usebibmacro{cite:mla:title}}%
                {\usebibmacro{cite:name}%
-                \usebibmacro{cite:mla:title}\addspace}}
+                \usebibmacro{cite:mla:title}\setunit{\addspace}}}%
            {\usebibmacro{cite:name}%
-            \usebibmacro{cite:mla:title}\addspace}}}}%
+            \usebibmacro{cite:mla:title}}}}}%
 
 \newbibmacro*{cite:mla:shorthand}{%
   \ifciteibid%
-    {\ifbool{cbx@mlafootnotes}% 0.5 -- no ibid for MLA footnotes
+    {\ifbool{cbx@mlafootnotes}%
       {\printtext[bibhyperref]{%
-        \printfield[citetitle:\strfield{entrytype}]{shorthand}}\addspace}%
+        \printfield[citetitle:\strfield{entrytype}]{shorthand}}\setunit{\addspace}}%
       {\usebibmacro{cite:ibid}}}%
     {\global\boolfalse{cbx@hyperpages}\printtext[bibhyperref]{%
-      \printfield[citetitle:\strfield{entrytype}]{shorthand}}\addspace}}
+      \printfield[citetitle:\strfield{entrytype}]{shorthand}}\setunit{\addspace}}}
 
 \newbibmacro*{cite:name}{%
  \ifsingletitle%
@@ -155,40 +156,37 @@
     % \ifbool{bbx@totalnames}% platypus - still need to add support for option totalnames in citations
     \printnames{labelname}}%
     \savefield{namehash}{\cbx@lasthash}%
-    \global\booltrue{cbx@named}}%\printnames{labelname}
+    \global\booltrue{cbx@named}}%
   {\printnames{labelname}%
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}}%
 
-\newbibmacro*{cite:mla:title}{% 0.7.1 tidied up
-  \unspace%
+\newbibmacro*{cite:mla:title}{% 1.4.9 platypus testing
   \ifnameundef{labelname}%
-    {\unspace%
-     \printtext[bibhyperref]{%
-       \printfield[citetitle:\strfield{entrytype}]{labeltitle}}%
-     \iffieldundef{postnote}%
-       {}%
-       {\addspace}}%
+    {\printtext[bibhyperref]{%
+       \printfield[citetitle:\strfield{entrytype}]{labeltitle}}}%
     {\ifsingletitle%
       {}%
-      {\usebibmacro{cite:mla:title:internal}}}
+      {\usebibmacro{cite:mla:title:internal}}}%
   \ifthenelse{\iffieldequalstr{entrytype}{review}%
       \and\ifnameundef{author}%
       \and\iffieldundef{title}}%
     {\printtext[bibhyperref]%
-      {\unspace\printtext{\bibcpstring{reviewof}%
-       \addspace\printfield{booktitle}}}}%
-    {}}%
+      {\printtext{\bibcpstring{reviewof}%
+	   \setunit{\addspace}%
+	   \printfield{booktitle}}}}%
+    {}%
+	\setunit{\addspace}}% 1.4.9 platypus testing
 
-\newbibmacro*{cite:mla:title:internal}{% 0.7.1 new internal macro
-  \ifbool{cbx@named}%
-    {\unspace\addcomma\addspace}%
-    {\unspace}%
+\newbibmacro*{cite:mla:title:internal}{% 1.4.9 platypus testing
+  \ifbool{cbx@named}{\setunit{\addcomma\addspace}}{}%
   \iffieldundef{title}%
     {\iffieldequalstr{entrytype}{review}%
-      {\printtext[bibhyperref]{\printtext{\bibstring{reviewof}%
-       \addspace\printfield{booktitle}}}}%
-      {\ifthenelse{\iffieldequalstr{entrytype}{suppbook}% 0.7.1
+      {\printtext[bibhyperref]%
+        {\printtext{\bibcpstring{reviewof}%
+  	   \setunit{\addspace}%
+  	   \printfield{booktitle}}}}%
+      {\ifthenelse{\iffieldequalstr{entrytype}{suppbook}%
          \OR\iffieldequalstr{entrytype}{suppcollection}}%
         {\printtext[bibhyperref]{%
          \printfield[mla:capital]{entrysubtype}}}%
@@ -198,32 +196,36 @@
 
 % %%%%%%%%%% for ibid, idem, opcit %%%%%%%%
 
-\newbibmacro*{cite:idem}{%
+\newbibmacro*{cite:idem}{% 1.4.9 platypus testing removing unspaces
   \ifsingletitle%
-    {\iffieldundef{postnote}%
-      {\usebibmacro{cite:name}}%
-      {\unspace\global\boolfalse{cbx@named}}}%
-    {\unspace\global\boolfalse{cbx@named}}}
+    % {\iffieldundef{postnote}%
+    %   {\usebibmacro{cite:name}}%
+    %   {\global\boolfalse{cbx@named}}}% This condition could never be met; that's ibid.
+    {\usebibmacro{cite:name}}%
+    {\global\boolfalse{cbx@named}}}
 
 \newbibmacro*{cite:opcit}{%
-  \usebibmacro{cite:mla:title}\addspace}
+  \usebibmacro{cite:mla:title}\setunit{\addspace}}
 
-\newbibmacro*{cite:ibid}{%
+\newbibmacro*{cite:ibid}{% 1.4.9 platypus testing
   \iffieldundef{postnote}%
-    {\unspace\usebibmacro{cite:mla:noibid}}%
-    {\unspace\global\booltrue{cbx@hyperpages}}%
+    {\usebibmacro{cite:mla:noibid}}%
+    {\global\booltrue{cbx@hyperpages}}%
   \usebibmacro{cite:save}%
-  \iffieldundef{prenote}
-    {}
-    {\usebibmacro{cite:reset}}}
+  \iffieldundef{prenote}%
+    {}%
+    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}% 1.4.9 platypus rethink this
+    % {\usebibmacro{cite:reset}}}% 1.4.9 platypus rethink this
 
 \renewcommand*{\postnotedelim}{\addspace}%
 
 \renewbibmacro*{postnote}{%
-  \iffieldundef{postnote}{\unspace}{%
-    {\ifbool{cbx@hyperpages}%
+  \iffieldundef{postnote}
+    {}
+	{\setunit{\addspace}%
+	\ifbool{cbx@hyperpages}%
       {\printtext[bibhyperref]{\printfield[ibidpostnote]{postnote}}}%
-      {\printfield[ibidpostnote]{postnote}}}}}%
+      {\printfield[ibidpostnote]{postnote}}}}%
 
 \newbibmacro*{locpostnote}{%
   \ifbool{cbx@mladraft}%
@@ -239,8 +241,6 @@
         {}}%
     {\usebibmacro{postnote}}}
 
-% \end{inlines}
-% \begin{footnotes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% Footnote Citations %%%%%%%%%%%%%%%%%%
@@ -423,7 +423,7 @@
   \newunit%
   \usebibmacro{cite:foot:byeditor}% ...check for spacing
   \newunit%
-  \iffieldsequal{year}{edition}% 0.7
+  \iffieldsequal{year}{edition}%
     {\printfield{year}~\bibstring{edition}\clearfield{year}}%
     {\printfield[foot:cite:edition:format]{edition}\isdot}%
   \newunit%
@@ -449,7 +449,6 @@
   \usedriver{}{footcite:thesis}}
 
 \DeclareBibliographyDriver{footcite:thesis}{%
-  % \unspace
   \usebibmacro{cite:foot:name}%
   \newunit%
   \usebibmacro{title}%
@@ -472,7 +471,7 @@
 
 \DeclareBibliographyDriver{footcite:review}{%
   \usebibmacro{cite:foot:author:review}%
-  \ifbool{cbx@named}% 0.7.1
+  \ifbool{cbx@named}%
     {\setunit{\newunitpunct}}%
     {\setunit{}}%
   \usebibmacro{cite:foot:title}%
@@ -582,7 +581,6 @@
   \newunit%
   \usebibmacro{mla:title:unpublished}%
   \newunit%
-  % \printfield[mla:lowercase]{titleaddon}%
   \newunit%
   \printfield{note}%
   \newunit%
@@ -657,8 +655,6 @@
 % - articles
 % - proceedings
 
-% \end{footnotes}
-% \begin{formats}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Format Declarations %%%%%%%%%%%%%%%%%%
@@ -668,17 +664,18 @@
 \DeclareFieldFormat{citetitle:article}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:inreference}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:book}{\mkbibemph{#1}}
-\DeclareFieldFormat{citetitle:booklet}{\mkbibemph{#1}}% 0.7
-\DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}% 0.7
-\DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}% 0.7
+\DeclareFieldFormat{citetitle:booklet}{\mkbibemph{#1}}%
+\DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}%
+\DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:incollection}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}% 1.4.9
 \DeclareFieldFormat{citetitle:inproceedings}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:unpublished}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:thesis}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:video}{\mkbibemph{#1}}
-\DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}% 0.7
-\DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}
-\DeclareFieldFormat{ibidpostnote}{\unspace{}#1}%
+\DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}%
+\DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
+\DeclareFieldFormat{ibidpostnote}{#1}%
 \DeclareFieldFormat{footpostnote}{#1}%
 \DeclareFieldFormat{mlarepeatedcites}{\fbox{#1}%
   \marginpar{\hfill\footnotesize{$\clubsuit$}}}%
@@ -696,8 +693,6 @@
   {\bibstring{supptotitle}\addspace\mkbibemph{#1}}
 
 
-% \end{formats}
-% \begin{cites}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% Cite Commands %%%%%%%%%%%%%%%%%%%%%
@@ -709,7 +704,6 @@
     {\global\undef\cbx@lastprenote}
     {\printfield{prenote}%
      \prenotedelim%
-     % \cbx@lastprenote
      \ifthenelse{\iffieldequals{prenote}{\cbx@lastprenote} \and \iffieldequals{entrykey}{\cbx@lastkey}}%
        {}%
        {\usebibmacro{cite:reset}}%
@@ -736,14 +730,14 @@
   {\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}%
-  {}
+  {}%
   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand*{\cite}[\mkbibparens]
   {\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
-  {}
+  {}%
   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand{\footcite}[\mkbibfootnote]
@@ -757,20 +751,44 @@
   {}
   {\usebibmacro{mla:foot:postnote}}
 
-\DeclareCiteCommand{\fullcite}
-  {\citereset\renewbibmacro*{author}{%
+% \DeclareCiteCommand{\fullcite}
+%   {\citereset\renewbibmacro*{author}{%
+%   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
+%     {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
+%                  \iffirstonpage}
+%        {\mbox{\mlanamedash\unspace\newunitpunct}}
+%        {\printnames{author}%
+%         \savefield{namehash}{\cbx@lasthash}}}
+%     {\let\cbx@lasthash\undefined}}
+% \begin{thebibliography}\thebibitem}
+%   {\usedriver{}{\thefield{entrytype}}\addperiod}
+%   {\thebibitem}
+%   {\end{thebibliography}\citereset}
+
+\newbibmacro{mla:fullcite:prenote}{%
+\citereset\renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
+    {\DeclareNameAlias{author}{default}\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
                  \iffirstonpage}
        {\mbox{\mlanamedash\unspace\newunitpunct}}
        {\printnames{author}%
         \savefield{namehash}{\cbx@lasthash}}}
-    {\let\cbx@lasthash\undefined}}
-\begin{thebibliography}\thebibitem}
-  {\usedriver{}{\thefield{entrytype}}\addperiod}
-  {\thebibitem}
-  {\end{thebibliography}\citereset}
-%\end{nothing}
+    {\let\cbx@lasthash\undefined}}}
+
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{mla:fullcite:prenote}\usebibmacro{prenote}}
+  {\usedriver
+     {\DeclareNameAlias{sortname}{default}\DeclareNameAlias{default}{last-first}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]%
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{cite:postnote}}
 
 \newbibmacro*{cite:mla:starred:title}{%
   \ifciteibid
@@ -782,17 +800,16 @@
           {\iffieldundef{postnote}
                   {\usebibmacro{cite:mla:title:alone}}
                   {\global\booltrue{cbx@hyperpages}}}%
-          {\usebibmacro{cite:mla:title:alone}\addspace}}
+          {\usebibmacro{cite:mla:title:alone}\setunit{\addspace}}}
       {\usebibmacro{cite:mla:shorthand}}}}
 
 \newbibmacro*{cite:mla:title:alone}{%
-  \unspace\printtext[bibhyperref]{%
+  \printtext[bibhyperref]{% suggested by StackExchange user Audrey
   \printfield[citetitle:\strfield{entrytype}]{labeltitle}}%
   \ifthenelse{\iffieldequalstr{entrytype}{suppbook}\and\iffieldundef{title}}%
     {\printtext[bibhyperref]{%
       \printfield[mla:capital]{entrysubtype}}}%
     {}}
 
-% \end{cites}
 
 \endinput
