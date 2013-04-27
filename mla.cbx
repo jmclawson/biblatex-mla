@@ -751,19 +751,19 @@
   {}
   {\usebibmacro{mla:foot:postnote}}
 
-% \DeclareCiteCommand{\fullcite}
-%   {\citereset\renewbibmacro*{author}{%
-%   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-%     {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
-%                  \iffirstonpage}
-%        {\mbox{\mlanamedash\unspace\newunitpunct}}
-%        {\printnames{author}%
-%         \savefield{namehash}{\cbx@lasthash}}}
-%     {\let\cbx@lasthash\undefined}}
-% \begin{thebibliography}\thebibitem}
-%   {\usedriver{}{\thefield{entrytype}}\addperiod}
-%   {\thebibitem}
-%   {\end{thebibliography}\citereset}
+\DeclareCiteCommand{\fullcite}
+  {\citereset\renewbibmacro*{author}{%
+  \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
+    {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
+                 \iffirstonpage}
+       {\mbox{\mlanamedash\unspace\newunitpunct}}
+       {\printnames{author}%
+        \savefield{namehash}{\cbx@lasthash}}}
+    {\let\cbx@lasthash\undefined}}
+\begin{thebibliography}\item}% kc9jud on GitHub helped to fix this
+  {\usedriver{}{\thefield{entrytype}}\addperiod}
+  {\item}
+  {\end{thebibliography}\citereset}
 
 \newbibmacro{mla:fullcite:prenote}{%
 \citereset\renewbibmacro*{author}{%
@@ -775,13 +775,13 @@
         \savefield{namehash}{\cbx@lasthash}}}
     {\let\cbx@lasthash\undefined}}}
 
-\DeclareCiteCommand{\fullcite}
-  {\usebibmacro{mla:fullcite:prenote}\usebibmacro{prenote}}
-  {\usedriver
-     {\DeclareNameAlias{sortname}{default}\DeclareNameAlias{default}{last-first}}
-     {\thefield{entrytype}}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+% \DeclareCiteCommand{\fullcite}
+%   {\usebibmacro{mla:fullcite:prenote}\usebibmacro{prenote}}
+%   {\usedriver
+%      {\DeclareNameAlias{sortname}{default}\DeclareNameAlias{default}{last-first}}
+%      {\thefield{entrytype}}}
+%   {\multicitedelim}
+%   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]%
   {\usebibmacro{prenote}}
