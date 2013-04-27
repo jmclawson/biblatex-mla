@@ -720,7 +720,7 @@
   \savefield{postnote}{\cbx@lastpostnote}}%
 
 \DeclareCiteCommand*{\parencite}[\mkbibparens]
-  {\usebibmacro{prenote}}
+  {\global\undef\cbx@lasthash\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
   {}
