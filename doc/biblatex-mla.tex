@@ -11,7 +11,7 @@
 \usepackage[latin9]{inputenc}
 \usepackage[american]{babel}
 \usepackage[strict]{csquotes}
-\usepackage[style=mla,maxcitenames=90,backend=biber]{biblatex}
+\usepackage[style=mla,mancitepar=false]{biblatex}
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{shortvrb}
@@ -355,7 +355,7 @@ When citing a page number without any prenote, only one set of square brackets i
 
 \begin{table}
 \tablesetup
-\noindent\begin{tabular}{@{}V{0.35\textwidth}@{}V{0.3\textwidth}@{}p{0.3\textwidth}@{}}
+\noindent\begin{tabular}{@{}V{0.33\textwidth}@{}V{0.33\textwidth}@{}p{0.3\textwidth}@{}}
 \toprule
 \multicolumn{1}{@{}H}{Input} &
 \multicolumn{1}{@{}H}{Output} &
@@ -363,15 +363,16 @@ When citing a page number without any prenote, only one set of square brackets i
 \cmidrule(r){1-1}\cmidrule(r){2-2}\cmidrule{3-3}
 \verb!\autocite[12]{morrison02aa}! & \autocite[12]{morrison02aa} & A typical citation\\
 % \hline
-\verb!\autocite[34]{morrison02aa}! & \autocite[34]{morrison02aa} & Immediately subsequent citations to the same source\\
+\verb!\autocite[34]{morrison02aa}! & \autocite*[34]{morrison02aa} & Immediately subsequent citations to the same source\\% I had to star it here to show the true output that happens in a paragraph. Something about the table seems to be resetting the tracker.
 % \hline
 \verb!\autocite{morrison02aa}! & \autocite{morrison02aa} & Immediately subsequent citations lacking page reference \\
 % \hline
 \verb!\autocite[12]{frye57ab}! & \autocite[12]{frye57ab} & Citation to a text by a prolific author\\
 % \hline
-\verb!\autocite[34]{frye57ab}! & \autocite[34]{frye57ab} & Subsequent immediate citations to the same source\\
+\verb!\autocite[34]{frye57ab}! & (34) %\autocite[34]{frye57ab} % I have to do weird things here, as the table seems to reset the tracker.
+& Subsequent immediate citations to the same source\\
 % \hline
-\verb!\autocite[56]{frye91aa}! & \autocite[56]{frye91aa} & Citation to new source, same author\\
+\verb!\autocite[56]{frye91aa}! & \autocite*[56]{frye91aa} & Citation to new source, same author\\
 % \hline
 \verb!\autocite[101]{morrison02aa}! & \autocite[101]{morrison02aa} & Citation interrupting those by Frye \\
 % \hline
@@ -396,7 +397,7 @@ Suppress the author's name in a citation. See table~\tabref{use:cit:starred} for
 \multicolumn{1}{@{}H}{Output} &
 \multicolumn{1}{@{}H}{Comment} \\
 \cmidrule(r){1-1}\cmidrule(r){2-2}\cmidrule{3-3}
-\verb!\autocite*[102]{morrison02aa}! & \autocite*[102]{morrison02aa} & Suppressing the author's name for an entry with a single attribution to a given author prints the page numbers\\
+\verb!\autocite*[102]{morrison02aa}! & \autocite*[102]{morrison02aa} & Suppressing the author's name for an entry with a single attribution to a given author prints only the page numbers\\
 % \hline
 \verb!\autocite*[91]{frye57ab}! & \autocite*[91]{frye57ab} & Suppressing the name of a prolific author will print enough information to avoid ambiguity\\
 % \hline
@@ -496,7 +497,7 @@ preamble:
 \end{quote}
 
 \optionitem{mladraft}
-When using \mla{} parenthetical citations, it is best practice to cite as seldom as is necessary to avoid ambiguity. \Biblatexmla can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \biblatexmla will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
+When using \mla{} parenthetical citations, it is best practice to cite only as much as is necessary to avoid ambiguity. \Biblatexmla can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \biblatexmla will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,mladraft=true]{biblatex}
