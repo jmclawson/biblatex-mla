@@ -324,7 +324,7 @@ The standard commands for \biblatexmla generally follow those defined by \biblat
 
 \commanditem{autocite}
 	
-Insert a citation. See table~\tabref{use:cit:typical} for examples. For best results, use the command before punctuation like this:
+Insert a citation. See \tabref{use:cit:typical} for examples. For best results, use the command before punctuation like this:
 \begin{quote}
 	\begin{verbatim}
 		\autocite{x}. 
@@ -386,7 +386,7 @@ When citing a page number without any prenote, only one set of square brackets i
 
 \commanditem{autocite*}
 
-Suppress the author's name in a citation. See table~\tabref{use:cit:starred} for examples. Use this starred variant of the above command when indicating the author's name in the sentence calling the citation.
+Suppress the author's name in a citation. See \tabref{use:cit:starred} for examples. Use this starred variant of the above command when indicating the author's name in the sentence calling the citation.
 
 
 \begin{table}
@@ -422,7 +422,7 @@ The curled braces always indicate the bibkey, and the squared braces respectivel
 
 \commanditem{mancite}
 
-Reset only those internal trackers for \biblatexmla which shorten subsequent citations to the same work or to other works by the same author. See table~\tabref{use:cit:mancite} for examples. If \biblatexmla is getting so ambitious in shortening subsequent citations that it leads to ambiguity, please consider using this command before the ambiguous citation.
+Reset only those internal trackers for \biblatexmla which shorten subsequent citations to the same work or to other works by the same author. See \tabref{use:cit:mancite} for examples. If \biblatexmla is getting so ambitious in shortening subsequent citations that it leads to ambiguity, please consider using this command before the ambiguous citation.
 
 \begin{table}
 \tablesetup
@@ -528,6 +528,15 @@ An entry with no defined \sty{howpublished} field will default either to a <Web>
 	\end{verbatim}	
 \end{quote}
 
+\optionitem{mancitepar}
+By default, the author trackers in \biblatexmla will reset with each paragraph in order to avoid confusing citations when much distance is likely to have passed from the previous citation. In effect, \biblatexmla silently calls the \cmd{mancite} command with each new paragraph. (See \tabref{use:cit:mancite} for the effects of \cmd{mancite}.) To turn off this option, disable the \mycode{mancitepar} package option:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,mancitepar=false]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+
 \end{optionslist}
 
 \section{Database Guide}
@@ -542,13 +551,13 @@ Whether exporting from Zotero or another program, whether managing your .bib fil
 \subsection{Typical fields} % (fold)
 \label{sub:typical_fields}
 
-The best way to acquaint oneself with \biblatexmla is to explore the included \sty{.bib} files, \sty{.tex} files, and the resulting \sty{.pdf} output. Much of the the bibfile database is pretty obvious. Take a look at figure~\ref{fig:example-book}, for example. 
-\begin{figure}[tbp]
+The best way to acquaint oneself with \biblatexmla is to explore the included \sty{.bib} files, \sty{.tex} files, and the resulting \sty{.pdf} output. Much of the the bibfile database is pretty obvious. Take a look at \tabref{fig:example-book}, for example. 
+\begin{table}[tbp]
 	\centering
 		\includegraphics[width=4.8in]{example-book.pdf}
 	\caption{A standard \sty{.bib} file \mycode{@book} entry and its corresponding output in the list of Works Cited, beneath.}
 	\label{fig:example-book}
-\end{figure}
+\end{table}
 
 Using \biblatexmla will automatically format the list of works cited entries to follow the most recent guidelines outlined in the \emph{MLA Style Manual}. In addition to many of the standard fields one might expect to find, \biblatexmla is also capable of handling unusual fields, described below. For a fuller consideration of the fields supported by \biblatexmla, see the example files and consult the Biblatex manual.
 
