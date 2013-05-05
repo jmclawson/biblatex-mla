@@ -22,7 +22,7 @@ your Latex preface:
 		\usepackage[american]{babel} 
 		\usepackage{csquotes} 
 		\usepackage[style=mla]{biblatex}
-		\bibliography{<bibfile>}
+		\addbibresource{<bibfile>}
 	- (replace "<bibfile>" with the name of your .bib bibliography file)
 	- to use MLA-style footnotes, use the "autocite=footnote" package option
 2. Cite a text with \autocite{<key>}, cite a page with
