@@ -1,4 +1,4 @@
-% mla.cbx, v1.4.9 2013/03/23 * compatible with biblatex 2.5
+% mla.cbx, v1.5 2013/05/05 * compatible with biblatex 2.5
 % Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
@@ -7,7 +7,7 @@
 %
 % File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.cbx}[2013/03/23 v1.4.9 biblatex citation style]
+\ProvidesFile{mla.cbx}[2013/05/05 v1.5 biblatex citation style]
 
 \newboolean{cbx@firstlonghand}%
 \DeclareBibliographyOption{firstlonghand}[true]{\setboolean{cbx@firstlonghand}{#1}}
@@ -21,8 +21,7 @@
     \mypkg@everypar\expandafter{\the\everypar}
     \mypkg@@everypar{\mypkgs@ownstuff\the\mypkg@everypar}
     \def\mypkgs@ownstuff{%
-    \mancite
-    }%
+    \mancite}%
     \let\everypar\mypkg@everypar
   }{}}
 

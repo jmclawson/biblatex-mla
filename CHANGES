@@ -1,3 +1,14 @@
+Changelog for version 1.5:
+- changes for compatibility with Biblatex 2.5
+- added entrytypes @online, @inbook, @bookinbook
+- updated entrytypes @video, @review
+- added epprinttype "jstor"
+- added package options "noremoteinfo" and "mancitepar" 
+- added hyperref linking to "Web" bibstring
+- quashed lingering spacing errors, improved bibnamedash, and improved handling of starred
+  autocites
+- improved documentation, examples
+
 Changelog for version 0.9.5:
 - changes for compatibility with Biblatex 1.0
 - further support for latest MLA edition (now default); use "showmedium=false" 
