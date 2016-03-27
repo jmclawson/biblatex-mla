@@ -7,7 +7,7 @@
 %
 % File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.cbx}[2013/05/05 v1.5 biblatex citation style]
+\ProvidesFile{mla.cbx}[2016/03/28 v1.5 biblatex citation style]
 
 \newboolean{cbx@firstlonghand}%
 \DeclareBibliographyOption{firstlonghand}[true]{\setboolean{cbx@firstlonghand}{#1}}
@@ -678,12 +678,25 @@
 \DeclareFieldFormat{footpostnote}{#1}%
 \DeclareFieldFormat{mlarepeatedcites}{\fbox{#1}%
   \marginpar{\hfill\footnotesize{$\clubsuit$}}}%
+\@ifpackagelater{biblatex}{2016/03/01}{%
+\DeclareNameFormat{cite:foot:editor}{%
+	\nameparts{#1}%
+  \usebibmacro{name:given-family}
+		{\partnamefamily}{\partnamegiven}{\partnameprefix}{\partnamesuffix}%
+  \usebibmacro{name:andothers}}%
+\DeclareNameFormat{cite:foot:translator}{%
+	\nameparts{#1}%
+  \usebibmacro{name:given-family}
+		{\partnamefamily}{\partnamegiven}{\partnameprefix}{\partnamesuffix}%
+  \usebibmacro{name:andothers}}%
+}{
 \DeclareNameFormat{cite:foot:editor}{%
   \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
   \usebibmacro{name:andothers}}%
 \DeclareNameFormat{cite:foot:translator}{%
   \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
   \usebibmacro{name:andothers}}%
+}
 \DeclareFieldFormat{foot:cite:edition:format}{%
   \ifinteger{#1}%
     {\mkbibordinal{#1}~\bibstring{edition}}%
