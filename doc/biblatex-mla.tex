@@ -1,4 +1,4 @@
-% biblatex-mla.tex v1.5 2013/05/05
+% biblatex-mla.tex v1.6 2016/07/07
 % Maintained at <https://github.com/jmclawson/biblatex-mla/> by James Clawson.
 %
 % This material is subject to the LaTeX Project Public License. Feel free to improve, redistribute, and adapt to your own ends, as allowed by that license. (See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for license details.) For inclusion in future versions, please share improvements in formatting and MLA standards compliance back to James Clawson: <biblatex-mla@konx.net>.
@@ -89,7 +89,7 @@ citecolor=black,%
   url={\biblatexmlahome},
   author={James Clawson},
   email={biblatex-mla@konx.net},
-  revision={1.5},
+  revision={1.6},
   date={\today}}
 
 \hypersetup{%
@@ -285,6 +285,9 @@ citecolor=black,%
 
 % subsection examples (end)
 
+\section{Version Note}
+This minor update addresses compatibility concerns with \biblatex. It does not reflect changes in the 8\superscript{th} edition of the \emph{MLA Handbook}, published April 2016; an upcoming version of \biblatexmla will attend to those style changes.
+
 \section{Introduction}
 \label{int}
 
@@ -457,7 +460,7 @@ Insert the list of Works Cited.
 \subsection{Package Options}
 \label{mla:subsec:options}
 
-\Biblatexmla defaults to the recommendations established by the \mla{}, but there may be times when you need to change some of these options for publication or other uses. As such, a number of package options have been defined to change the functionality of \biblatexmla within reason.
+\Biblatexmla defaults to the recommendations established by the \mla{}, but there may be times when it is appropriate to change some of these options for publication or other uses. Package options change the default functionality of \biblatexmla.
 
 \begin{optionslist}
 \optionitem{autocite=footnote}
@@ -495,7 +498,7 @@ preamble:
 \end{quote}
 
 \optionitem{mladraft}
-When using \mla{} parenthetical citations, it is best practice to cite only as much as is necessary to avoid ambiguity. \Biblatexmla can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \biblatexmla will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
+When using \mla{} parenthetical citations, it is best practice to cite only when necessary to avoid ambiguity. \Biblatexmla can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \biblatexmla will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,mladraft=true]{biblatex}
@@ -511,7 +514,7 @@ Modeled after the implementation in biblatex-apa to suppress remote information 
 \end{quote}
 
 \optionitem{showmedium}
-\Biblatexmla version 0.9 introduced support for the latest \mla{} style, defined in the 3\superscript{rd} edition of the \emph{Style Manual}, requiring the publication medium of each entry to be printed in the list of Works Cited. By default, \biblatexmla will do the same, using the \sty{howpublished} field. Turn off this option---and the other new changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
+\Biblatexmla version 0.9 introduced support for the 3\superscript{rd} edition of the \emph{Style Manual}, requiring the publication medium of each entry to be printed in the list of Works Cited. By default, \biblatexmla will do the same, using the \sty{howpublished} field. Turn off this option---and the other new changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,showmedium=false]{biblatex}
@@ -527,10 +530,10 @@ An entry with no defined \sty{howpublished} field will default either to a <Web>
 \end{quote}
 
 \optionitem{mancitepar}
-By default, the author trackers in \biblatexmla will reset with each paragraph in order to avoid confusing citations when much distance is likely to have passed from the previous citation. In effect, \biblatexmla silently calls the \cmd{mancite} command with each new paragraph. (See \tabref{use:cit:mancite} for the effects of \cmd{mancite}.) To turn off this option, disable the \mycode{mancitepar} package option:
+Although perhaps they should, the author trackers in \biblatexmla do not by default reset with each paragraph or page. As a result, shortened citations may be unclear when much distance has passed from previous, fuller citations. To avoid this ambiguity, the \cmd{mancite} command can be called before an unclear citation. (See \tabref{use:cit:mancite} for the effects of \cmd{mancite}.) Alternatively, consider asking \biblatexmla to silently call the \cmd{mancite} command with each new paragraph by enabling the \mycode{mancitepar} package option:
 \begin{quote}
 	\begin{verbatim}
-		\usepackage[style=mla,mancitepar=false]{biblatex}
+		\usepackage[style=mla,mancitepar=true]{biblatex}
 	\end{verbatim}	
 \end{quote}
 
@@ -542,9 +545,7 @@ By default, the author trackers in \biblatexmla will reset with each paragraph i
 
 % I lost my original documentation files, including original style files I created to maintain them, so I'm transitioning everything to Philipp Lehman's \sty{ltxdockit}. This part of the user guide, explaining how to create \sty{bibtex} entries for use with \biblatexmla, will be updated shortly. Until then, please see \S{} 4 (pages 7--20) of the previous version: \mylink{http://konx.net/biblatex-mla/biblatex-mla.pdf}.
 
-\biblatex (and, thus, \biblatexmla) uses \bibtex-style databases to manage the citations and list of works cited. While these databases are just flat text files, there are many good programs available to help you manage them. Zotero, for example, can export as \bibtex, as can Endnote and other commercial programs; each of these will nevertheless export with varying degrees of success. Standalone \bibtex managers such as JabRef and BibDesk use \sty{.bib} files as their native filetype and are much more reliable for managing your list of sources.
-
-Whether exporting from Zotero or another program, whether managing your .bib files in a standalone editor or manipulating them in a text editor, you will at some point have to know the fields available to \biblatexmla---especially as some of these are unique to \biblatex, and as I've had to repurpose some of the fields to suit \biblatexmla. 
+\biblatex (and, thus, \biblatexmla) uses \bibtex-style databases to manage the citations and list of works cited. While these databases are just flat text files, there are many good programs available to help manage them. Zotero, Endnote, and other commercial programs, for example, can export as \bibtex; each of these will nevertheless export with varying degrees of success. Standalone \bibtex managers such as JabRef and BibDesk use \sty{.bib} files as their native filetype and are much more reliable for managing your list of sources. Whether exporting from a program, managing .bib files in a standalone editor, or manipulating them in a text editor, it is necessary to be familiar with fields available to \biblatexmla---especially as some of these are unique \biblatex and \biblatexmla. 
 
 \subsection{Typical fields} % (fold)
 \label{sub:typical_fields}
@@ -557,7 +558,7 @@ The best way to acquaint oneself with \biblatexmla is to explore the included \s
 	\label{fig:example-book}
 \end{table}
 
-Using \biblatexmla will automatically format the list of works cited entries to follow the most recent guidelines outlined in the \emph{MLA Style Manual}. In addition to many of the standard fields one might expect to find, \biblatexmla is also capable of handling unusual fields, described below. For a fuller consideration of the fields supported by \biblatexmla, see the example files and consult the Biblatex manual.
+In addition to many of the standard fields one might expect to find, \biblatexmla is also capable of handling unusual fields, described below. For a fuller consideration of the fields supported by \biblatexmla, see the example files and consult the Biblatex manual.
 
 
 % \mlafullexample{douglas93aa}{The above entry, found in the \sty{.bib} file, outputs to the below entry in the list of works cited:} %Below are the different \sty{@types} and the fields available to them. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (for example, \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
@@ -570,7 +571,7 @@ Using \biblatexmla will automatically format the list of works cited entries to 
 \begin{optionslist}
 	
 	\optionitem{crossref}
-	the \sty{key} of a parent source in which a shorter source is found. The \sty{crossref} field is handy to avoid spending time re-inputting similar data, but it is also useful for including \mla{}-style cross-references in the list of Works Cited. Keep in mind the problems inherent in using the \sty{crossref} field, outlined in section 2.4.1 of the \biblatex manual. In the future, \biblatexmla may provide further support for the \biblatex \sty{xref} field, making \sty{crossref} secondary in importance.
+	the \sty{key} of a parent source in which a shorter source is found. The \sty{crossref} field is handy to avoid spending time re-inputting similar data, but it is also useful for including \mla{}-style cross-references in the list of Works Cited. Keep in mind the problems of the \sty{crossref} field, explained in section 2.4.1 of the \biblatex manual.% In the future, \biblatexmla may provide further support for the \biblatex \sty{xref} field, making \sty{crossref} secondary in importance.
 	
 	\optionitem{shorttitle}
 	the shortened title to be printed in citations to disambiguate among multiple titles by one author. \Biblatexmla will only print this field in citations when necessary; when this field is not defined, \biblatexmla will use the whole of the \sty{title} field.
@@ -772,7 +773,7 @@ Using \biblatexmla will automatically format the list of works cited entries to 
 \section{Meta}
 \subsection{License}
 
-\biblatexmla is copyrighted \textcopyright\ 2007--2013, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
+\biblatexmla is copyrighted \textcopyright\ 2007--2016, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
 
 \subsection[Feedback]{Feedback}
 \label{int:feb}

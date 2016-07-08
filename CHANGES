@@ -1,3 +1,9 @@
+Changelog for version 1.6
+- changes for compatibility with Biblatex 3.3+
+- changed behavior of "mancitepar" (which now defaults to false)
+- an upcoming version will provide support for more entrytypes and reflect changes made 
+  in the 2016 MLA handbook
+
 Changelog for version 1.5:
 - changes for compatibility with Biblatex 2.5
 - added entrytypes @online, @inbook, @bookinbook
