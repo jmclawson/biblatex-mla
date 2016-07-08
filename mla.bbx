@@ -7,7 +7,7 @@
 %
 % File is in constant progress. Things are messy. Ignore platypi.
 
-\ProvidesFile{mla.bbx}[2013/05/05 v1.5 biblatex bibliography style]
+\ProvidesFile{mla.bbx}[2016/03/28 v1.5 biblatex bibliography style]
 
 \RequireBibliographyStyle{standard}
 \DeclareLanguageMapping{american}{american-mla}
@@ -51,11 +51,28 @@
 
 \DeclareNameFormat{mla:last}{#1}%
 \DeclareNameAlias{author}{sortname}
+\@ifpackagelater{biblatex}{2016/03/01}{%
+\DeclareNameFormat{default}{%
+	\nameparts{#1}
+  \ifgiveninits
+	{\usebibmacro{name:given-family}
+    {\namepartfamily}
+    {\namepartgiveni}
+    {\namepartprefix}
+    {\namepartsuffix}}
+	{\usebibmacro{name:given-family}
+    {\namepartfamily}
+    {\namepartgiven}
+    {\namepartprefix}
+    {\namepartsuffix}}%
+  \usebibmacro{name:andothers}}
+}{%
 \DeclareNameFormat{default}{%
   \iffirstinits
     {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
     {\usebibmacro{name:first-last}{#1}{#3}{#5}{#7}}%
   \usebibmacro{name:andothers}}
+}
 
 % \renewenvironment*{thebibliography}
 %   {\list
@@ -495,7 +512,7 @@
   \usebibmacro{mla:generaleditor:internal}{c}%
 }
 
-\newbibmacro*{mla:generaleditor:internal}[1]{% 
+\newbibmacro*{mla:generaleditor:internal}[1]{%
   \iffieldequalstr{editor#1type}{generaleditor}%
     {\printnames{editor#1}%
       \setunit{\addcomma\addspace}%
@@ -561,7 +578,7 @@
     \OR%
     \iffieldequalstr{entrysubtype}{play}%
 	\OR%
-	\iffieldequalstr{entrytype}{bookinbook}}% 1.5 platypus 
+	\iffieldequalstr{entrytype}{bookinbook}}% 1.5 platypus
       {\usebibmacro{title:incollection:italics}}%
       {\setboolean{bbx@mla-incollection}{true}%
        \usebibmacro{title}%
@@ -903,7 +920,7 @@
   \usebibmacro{finentry}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % % % % % % % % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % % % % % % % %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % drivers to add eventually:
 % * \DeclareBibliographyDriver{misc}
@@ -913,7 +930,7 @@
 % * \DeclareBibliographyDriver{movie}
 % * \DeclareBibliographyDriver{music}
 % * \DeclareBibliographyDriver{performance}
-% 
+%
 % Specifically important mainstay types to add for MLA users
 % 0 support for multiple publishers? % can't do with bibtex
 % * editorial
