@@ -47,9 +47,9 @@
 \setlength{\bibitemsep}{0pt}
 \renewcommand*{\mkbibnamesuffix}[1]{\addcomma\addlowpenspace#1}
 
-\DeclareNameFormat{mla:last}{#1}%
 \DeclareNameAlias{author}{sortname}
 \@ifpackagelater{biblatex}{2016/03/01}{%
+  \DeclareNameFormat{mla:last}{\nameparts{#1}\namepartfamily}%
   \DeclareNameFormat{default}{%
     \nameparts{#1}%
     \ifgiveninits{%
@@ -60,6 +60,7 @@
     \usebibmacro{name:andothers}%
   }%
 }{%
+  \DeclareNameFormat{mla:last}{#1}%
   \DeclareNameFormat{default}{%
     \iffirstinits{%
       \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
@@ -625,7 +626,9 @@
     {\printfield{volumes}\clearfield{volumes}}%
     {}%%
   \newunit\newblock
-  \usebibmacro{series+number}%
+  \ifbool{bbx@publimedium}%
+    {}%
+    {\usebibmacro{series+number}}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
@@ -656,7 +659,9 @@
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
-  \usebibmacro{series+number}%
+  \ifbool{bbx@publimedium}%
+    {}%
+    {\usebibmacro{series+number}}%
   \newunit\newblock
   \printfield{note}%
   \newunit
@@ -679,7 +684,9 @@
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
-  \usebibmacro{series+number}%
+  \ifbool{bbx@publimedium}%
+    {}%
+    {\usebibmacro{series+number}}%
   \newunit\newblock
   \printfield{note}%
   \newunit
@@ -765,7 +772,7 @@
     {\printfield[brackets]{location}%
      \printtext{\printdate}%
      \newunit}%
-    {\printfield{series}%
+    {\printfield{series}\clearfield{series}%
      \setunit{\addspace}%
      \printfield[default]{volume}%
      \setunit*{\adddot}%
@@ -807,7 +814,9 @@
       \newunit
       \printfield{volumes}%
       \newunit\newblock
-      \usebibmacro{series+number}%
+	  \ifbool{bbx@publimedium}%
+	    {}%
+	    {\usebibmacro{series+number}}%
       \newunit\newblock
       \printfield{note}%
       \newunit\newblock
@@ -953,7 +962,7 @@
 \renewbibmacro*{series+number}{%
   \iffieldundef{series}%
     {}%
-    {\printfield{series}\setunit*{\addspace}\printfield{number}}%
+    {\printfield{series}\clearfield{series}\setunit*{\addspace}\printfield{number}}%
 }
 
 \renewbibmacro*{title}{%
@@ -1137,7 +1146,7 @@
      \setunit*{\addcomma\addspace}%
      \printfield[mla:newspaper:section]{chapter}%
     }%
-    {\printfield{series}%
+    {\printfield{series}\clearfield{series}%
      \setunit*{\addspace}%
      \printfield{volume}%
      \setunit*{\adddot}%
@@ -1173,7 +1182,7 @@
      \setunit{\addcomma\addspace}%
      \printfield[mla:newspaper:section]{chapter}%
     }%
-    {\printfield{series}%
+    {\printfield{series}\clearfield{series}%
      \setunit{\addspace}%
      \printfield{volume}%
      \setunit*{\adddot}%
