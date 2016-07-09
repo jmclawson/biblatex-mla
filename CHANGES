@@ -1,6 +1,7 @@
 Changelog for version 1.6
 - changes for compatibility with Biblatex 3.3+
-- changed behavior of "mancitepar" (which now defaults to false)
+- changed behavior of "mancitepar", which now defaults to false
+- fixed buggy repetition of series field (hopefully)
 - an upcoming version will provide support for more entrytypes and reflect changes made 
   in the 2016 MLA handbook
 
