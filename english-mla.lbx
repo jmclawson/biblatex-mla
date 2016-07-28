@@ -13,7 +13,7 @@
       {}
       {\mkbibmonth{\thefield{#2}}%
        \iffieldundef{#1}{}{\space}}%
-    \stripzeros{\thefield{#1}}}%
+    \mkdatezeros{\thefield{#1}}}%
   \protected\def\mkbibdateshort#1#2#3{%
     \iffieldundef{#3}
       {}
@@ -37,11 +37,11 @@
   % typegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
   % bytypegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
   generaleditor    = {{general editor}{gen\adddotspace ed\adddot}},
-  bytranslator     = {{translated by}{trans\adddot}},
-  byeditor         = {{edited by}{ed\adddot}},
+  bytranslator     = {{translated by}{translated by}},
+  byeditor         = {{edited by}{edited by}},
   % byserieseditor   = {{general editor}{general editor}},% not used?
-  page             = {{\unskip}{\unskip}},
-  pages            = {{\unskip}{\unskip}},
+  % page             = {{\unskip}{\unskip}},
+  % pages            = {{\unskip}{\unskip}},
   byeditortr       = {{ed\adddotspace and trans\adddot}{ed\adddotspace and trans\adddot}},
   byeditorco       = {{ed\adddotspace and comm\adddot}{ed\adddotspace and comm\adddot}},
   byeditoran       = {{ed\adddotspace and annot\adddot}{ed\adddotspace and annot\adddot}},

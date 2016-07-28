@@ -8,13 +8,13 @@
   \protected\def\mkbibdatelong#1#2#3{%
     \iffieldundef{#3}
       {}
-      {\thefield{#3}%
+      {\mkdatezeros{\thefield{#3}}%
        \iffieldundef{#2}{}{\nobreakspace}}%
     \iffieldundef{#2}
       {}
       {\mkbibmonth{\thefield{#2}}%
        \iffieldundef{#1}{}{\space}}%
-    \stripzeros{\thefield{#1}}}%
+    \thefield{#1}}%
   \protected\def\mkbibdateshort#1#2#3{%
     \iffieldundef{#3}
       {}
