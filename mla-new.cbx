@@ -733,15 +733,31 @@
   {}
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand{\cite}[\mkbibparens]
-  {\usebibmacro{prenote}}%
+\DeclareCiteCommand{\cite}
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}%
   {}%
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand*{\cite}[\mkbibparens]
-  {\usebibmacro{prenote}}%
+\DeclareCiteCommand{\headlesscite}  
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:mla:starred:title}}
+  {}%
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand*{\cite}
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
   {}%
