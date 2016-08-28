@@ -127,9 +127,24 @@
 \DeclareFieldFormat{openrangevolumes}{#1~\bibstring{volstodate}}%
 \DeclareFieldFormat{volumeof}{\bibstring{volume}~#1~\bibstring{ofseries}}%
 \DeclareFieldFormat{mla:sentence-case}{\MakeSentenceCase{#1}}%
-
-\DeclareFieldFormat{eprint:googlebooks}{\emph{Google Books}}%
-\DeclareFieldFormat{eprint:adelaide}{\emph{eBooks@Adelaide}}%
+\DeclareFieldFormat{eprinttype}{\mkbibemph{#1}}
+\DeclareFieldFormat{eprint:jstor}{%
+  \iffieldundef{url}{%
+  \mkbibemph{JSTOR}\addcomma\space \printtext[url]{www.jstor.org/stable/#1}}{%
+  \mkbibemph{JSTOR}}}
+\DeclareFieldFormat{eprint:hulu}{%
+  \iffieldundef{url}{%
+  \mkbibemph{Hulu}\addcomma\space \printtext[url]{www.hulu.com/watch/#1}}{%
+  \mkbibemph{Hulu}}}
+\DeclareFieldFormat{eprint:googlebooks}{%
+  \iffieldundef{url}{%
+  \mkbibemph{Google Books}\addcomma\space \printtext[url]{books.google.com/books?id=#1}}{%
+  \mkbibemph{Google Books}}}
+\DeclareFieldFormat{eprint:muse}{%
+  \iffieldundef{url}{%
+  \mkbibemph{Project Muse}\addcomma\space \printtext[url]{muse.jhu.edu/article/#1}}{%
+  \mkbibemph{Project Muse}}}
+% \DeclareFieldFormat{eprint:adelaide}{\mkbibemph{eBooks@Adelaide}}% removed for biblatex-mla-new
 \DeclareFieldFormat{eprint}{\emph{#1}}%
 
 \DeclareFieldFormat{urldate}{#1}%
@@ -151,11 +166,16 @@
 \DeclareBibliographyAlias{suppcollection}{suppbook}
 
 \DeclareFieldAlias[online]{maintitle}{journaltitle}
+% \DeclareFieldAlias[book]{title}{booktitle}
+\DeclareFieldAlias[book]{subtitle}{booksubtitle}
+\DeclareFieldAlias[book]{title}{booktitle}
 
 \renewcommand*{\newunitpunct}{\addcomma\space}
+\renewcommand*{\multilistdelim}{/}
+\renewcommand*{\finallistdelim}{/}
 \renewcommand*{\newblockpunct}{\addperiod\space}
 \renewcommand*{\andothersdelim}{\ifcitation{}{\addcomma}\addspace}
-\renewcommand*{\bibpagespunct}{\addperiod\space}
+% \renewcommand*{\bibpagespunct}{\addperiod\space}
 \renewcommand*{\subtitlepunct}{\ifterm{}{\addcolon}\space}
 
 \newboolean{bbx@mla-incollection}
@@ -227,7 +247,7 @@
 
 \renewcommand*{\bibnamedash}{% suggested by StackExchange user Audrey
   \mlanamedash%
-  \iffieldundef{nameaddon}{\adddot}{\nopunct}}%
+  \iffieldundef{nameaddon}{\addperiod\addspace}{\nopunct}}%
 
 \newcommand*{\mlanamedash}{-{}-{}-}
 
@@ -322,75 +342,65 @@
 % \renewbibmacro*{date}{\printdate}%
 
 \renewbibmacro*{url+urldate}{%
-  \printfield[mla:capital:web]{url}%
-  \setunit{\addperiod\space}%
-  \iffieldundef{urlyear}{}{\printtext{Accessed}\space\printurldate}%
+  \printfield[mla:capital:web]{url}\clearfield{url}%
+  \printunit{\addperiod\space}\newblock%
+  \iffieldundef{urlyear}{}{\printtext{Accessed}\space\printurldate\clearfield{urlyear}}%
   }
 
-\DeclareBibliographyDriver{periodical}{%
+\newbibmacro*{mla:container:top}{%
   \usebibmacro{bibindex}%
   \usebibmacro{author/editor+others/translator+others}%
   \setunit{\addperiod\space}\newblock%
+  \ifthenelse{%
+      \iffieldequalstr{entrytype}{suppbook}%
+      \OR%
+      \iffieldequalstr{entrytype}{suppcollection}}%
+	  {\ifthenelse{\iffieldundef{title}}{\printfield[mla:capital]{entrysubtype}}{\usebibmacro{title}}%
+	   \printunit{\addperiod\space}\newblock%
+	   \newunit}%
+	  {\usebibmacro{maintitle+booktitle}}%
+  \printunit{\addperiod\space}\newblock%
+  }
+
+\newbibmacro*{mla:container:one}{%
   \usebibmacro{mla:article:journal+issuetitle}%
-  \newunit\newblock%
+  \newunit\newblock
   \printfield{note}%
   \newunit%
   \printfield{pages}%
-  \newunit\newblock%
-  \usebibmacro{mla:isbn/issn+doi+eprint}%
-  \newunit\newblock%
-  \usebibmacro{url+urldate}%
-  \newunit\newblock%
-  \printfield{addendum}%
-  \newunit\newblock%
-  \usebibmacro{pageref}%
   \newunit%
-  % \usebibmacro{publimedium}%
-  \usebibmacro{finentry}}
+  \ifthenelse{\iffieldundef{eprinttype} \OR \(\iffieldundef{eprinttype} \AND \iffieldundef{eprint}\)}
+    {\usebibmacro{url+urldate}}%
+    {}%
+  \printunit{\addperiod\space}\newblock%
+  }
 
-\DeclareBibliographyDriver{article}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\addperiod\space}\newblock%
-  \usebibmacro{title}%
+\newbibmacro*{mla:container:two}{%
+  \usebibmacro{mla:isbn/issn+doi+eprint}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \newunit\newblock
+  \printfield{addendum}%
+  \printunit{\addperiod\space}\newblock%
+  \usebibmacro{pageref}%
+  }
+
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{mla:container:top}%
+  % \usebibmacro{bibindex}%
+  % \usebibmacro{author/editor+others/translator+others}%
+  % \setunit{\addperiod\space}\newblock%
+  % \usebibmacro{maintitle+booktitle}%
   \printunit{\addperiod\space}\newblock%
   \usebibmacro{bytranslator+others}%
   \newunit%
-  \usebibmacro{mla:article:journal+issuetitle}%
-  \newunit\newblock
-  \printfield{note}%
-  \newunit%
-  \printfield{pages}%
-  \printunit{\addperiod\space}\newblock
-  \usebibmacro{mla:isbn/issn+doi+eprint}%
-  \newunit\newblock
-  \usebibmacro{url+urldate}%
-  \newunit\newblock
-  \printfield{addendum}%
-  \newunit\newblock
-  \usebibmacro{pageref}%
-  \newunit%
-  % \usebibmacro{publimedium}%
-  \usebibmacro{finentry}}
-
-\DeclareBibliographyDriver{book}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\addperiod\space}\newblock%
-  \usebibmacro{maintitle+booktitle}%
-  \printunit{\addperiod\space}\newblock%
   \usebibmacro{byeditor+others}%
   \newunit%
   \printfield{edition}\isdot%
   \newunit%
-  \iffieldundef{maintitle}%
-    {\printfield{volume}%
-     \printfield{part}}%
-    {}%
+  \iffieldundef{maintitle}{\printfield{volume}\printfield{part}}{}%
   \newunit%
-  \iffieldundef{volume}%
-    {\printfield{volumes}\clearfield{volumes}}%
-    {}%%
+  \iffieldundef{volume}{\printfield{volumes}\clearfield{volumes}}{}%%
   \newunit%
   \usebibmacro{series+number}%
   \newunit%
@@ -414,6 +424,55 @@
   \newunit%
   \printfield[mla:sentence-case]{addendum}%
   \newunit%
+  \usebibmacro{pageref}%
+  \newunit%
+  % \usebibmacro{publimedium}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{mla:container:top}%
+  % \usebibmacro{bibindex}%
+  % \usebibmacro{author/editor+others/translator+others}%
+  % \setunit{\addperiod\space}\newblock%
+  % \usebibmacro{title}%
+  \printunit{\addperiod\space}\newblock%
+  \usebibmacro{mla:container:one}%
+  % \usebibmacro{bytranslator+others}%
+  % \newunit%
+  % \usebibmacro{mla:article:journal+issuetitle}%
+  % \newunit\newblock
+  % \printfield{note}%
+  % \newunit%
+  % \printfield{pages}%
+  \printunit{\addperiod\space}\newblock%
+  \usebibmacro{mla:container:two}%
+  % \usebibmacro{mla:isbn/issn+doi+eprint}%
+  % \newunit\newblock
+  % \usebibmacro{url+urldate}%
+  % \newunit\newblock
+  % \printfield{addendum}%
+  % \newunit\newblock
+  % \usebibmacro{pageref}%
+  % \newunit%
+  % % \usebibmacro{publimedium}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{periodical}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\addperiod\space}\newblock%
+  \usebibmacro{mla:article:journal+issuetitle}%
+  \newunit\newblock%
+  \printfield{note}%
+  \newunit%
+  \printfield{pages}%
+  \newunit\newblock%
+  \usebibmacro{mla:isbn/issn+doi+eprint}%
+  \newunit\newblock%
+  \usebibmacro{url+urldate}%
+  \newunit\newblock%
+  \printfield{addendum}%
+  \newunit\newblock%
   \usebibmacro{pageref}%
   \newunit%
   % \usebibmacro{publimedium}%
@@ -501,16 +560,24 @@
      \newunit\newblock%
   \iftoggle{bbx:doi}{\printfield{doi}\clearfield{doi}}{}%
      \newunit\newblock%
-  \iftoggle{bbx:eprint}{\usebibmacro{eprint}}{}%
+  \iftoggle{bbx:eprint}{\usebibmacro{eprint+extra}}{}%
      \newunit\newblock}
 
+\newbibmacro*{eprint+extra}{%
+  \iffieldundef{eprinttype}
+    {\printfield{eprint}}
+    {\iffieldundef{eprint}
+      {\printfield{eprinttype}}
+      {\printfield[eprint:\strfield{eprinttype}]{eprint}}}}
+
 \DeclareBibliographyDriver{suppbook}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{author/editor}%
-  \setunit{\addperiod\space}\newblock%
-  \usebibmacro{maintitle+title}%
-  \newunit\newblock
-  \printfield[mla:capital]{entrysubtype}%
+  \usebibmacro{mla:container:top}%
+  % \usebibmacro{bibindex}%
+  % \usebibmacro{author/editor}%
+  % \setunit{\addperiod\space}\newblock%
+  % \usebibmacro{maintitle+title}%
+  % \newunit\newblock
+  % \printfield[mla:capital]{entrysubtype}%
   \newunit\newblock
   \iffieldundef{crossref}%
     {\iffieldundef{xref}%
@@ -729,28 +796,31 @@
   \ifnameundef{bookauthor}%
     {\printtext[reviewededitor]{\printnames[default]{editor}}}%
     {\printtext[reviewedauthor]{\printnames[default]{bookauthor}}}%
-  \newunit\newblock
-  \usebibmacro{journal}%
-  \setunit*{\addcomma\space}%
-  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
-    {\printfield[brackets]{location}%
-     \printtext{\printdate}%
-     \newunit}%
-    {\printfield{series}\clearfield{series}%
-     \setunit{\addspace}%
-     \printfield[default]{volume}%
-     \setunit*{\adddot}%
-     \printfield{number}\clearfield{number}%
-     \newunit%
-     \printfield{eid}%
-     \setunit{\addspace}%
-     \usebibmacro{issue+date}%
-     \newunit\newblock%
-     \usebibmacro{issue}%
-     \newunit}%
-  \newunit%
-  \printfield{pages}%
-  \newunit\newblock%
+  \setunit{\addperiod\space}\newblock%
+  \usebibmacro{mla:container:one}%
+  \setunit{\addperiod\space}\newblock%
+  \usebibmacro{mla:container:two}%
+  % \usebibmacro{journal}%
+  % \setunit*{\addcomma\space}%
+  % \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
+  %   {\printfield[brackets]{location}%
+  %    \printtext{\printdate}%
+  %    \newunit}%
+  %   {\printfield{series}\clearfield{series}%
+  %    \setunit{\addspace}%
+  %    \printfield[default]{volume}%
+  %    \setunit*{\adddot}%
+  %    \printfield{number}\clearfield{number}%
+  %    \newunit%
+  %    \printfield{eid}%
+  %    \setunit{\addspace}%
+  %    \usebibmacro{issue+date}%
+  %    \newunit\newblock%
+  %    \usebibmacro{issue}%
+  %    \newunit}%
+  % \newunit%
+  % \printfield{pages}%
+  % \newunit\newblock%
   % \usebibmacro{publimedium}% 1.4.9 updated
   \usebibmacro{finentry}}
 
@@ -1034,6 +1104,20 @@
         \setunit{\addcolon\space}}}%
   \printunit*{\addperiod\space}}
 
+\renewbibmacro*{booktitle}{%
+  \ifboolexpr{
+    test {\iffieldundef{booktitle}}
+    and
+    test {\iffieldundef{booksubtitle}}
+  }
+    {\usebibmacro{title}}
+    {\printtext[booktitle]{%
+       \printfield[titlecase]{booktitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{booksubtitle}}%
+     \newunit}%
+  \printfield{booktitleaddon}}
+
 \newbibmacro*{mla:proceedings:booktitle}{%
   \usebibmacro{booktitle}%
   \newunit%
@@ -1102,7 +1186,8 @@
   \ifthenelse{\iffieldequalstr{entrytype}{online}}{\usebibmacro{mla:online}}{\setunit*{\addspace}}%
   \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine} \or \iffieldequalstr{entrytype}{online}}%
     {\printlist[brackets]{location}%
-     \printtext{\printdate}%
+     \newunit%
+	 \printtext{\printdate}%
      \newunit%
      \printfield{version}%
      \newunit%
@@ -1225,38 +1310,38 @@
       \map{% JSTOR
 		   \step[fieldsource=url, match={jstor.org}, final]
 		   \step[fieldset=eprint, fieldvalue={JSTOR}]
-		   \step[fieldset=urldate, null]
+		   % \step[fieldset=urldate, null]
           }
       \map{% Project Muse
 		   \step[fieldsource=url, match={muse.jhu.edu}, final]
 		   \step[fieldset=eprint, fieldvalue={Project Muse}]
-		   \step[fieldset=urldate, null]
+		   % \step[fieldset=urldate, null]
           }
       \map{% Adelaide eBooks
 		   \step[fieldsource=url, match={ebooks.adelaide.edu.au}, final]
 		   \step[fieldset=eprint, origfieldval]
 		   \step[fieldset=eprinttype, fieldvalue={adelaide}]
-		   \step[fieldset=urldate, null]
+		   % \step[fieldset=urldate, null]
           }
       \map{% Google Books
 		   \step[fieldsource=url, match={books.google}, final]
 		   \step[fieldset=eprint, fieldvalue={Google Books}]
-		   \step[fieldset=urldate, null]
+		   % \step[fieldset=urldate, null]
           }
       \map{% EBSCO - Academic Search Complete
 		   \step[fieldsource=url, match={db=a9h}, final]
-		   \step[fieldset=eprint, fieldvalue={Academic Search Complete Platypus}]
-		   \step[fieldset=urldate, null]
+		   \step[fieldset=eprint, fieldvalue={Academic Search Complete}]
+		   % \step[fieldset=urldate, null]
           }
       \map{% EBSCO - LexisNexis Academic
 		   \step[fieldsource=url, match={db=fdcaae48}, final]
 		   \step[fieldset=eprint, fieldvalue={LexisNexis Academic}]
-		   \step[fieldset=urldate, null]
+		   % \step[fieldset=urldate, null]
           }
       \map{% EBSCO - MLA Database
 		   \step[fieldsource=url, match={db=mzh}, final]
 		   \step[fieldset=eprint, fieldvalue={MLA International Bibliography}]
-		   \step[fieldset=urldate, null]
+		   % \step[fieldset=urldate, null]
           }
       \map{
            \step[fieldsource=url, match=\regexp{dx.doi.org/(.+)}, fieldtarget=doi]
@@ -1268,10 +1353,10 @@
            \step[fieldset=url, null]
            \step[fieldset=urldate, null]
           }
-      \map{ % removes url + urldate field from all entries that have an eprint field
-           \step[fieldsource=eprint, final]
-           \step[fieldset=urldate, null]
-          }
+      % \map{ % removes url + urldate field from all entries that have an eprint field
+      %      \step[fieldsource=eprint, final]
+      %      \step[fieldset=urldate, null]
+      %     }
     }      
 }
 
