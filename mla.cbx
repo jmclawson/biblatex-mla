@@ -1,11 +1,11 @@
-% mla.cbx, v1.6 2016/07/08 * compatible with biblatex 3.3
+% mla-this.cbx, v1.9 2016/11/01 * compatible with biblatex 3.4
 % Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla.cbx}[2016/07/08 v1.6 biblatex citation style]
+\ProvidesFile{mla-this.cbx}[2016/11/01 v1.9 biblatex citation style]
 
 \newboolean{cbx@firstlonghand}%
 \DeclareBibliographyOption{firstlonghand}[true]{\setboolean{cbx@firstlonghand}{#1}}
@@ -38,7 +38,6 @@
     \fi
     \xdef\split@prev{\the\insertpenalties}%
   }}
-
 
 \ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long,mancitepar=false,datezeros=false}%
 
@@ -700,12 +699,10 @@
 \DeclareFieldFormat{supptotitle}%
   {\bibstring{supptotitle}\addspace\mkbibemph{#1}}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% Cite Commands %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% updated for parity with mla-new.cbx
 
 \renewbibmacro*{prenote}{%
   \iffieldundef{prenote}
@@ -734,15 +731,41 @@
   {}
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand{\cite}[\mkbibparens]
-  {\usebibmacro{prenote}}%
+\DeclareCiteCommand{\cite}% 1.9 added support for smart switching when used in footnote
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:mla}}%
+  {}%
+  {\usebibmacro{postnote}}
+  
+\DeclareCiteCommand{\textcite}
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}%
   {}%
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand*{\cite}[\mkbibparens]
-  {\usebibmacro{prenote}}%
+\DeclareCiteCommand{\headlesscite}% 1.9 added alias to starred command for Chicago compatibility
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:mla:starred:title}}
+  {}%
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand*{\cite}% 1.9 added support for smart switching when used in footnote
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
   {}%
@@ -759,19 +782,37 @@
   {}
   {\usebibmacro{mla:foot:postnote}}
 
-\DeclareCiteCommand{\fullcite}
-  {\citereset\renewbibmacro*{author}{%
-  \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
-                 \iffirstonpage}
-       {\mbox{\mlanamedash\unspace\newunitpunct}}
-       {\printnames{author}%
-        \savefield{namehash}{\cbx@lasthash}}}
-    {\let\cbx@lasthash\undefined}}
-\begin{thebibliography}\item}% kc9jud on GitHub helped to fix this
-  {\usedriver{}{\thefield{entrytype}}\addperiod}
-  {\item}
-  {\end{thebibliography}\citereset}
+\DeclareCiteCommand{\fullcite}% platypus-mla-new deprecating to prepare for chicago compatibility
+%   {\citereset\renewbibmacro*{author}{%
+%   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
+%     {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
+%                  \iffirstonpage}
+%        {\mbox{\mlanamedash\unspace\newunitpunct}}
+%        {\printnames{author}%
+%         \savefield{namehash}{\cbx@lasthash}}}
+%     {\let\cbx@lasthash\undefined}}
+% \begin{thebibliography}\item}% kc9jud on GitHub helped to fix this
+%   {\usedriver{}{\thefield{entrytype}}\addperiod}
+%   {\item}
+%   {\end{thebibliography}\citereset}
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:mla:title}}
+  {}%
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\headlessfullcite}
+  {\iffootnote{\iffieldundef{prenote}
+    {\global\undef\cbx@lastprenote
+	\printtext{See\addspace}}}
+	\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:mla:starred:title}}
+  {}%
+  {\usebibmacro{postnote}}
 
 \newbibmacro{mla:fullcite:prenote}{%
 \citereset\renewbibmacro*{author}{%

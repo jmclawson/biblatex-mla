@@ -1,11 +1,11 @@
-% mla.bbx, v2.0 2016/07/27 * compatible with biblatex 3.4
+% mla.bbx, v1.9 2016/11/01 * compatible with biblatex 3.4
 % Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla-new.bbx}[2016/07/27 v2.0 biblatex bibliography style]
+\ProvidesFile{mla-new.bbx}[2016/11/01 v1.9 biblatex bibliography style]
 
 \RequireBibliographyStyle{standard}
 \DeclareLanguageMapping{american}{american-mla}
@@ -151,19 +151,31 @@
 \DeclareFieldFormat[article,periodical,review]{volume}{\bibstring{volume}\ppspace#1}% volume of a journal
 \DeclareFieldFormat[article,periodical,review]{number}{\bibstring{number}\ppspace#1}% volume of a journal
 
+\DeclareBibliographyAlias{artwork}{article}% platypus 2.0 mla-new
+\DeclareBibliographyAlias{audio}{article}% platypus 2.0 mla-new
 \DeclareBibliographyAlias{booklet}{book}
-\DeclareBibliographyAlias{bookinbook}{incollection}
+\DeclareBibliographyAlias{bookinbook}{incollection}%
 \DeclareBibliographyAlias{collection}{book}
 \DeclareBibliographyAlias{reference}{book}
-
-\DeclareBibliographyAlias{inbook}{incollection}
-
+\DeclareBibliographyAlias{image}{article}% platypus 2.0 mla-new
+\DeclareBibliographyAlias{inbook}{incollection}%
+\DeclareBibliographyAlias{letter}{article}% platypus 2.0 mla-new
 \DeclareBibliographyAlias{manual}{customa}
 \DeclareBibliographyAlias{misc}{customa}
+\DeclareBibliographyAlias{music}{audio}% platypus 2.0 mla-new
 \DeclareBibliographyAlias{online}{article}
 \DeclareBibliographyAlias{patent}{customa}
 \DeclareBibliographyAlias{report}{customa}
 \DeclareBibliographyAlias{suppcollection}{suppbook}
+
+%%% standalone types
+% -book, -booklet, -collection, -periodical, -proceedings, -reference, -thesis
+
+%%% sources in other works
+% -article, -bookinbook, -incollection, -inproceedings, -inreference, -letter, -review, -suppbook, -suppcollection
+
+%%% other media
+% -artwork, -audio, -image, -music, online, -unpublished, -video
 
 \DeclareFieldAlias[online]{maintitle}{journaltitle}
 % \DeclareFieldAlias[book]{title}{booktitle}
@@ -181,7 +193,7 @@
 \newboolean{bbx@mla-incollection}
 \newbool{bbx@inset}
 
-\DeclareBibliographyOption{dashed}[true]{% platypus 1.0 (from authortitle.bbx)
+\DeclareBibliographyOption{dashed}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{pagetracker}%
      \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
@@ -253,7 +265,7 @@
 
 \renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\usebibmacro{bbx:dashcheck}% platypus 1.0 from authortitle.bbx
+    {\usebibmacro{bbx:dashcheck}%
        {\bibnamedash}%
        {\ifbool{bbx@totalnames}%
          {\printnames[sortname][-\value{listtotal}]{author}}
@@ -339,8 +351,6 @@
   \newunit%
   \printfield{pages}}
 
-% \renewbibmacro*{date}{\printdate}%
-
 \renewbibmacro*{url+urldate}{%
   \printfield[mla:capital:web]{url}\clearfield{url}%
   \printunit{\addperiod\space}\newblock%
@@ -387,10 +397,6 @@
 
 \DeclareBibliographyDriver{book}{%
   \usebibmacro{mla:container:top}%
-  % \usebibmacro{bibindex}%
-  % \usebibmacro{author/editor+others/translator+others}%
-  % \setunit{\addperiod\space}\newblock%
-  % \usebibmacro{maintitle+booktitle}%
   \printunit{\addperiod\space}\newblock%
   \usebibmacro{bytranslator+others}%
   \newunit%
@@ -426,35 +432,14 @@
   \newunit%
   \usebibmacro{pageref}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{mla:container:top}%
-  % \usebibmacro{bibindex}%
-  % \usebibmacro{author/editor+others/translator+others}%
-  % \setunit{\addperiod\space}\newblock%
-  % \usebibmacro{title}%
   \printunit{\addperiod\space}\newblock%
   \usebibmacro{mla:container:one}%
-  % \usebibmacro{bytranslator+others}%
-  % \newunit%
-  % \usebibmacro{mla:article:journal+issuetitle}%
-  % \newunit\newblock
-  % \printfield{note}%
-  % \newunit%
-  % \printfield{pages}%
   \printunit{\addperiod\space}\newblock%
   \usebibmacro{mla:container:two}%
-  % \usebibmacro{mla:isbn/issn+doi+eprint}%
-  % \newunit\newblock
-  % \usebibmacro{url+urldate}%
-  % \newunit\newblock
-  % \printfield{addendum}%
-  % \newunit\newblock
-  % \usebibmacro{pageref}%
-  % \newunit%
-  % % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{periodical}{%
@@ -475,7 +460,6 @@
   \newunit\newblock%
   \usebibmacro{pageref}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \newbibmacro*{mla:reprint}{%
@@ -493,7 +477,7 @@
   \newunit%
   \ifbool{bbx@mla-incollection}%
     {\printfield[bibliography:origyear]{origyear}\clearfield{origyear}}%
-    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}% 1.4.9 cleared up most spurious punct
+    {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}%
       {\printorigdate\clearfield{origyear}}%
       {}%
 	}%
@@ -572,12 +556,6 @@
 
 \DeclareBibliographyDriver{suppbook}{%
   \usebibmacro{mla:container:top}%
-  % \usebibmacro{bibindex}%
-  % \usebibmacro{author/editor}%
-  % \setunit{\addperiod\space}\newblock%
-  % \usebibmacro{maintitle+title}%
-  % \newunit\newblock
-  % \printfield[mla:capital]{entrysubtype}%
   \newunit\newblock
   \iffieldundef{crossref}%
     {\iffieldundef{xref}%
@@ -590,7 +568,6 @@
     \printfield{pages}%
     \newunit}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareCiteCommand{\bbx@crossref}%
@@ -614,7 +591,7 @@
     \OR%
     \iffieldequalstr{entrysubtype}{play}%
 	\OR%
-	\iffieldequalstr{entrytype}{bookinbook}}% 1.5 platypus
+	\iffieldequalstr{entrytype}{bookinbook}}%
       {\usebibmacro{title:incollection:italics}}%
       {\setbool{bbx@mla-incollection}{true}%
        \usebibmacro{title}%
@@ -635,7 +612,6 @@
     \printfield{pages}%
     \newunit}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \newbibmacro*{mla:incollection:internal}{%
@@ -708,7 +684,6 @@
   \newunit\newblock
   \usebibmacro{pageref}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{proceedings}{%
@@ -731,7 +706,6 @@
   \newunit\newblock
   \usebibmacro{pageref}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{unpublished}{%
@@ -752,7 +726,6 @@
   \newunit\newblock
   \printfield{addendum}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{thesis}{%
@@ -766,7 +739,7 @@
   \printlist{institution}%
   \newunit%
   \iffieldequalstr{entrysubtype}{published}%
-    {\printfield{origyear}\clearfield{origyear}}% 1.4.9 cleared origyear
+    {\printfield{origyear}\clearfield{origyear}}%
     {\printfield{year}}%
   \newunit\newblock
   \iffieldequalstr{entrysubtype}{published}%
@@ -782,7 +755,6 @@
   \printfield{addendum}%
   \newunit\newblock
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{review}{%
@@ -800,28 +772,6 @@
   \usebibmacro{mla:container:one}%
   \setunit{\addperiod\space}\newblock%
   \usebibmacro{mla:container:two}%
-  % \usebibmacro{journal}%
-  % \setunit*{\addcomma\space}%
-  % \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
-  %   {\printfield[brackets]{location}%
-  %    \printtext{\printdate}%
-  %    \newunit}%
-  %   {\printfield{series}\clearfield{series}%
-  %    \setunit{\addspace}%
-  %    \printfield[default]{volume}%
-  %    \setunit*{\adddot}%
-  %    \printfield{number}\clearfield{number}%
-  %    \newunit%
-  %    \printfield{eid}%
-  %    \setunit{\addspace}%
-  %    \usebibmacro{issue+date}%
-  %    \newunit\newblock%
-  %    \usebibmacro{issue}%
-  %    \newunit}%
-  % \newunit%
-  % \printfield{pages}%
-  % \newunit\newblock%
-  % \usebibmacro{publimedium}% 1.4.9 updated
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{inreference}{%
@@ -867,7 +817,6 @@
     {\bbx@crossref{\thefield{crossref}}%
      \nopunct\unspace\printfield{pages}}%
   \newunit%
-  % \usebibmacro{publimedium}%
   \usebibmacro{finentry}}
 
 \newbibmacro{mlabelnamepunct}{\setunit{\labelnamepunct}\newblock}
@@ -875,7 +824,7 @@
 \newbibmacro{mla:video:localized:last-first}[1]{%
   \ifnameundef{#1}%
     {}%
-    {\printnames{#1}\addcomma\addspace% platypus 2.0 this looks like it'll be a problem, since it's hardcoding the punctuation
+    {\printnames{#1}\addcomma\addspace% platypus 2.0 this looks like it could be a problem, since it's hardcoding punctuation
     \ifthenelse{\iffieldbibstring{#1type} \and \not %
     \iffieldundef{#1type}}%
       {\bibstring{\thefield{#1type}}}%
@@ -887,7 +836,7 @@
 \newbibmacro{mla:video:name:first:footnote}[1]{%
   \ifnameundef{#1}%
     {}%
-    {\printnames[byeditor]{#1}\addcomma\addspace% platypus 2.0 this looks like it'll be a problem, since it's hardcoding the
+    {\printnames[byeditor]{#1}\addcomma\addspace% platypus 2.0 this looks like it could be a problem, since it's hardcoding punctuation
     \ifthenelse{\iffieldbibstring{#1type} \and \not %
     \iffieldundef{#1type}}%
       {\bibstring{\thefield{#1type}}}%
@@ -953,7 +902,6 @@
   \newunit%
   \printfield{year}%
   \newunit\newblock%
-  % \usebibmacro{publimedium}% 1.4.9 updated to most recent MLA format
   \usebibmacro{finentry}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
