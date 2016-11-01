@@ -1,3 +1,18 @@
+Changelog for version 1.9
+- changes for compatibility with the latest MLA edition; use "style=mla-new" to change the Works Cited to the new style
+- added support for some common biblatex-chicago citation commands (\headlesscite, \textcite, etc.)
+- added preliminary support for new entry types (@artwork, @audio, @image, @letter, @music)
+- added style intelligence with source mapping:
+    * the word "University" in publisher names will automatically shorten to "U"
+    * the word "Press" in publisher names will automatically shorten to "P"
+    * the phrase "University Press" in publisher names will automatically shorten to "UP"
+    * certain words in publisher names--including "Company," "Corporation," "Incorporated", "Limited," and their 
+      respective abbreviations--will not be printed
+    * if an entry includes a URL pointing to a number of eprint domains--including include JSTOR, Project Muse, Adelaide 
+      Online Books, Google Books, EBSCO Academic Search Complete, EBSCO LexisNexis, and the EBSCO MLA Database--
+      biblatex-mla will correctly reformat it as an eprint
+    * if an entry includes a URL pointing to a doi server, biblatex-mla will correctly reformat it as an doi reference
+
 Changelog for version 1.6
 - changes for compatibility with Biblatex 3.3+
 - changed behavior of "mancitepar", which now defaults to false
