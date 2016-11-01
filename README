@@ -21,8 +21,9 @@ Usage:
 your Latex preface:
 		\usepackage[american]{babel} 
 		\usepackage{csquotes} 
-		\usepackage[style=mla]{biblatex}
+		\usepackage[style=mla-new]{biblatex}
 		\addbibresource{<bibfile>}
+	- (replace "style=mla-new" with "style=mla" if you'd prefer to use the style described in the old edition of the *Handbook*)
 	- (replace "<bibfile>" with the name of your .bib bibliography file)
 	- to use MLA-style footnotes, use the "autocite=footnote" package option
 2. Cite a text with \autocite{<key>}, cite a page with
