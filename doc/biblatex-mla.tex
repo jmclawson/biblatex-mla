@@ -293,7 +293,7 @@ This beta update is for testing compatibility with the 8\superscript{th} edition
 
 \Biblatexmla provides support to \biblatex, \bibtex, and \latex for citations and Works Cited lists in the style established by the Modern Language Association (\mla). For commands and options to change package defaults, see \secref{mla:subsec:commands} and \secref{mla:subsec:options}, respectively, below.
 
-\mla style, a common standard for writers in the humanities, is outlined in the \emph{MLA Style Manual}, in its 3\superscript{rd} edition, and the \emph{MLA Handbook for Writers of Research Papers}, now in its 8\superscript{th} edition. \Biblatexmla follows the style outlined in the latter of these. It also follows the logic of the \mla{} when citing similar material repeatedly, trimming unnecessary information from citations where necessary. \Biblatexmla is compatible with \biblatex's support for \sty{hyperref} and \sty{tex2ht}, and the main word in each citation (either the author's name, the title, or the page number) serves as a link to the particular entry in the Works Cited. For anything not covered by this manual, please also see the \biblatex documentation or contact me by email.
+\mla style, a common standard for writers in the humanities, is outlined in the \emph{MLA Style Manual}, in its 3\superscript{rd} edition, and the \emph{MLA Handbook for Writers of Research Papers}, now in its 8\superscript{th} edition. \Biblatexmla follows the style outlined in the latter of these. It also follows the logic of the \mla{} when citing similar material repeatedly, trimming unnecessary information from citations where necessary. \Biblatexmla is compatible with \biblatex's support for \sty{hyperref} and \sty{tex4ht}, and the main word in each citation (either the author's name, the title, or the page number) serves as a link to the particular entry in the Works Cited. For anything not covered by this manual, please also see the \biblatex documentation or contact me by email.
 
 \newpage
 \section{Use}
@@ -405,7 +405,7 @@ Print a citation without parentheses. This command may be useful in certain circ
 
 \commanditem{mancite}
 
-Reset most trackers for \biblatexmla which shorten subsequent citations. See \tabref{use:cit:all} for an example. If \biblatexmla is getting so ambitious in shortening subsequent citations that it leads to ambiguity, use this command before the ambiguous citation.
+Reset most trackers that shorten subsequent citations. See \tabref{use:cit:all} for an example. If \biblatexmla is getting so ambitious in shortening subsequent citations that it leads to ambiguity, use this command before the ambiguous citation.
 
 \commanditem{citereset}
 
@@ -716,7 +716,7 @@ Fields not yet supported in biblatex-mla (but which should be supported in futur
 
 \begin{optionslistNOT}
 	\optionitem{howpublished}
-	to be used in support of the MLA-style revisions in the third edition of the \emph{MLA Style Manual} and the (upcoming) 7th edition of the \emph{MLA Handbook}; will default to ``Print''  when undefined
+	to be used in support of the MLA-style revisions in the third edition of the \emph{MLA Style Manual} and the 7th edition of the \emph{MLA Handbook}; will default to ``Print''  when undefined
 
 	\optionitem{origlocation}
 	original place of publication (for reprints)
@@ -1170,7 +1170,7 @@ The \sty{@audio} entry type is only partially supported in \biblatexmla in order
 \end{optionslistNOT}
 
 \subsubsection*{@image}
-The \sty{@image} entry type is only partially supported in \biblatexmla in order to begin work to support it further in the future. It is currently built onto the same backend as \sty{@image} entries, so it accepts additional fields used in that entry type.
+The \sty{@image} entry type is only partially supported in \biblatexmla in order to begin work to support it further in the future. It is currently built onto the same backend as \sty{@article} entries, so it accepts additional fields used in that entry type.
 
 \begin{optionslistNOT}
 
