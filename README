@@ -3,12 +3,13 @@ Biblatex-mla provides Biblatex support for references and citations in the
 style defined by the Modern Language Association (MLA). The style is a common
 standard for writers in the humanities and is outlined in the MLA Style Manual
 and the MLA Handbook for Writers of Research Papers. These files follow
-definitions for the 3rd edition of the Manual and the 7th edition of the
-Handbook.  Before using biblatex-mla, you will need to install Biblatex:
-http://www.ctan.org/tex-archive/help/Catalogue/entries/biblatex.html
+definitions for the 7th and 8th editions of the MLA Handbook.  Before using 
+biblatex-mla, you will need to install Biblatex. Biblatex is commonly 
+included with most installations of LaTeX, but it can also be found at 
+http://www.ctan.org/pkg/biblatex
 
 
-Installation:
+Manual Installation:
 1. Locate your latex installation folder
 	- In OS X, it can be found at 
 		~/Library/texmf/tex/latex/
@@ -23,7 +24,8 @@ your Latex preface:
 		\usepackage{csquotes} 
 		\usepackage[style=mla-new]{biblatex}
 		\addbibresource{<bibfile>}
-	- (replace "style=mla-new" with "style=mla" if you'd prefer to use the style described in the old edition of the Handbook)
+	- (replace "style=mla-new" with "style=mla" if you'd prefer to use the 
+	  style described in the old edition of the Handbook)
 	- (replace "<bibfile>" with the name of your .bib bibliography file)
 	- to use MLA-style footnotes, use the "autocite=footnote" package option
 2. Cite a text with \autocite{<key>}, cite a page with
