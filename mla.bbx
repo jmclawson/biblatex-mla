@@ -71,14 +71,6 @@
   }%
 }
 
-% \renewenvironment*{thebibliography}
-%   {\list
-%      {}
-%      {\setlength{\leftmargin}{\bibhang}%
-%       \setlength{\itemindent}{-\leftmargin}%
-%       \setlength{\itemsep}{\bibitemsep}%
-%       \setlength{\parsep}{\bibparsep}}}
-%   {\endlist}
 \defbibenvironment{bibliography}
   {\list
      {}
@@ -96,7 +88,7 @@
 \DeclareFieldFormat{title:booklet}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:collection}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:incollection}{\mkbibquote{#1}}%
-\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%platypus 1.0
+\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:inproceedings}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:thesis}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:reviewedbook}{\bibstring{reviewof}\addspace\mkbibemph{#1}}%
@@ -109,7 +101,7 @@
   {\unspace\mkbibbrackets{#1}\addspace}%
 \DeclareFieldFormat[article]{version}{#1\isdot}%
 \DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
-\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}% 1.4.9 platypus don't forget to localize
+\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}%
 \DeclareFieldFormat{mla:publimedium}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital:web}{%
@@ -146,11 +138,11 @@
 \DeclareFieldFormat{urldate}{#1}%
 
 \DeclareBibliographyAlias{booklet}{book}
-\DeclareBibliographyAlias{bookinbook}{incollection}% platypus 1.5
+\DeclareBibliographyAlias{bookinbook}{incollection}%
 \DeclareBibliographyAlias{collection}{book}
 \DeclareBibliographyAlias{reference}{book}
 
-\DeclareBibliographyAlias{inbook}{incollection}% platypus 1.0
+\DeclareBibliographyAlias{inbook}{incollection}%
 
 \DeclareBibliographyAlias{manual}{customa}
 \DeclareBibliographyAlias{misc}{customa}
@@ -169,7 +161,7 @@
 \newboolean{bbx@mla-incollection}
 \newbool{bbx@inset}
 
-\DeclareBibliographyOption{dashed}[true]{% platypus 1.0 (from authortitle.bbx)
+\DeclareBibliographyOption{dashed}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{pagetracker}%
      \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
@@ -229,17 +221,6 @@
 % 0.7.1 for years with open range
 \newcommand*{\openrangemark}{\mbox{ }}% 0.7.1
 
-% % 0.9 - new commands for open year ranges
-% \newrobustcmd*{\mkbibrangefull}[2]{%
-%   \printtext{%
-%     \csuse{mkbibdate#1}{#2year}{#2month}{#2day}%
-%     \iffieldundef{#2endyear}
-%       {}
-%       {\iffieldequalstr{#2endyear}{}
-%          {\mbox{\bibdatedash}}
-% 	 {\bibdatedash
-% 	  \csuse{mkbibdate#1}{#2endyear}{#2endmonth}{#2endday}}}}}
-
 \newbibmacro*{bbx:savehash}{%
   \savefield{fullhash}{\bbx@lasthash}}
 
@@ -251,7 +232,7 @@
 
 \renewbibmacro*{author}{%
   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-    {\usebibmacro{bbx:dashcheck}% platypus 1.0 from authortitle.bbx
+    {\usebibmacro{bbx:dashcheck}%
        {\bibnamedash}%
        {\ifbool{bbx@totalnames}%
          {\printnames[sortname][-\value{listtotal}]{author}}
@@ -340,7 +321,7 @@
 \renewbibmacro*{date}{\printdate}%
 
 \renewbibmacro*{url+urldate}{%
-  \ifthenelse{\boolean{bbx@publimedium}\AND\NOT \(\iffieldundef{url} \AND \iffieldundef{eprint}\)}% 0.9 platypus - check the logic here! should it be and or or between url and eprint?
+  \ifthenelse{\boolean{bbx@publimedium}\AND\NOT \(\iffieldundef{url} \AND \iffieldundef{eprint}\)}%
     {\printfield[mla:capital:web]{url}\newunit}%
     {\iffieldundef{urlyear}{}{\setunit{\addspace}}}%
   \iffieldundef{urlyear}%
@@ -575,7 +556,7 @@
     \OR%
     \iffieldequalstr{entrysubtype}{play}%
 	\OR%
-	\iffieldequalstr{entrytype}{bookinbook}}% 1.5 platypus
+	\iffieldequalstr{entrytype}{bookinbook}}%
       {\usebibmacro{title:incollection:italics}}%
       {\setboolean{bbx@mla-incollection}{true}%
        \usebibmacro{title}%
@@ -979,7 +960,7 @@
     {\setunit*{\addcolon\space}}%
   \printlist{publisher}%
   \setunit*{\addcomma\space}%
-  \ifbool{bbx@nodate}{\printtext{n.d.}}% platypus-don't forget to localize this string!
+  \ifbool{bbx@nodate}{\printtext{n.d.}}%
   \printdate%
   \newunit}
 
@@ -1153,7 +1134,7 @@
      \printfield{number}\clearfield{number}%
      \setunit*{\addcomma\space}%
      \usebibmacro{mla:isbn/issn+doi+eprint}%
-     \setunit{\addspace}% platypus-1.0b removed asterisk
+     \setunit{\addspace}%
      \usebibmacro{issue+date}%
      \newunit\newblock
      \newunit}%
