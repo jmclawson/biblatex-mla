@@ -149,7 +149,6 @@
 \newbibmacro*{cite:name}{%
  \ifsingletitle%
   {\printtext[bibhyperref]{%
-    % \ifbool{bbx@totalnames}% platypus - still need to add support for option totalnames in citations
     \printnames{labelname}}%
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}%
@@ -157,7 +156,7 @@
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}}%
 
-\newbibmacro*{cite:mla:title}{% 1.4.9 platypus testing
+\newbibmacro*{cite:mla:title}{%
   \ifnameundef{labelname}%
     {\printtext[bibhyperref]{%
        \printfield[citetitle:\strfield{entrytype}]{labeltitle}}}%
@@ -172,9 +171,9 @@
 	   \setunit{\addspace}%
 	   \printfield{booktitle}}}}%
     {}%
-	\setunit{\addspace}}% 1.4.9 platypus testing
+	\setunit{\addspace}}%
 
-\newbibmacro*{cite:mla:title:internal}{% 1.4.9 platypus testing
+\newbibmacro*{cite:mla:title:internal}{%
   \ifbool{cbx@named}{\setunit{\addcomma\addspace}}{}%
   \iffieldundef{title}%
     {\iffieldequalstr{entrytype}{review}%
@@ -192,26 +191,22 @@
 
 % %%%%%%%%%% for ibid, idem, opcit %%%%%%%%
 
-\newbibmacro*{cite:idem}{% 1.4.9 platypus testing removing unspaces
+\newbibmacro*{cite:idem}{%
   \ifsingletitle%
-    % {\iffieldundef{postnote}%
-    %   {\usebibmacro{cite:name}}%
-    %   {\global\boolfalse{cbx@named}}}% This condition could never be met; that's ibid.
     {\usebibmacro{cite:name}}%
     {\global\boolfalse{cbx@named}}}
 
 \newbibmacro*{cite:opcit}{%
   \usebibmacro{cite:mla:title}\setunit{\addspace}}
 
-\newbibmacro*{cite:ibid}{% 1.4.9 platypus testing
+\newbibmacro*{cite:ibid}{%
   \iffieldundef{postnote}%
     {\usebibmacro{cite:mla:noibid}}%
     {\global\booltrue{cbx@hyperpages}}%
   \usebibmacro{cite:save}%
   \iffieldundef{prenote}%
     {}%
-    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}% 1.4.9 platypus rethink this
-    % {\usebibmacro{cite:reset}}}% 1.4.9 platypus rethink this
+    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}%
 
 \renewcommand*{\postnotedelim}{\addspace}%
 
@@ -646,15 +641,8 @@
     {\unspace\addspace\printfield[footpostnote]{postnote}}%
   \usebibmacro{cite:reset}}
 
-%%%%% platypus TODO for footnotes %%%%%
-% - inproceedings
-% - articles
-% - proceedings
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Format Declarations %%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareFieldFormat{citetitle:article}{\mkbibquote{#1}}
@@ -782,19 +770,7 @@
   {}
   {\usebibmacro{mla:foot:postnote}}
 
-\DeclareCiteCommand{\fullcite}% platypus-mla-new deprecating to prepare for chicago compatibility
-%   {\citereset\renewbibmacro*{author}{%
-%   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-%     {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
-%                  \iffirstonpage}
-%        {\mbox{\mlanamedash\unspace\newunitpunct}}
-%        {\printnames{author}%
-%         \savefield{namehash}{\cbx@lasthash}}}
-%     {\let\cbx@lasthash\undefined}}
-% \begin{thebibliography}\item}% kc9jud on GitHub helped to fix this
-%   {\usedriver{}{\thefield{entrytype}}\addperiod}
-%   {\item}
-%   {\end{thebibliography}\citereset}
+\DeclareCiteCommand{\fullcite}%
   {\iffootnote{\iffieldundef{prenote}
     {\global\undef\cbx@lastprenote
 	\printtext{See\addspace}}}
