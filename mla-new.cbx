@@ -146,7 +146,6 @@
 \newbibmacro*{cite:name}{%
  \ifsingletitle%
   {\printtext[bibhyperref]{%
-    % \ifbool{bbx@totalnames}% platypus - still need to add support for option totalnames in citations
     \printnames{labelname}}%
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}%
@@ -637,11 +636,6 @@
     {\unspace\addspace\printfield[footpostnote]{postnote}}%
   \usebibmacro{cite:reset}}
 
-%%%%% platypus TODO for footnotes %%%%%
-% - inproceedings
-% - articles
-% - proceedings
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Format Declarations %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -770,19 +764,7 @@
   {}
   {\usebibmacro{mla:foot:postnote}}
 
-\DeclareCiteCommand{\fullcite}% platypus-mla-new deprecating to prepare for chicago compatibility
-%   {\citereset\renewbibmacro*{author}{%
-%   \ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}
-%     {\ifthenelse{\iffieldequals{namehash}{\cbx@lasthash}\AND\NOT
-%                  \iffirstonpage}
-%        {\mbox{\mlanamedash\unspace\newunitpunct}}
-%        {\printnames{author}%
-%         \savefield{namehash}{\cbx@lasthash}}}
-%     {\let\cbx@lasthash\undefined}}
-% \begin{thebibliography}\item}% kc9jud on GitHub helped to fix this
-%   {\usedriver{}{\thefield{entrytype}}\addperiod}
-%   {\item}
-%   {\end{thebibliography}\citereset}
+\DeclareCiteCommand{\fullcite}
   {\iffootnote{\iffieldundef{prenote}
     {\global\undef\cbx@lastprenote
 	\printtext{See\addspace}}}
