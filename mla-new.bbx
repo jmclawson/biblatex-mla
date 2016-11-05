@@ -71,14 +71,6 @@
   }%
 }
 
-% \renewenvironment*{thebibliography}
-%   {\list
-%      {}
-%      {\setlength{\leftmargin}{\bibhang}%
-%       \setlength{\itemindent}{-\leftmargin}%
-%       \setlength{\itemsep}{\bibitemsep}%
-%       \setlength{\parsep}{\bibparsep}}}
-%   {\endlist}
 \defbibenvironment{bibliography}
   {\list
      {}
@@ -96,7 +88,7 @@
 \DeclareFieldFormat{title:booklet}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:collection}{\mkbibemph{#1}}
 \DeclareFieldFormat{title:incollection}{\mkbibquote{#1}}%
-\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%platypus 1.0
+\DeclareFieldFormat{title:inbook}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:inproceedings}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:thesis}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:reviewedbook}{\bibstring{reviewof}\addspace\mkbibemph{#1}}%
@@ -109,7 +101,7 @@
   {\unspace\mkbibbrackets{#1}\addspace}%
 \DeclareFieldFormat[article]{version}{#1\isdot}%
 \DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
-\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}% 1.4.9 platypus don't forget to localize
+\DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}%
 \DeclareFieldFormat{mla:publimedium}{\MakeCapital{#1}}%
 \DeclareFieldFormat{mla:capital}{\MakeCapital{#1}}%
 \DeclareFieldFormat{url}{%
@@ -144,25 +136,24 @@
   \iffieldundef{url}{%
   \mkbibemph{Project Muse}\addcomma\space \printtext[url]{muse.jhu.edu/article/#1}}{%
   \mkbibemph{Project Muse}}}
-% \DeclareFieldFormat{eprint:adelaide}{\mkbibemph{eBooks@Adelaide}}% removed for biblatex-mla-new
 \DeclareFieldFormat{eprint}{\emph{#1}}%
 
 \DeclareFieldFormat{urldate}{#1}%
 \DeclareFieldFormat[article,periodical,review]{volume}{\bibstring{volume}\ppspace#1}% volume of a journal
-\DeclareFieldFormat[article,periodical,review]{number}{\bibstring{number}\ppspace#1}% volume of a journal
+\DeclareFieldFormat[article,periodical,review]{number}{\bibstring{number}\ppspace#1}% number of a journal
 
-\DeclareBibliographyAlias{artwork}{article}% platypus 2.0 mla-new
-\DeclareBibliographyAlias{audio}{article}% platypus 2.0 mla-new
+\DeclareBibliographyAlias{artwork}{article}%
+\DeclareBibliographyAlias{audio}{article}%
 \DeclareBibliographyAlias{booklet}{book}
 \DeclareBibliographyAlias{bookinbook}{incollection}%
 \DeclareBibliographyAlias{collection}{book}
 \DeclareBibliographyAlias{reference}{book}
-\DeclareBibliographyAlias{image}{article}% platypus 2.0 mla-new
+\DeclareBibliographyAlias{image}{article}%
 \DeclareBibliographyAlias{inbook}{incollection}%
-\DeclareBibliographyAlias{letter}{article}% platypus 2.0 mla-new
+\DeclareBibliographyAlias{letter}{article}%
 \DeclareBibliographyAlias{manual}{customa}
 \DeclareBibliographyAlias{misc}{customa}
-\DeclareBibliographyAlias{music}{audio}% platypus 2.0 mla-new
+\DeclareBibliographyAlias{music}{audio}%
 \DeclareBibliographyAlias{online}{article}
 \DeclareBibliographyAlias{patent}{customa}
 \DeclareBibliographyAlias{report}{customa}
@@ -824,7 +815,7 @@
 \newbibmacro{mla:video:localized:last-first}[1]{%
   \ifnameundef{#1}%
     {}%
-    {\printnames{#1}\addcomma\addspace% platypus 2.0 this looks like it could be a problem, since it's hardcoding punctuation
+    {\printnames{#1}\addcomma\addspace%
     \ifthenelse{\iffieldbibstring{#1type} \and \not %
     \iffieldundef{#1type}}%
       {\bibstring{\thefield{#1type}}}%
@@ -836,7 +827,7 @@
 \newbibmacro{mla:video:name:first:footnote}[1]{%
   \ifnameundef{#1}%
     {}%
-    {\printnames[byeditor]{#1}\addcomma\addspace% platypus 2.0 this looks like it could be a problem, since it's hardcoding punctuation
+    {\printnames[byeditor]{#1}\addcomma\addspace%
     \ifthenelse{\iffieldbibstring{#1type} \and \not %
     \iffieldundef{#1type}}%
       {\bibstring{\thefield{#1type}}}%
@@ -953,13 +944,13 @@
       {\usebibmacro{title+stitle}}}}%
 
 \renewbibmacro*{publisher+location+date}{%
-  % \printlist{location}% platypus - removed for edition 8
+  % \printlist{location}% platypus - removed for 1.9... add an option to 2.0 for printing location
   % \iflistundef{publisher}%
     % {\setunit*{\addcomma\space}}%
     % {\setunit*{\addcolon\space}}%
   \printlist{publisher}%
   \newunit%
-  \ifbool{mla@nodate}{\printtext{n.d.}}% platypus-don't forget to localize this string!
+  \ifbool{mla@nodate}{\printtext{n.d.}}%
   \printdate%
   \newunit}
 
@@ -1147,8 +1138,6 @@
      \newunit%
      \printfield{number}\clearfield{number}%
      \newunit%
-     % platypus-mlaarticlejournal\usebibmacro{mla:isbn/issn+doi+eprint}%
-     % \newunit%
      \usebibmacro{issue+date}%
      \newunit\newblock
      \newunit}%
