@@ -159,17 +159,7 @@
 \DeclareBibliographyAlias{report}{customa}
 \DeclareBibliographyAlias{suppcollection}{suppbook}
 
-%%% standalone types
-% -book, -booklet, -collection, -periodical, -proceedings, -reference, -thesis
-
-%%% sources in other works
-% -article, -bookinbook, -incollection, -inproceedings, -inreference, -letter, -review, -suppbook, -suppcollection
-
-%%% other media
-% -artwork, -audio, -image, -music, online, -unpublished, -video
-
 \DeclareFieldAlias[online]{maintitle}{journaltitle}
-% \DeclareFieldAlias[book]{title}{booktitle}
 \DeclareFieldAlias[book]{subtitle}{booksubtitle}
 \DeclareFieldAlias[book]{title}{booktitle}
 
@@ -178,7 +168,6 @@
 \renewcommand*{\finallistdelim}{/}
 \renewcommand*{\newblockpunct}{\addperiod\space}
 \renewcommand*{\andothersdelim}{\ifcitation{}{\addcomma}\addspace}
-% \renewcommand*{\bibpagespunct}{\addperiod\space}
 \renewcommand*{\subtitlepunct}{\ifterm{}{\addcolon}\space}
 
 \newboolean{bbx@mla-incollection}
@@ -1296,25 +1285,6 @@
       %     }
     }      
 }
-
-% ebooks.adelaide.edu.au
-
-% db=a9h
-		   %       \map{% EBSCO eprint MLA database
-		   % \step[fieldsource=url, match={db=mzh}, final]
-		   % \step[fieldset=eprinttype, fieldvalue={\emph{MLA International Bibliography}\addperiod\space EBSCO}]
-		   % \step[fieldset=eprintclass, fieldvalue={mzh}]
-		   %           }
-		   %       \map{% EBSCO eprint LexisNexis database
-		   % \step[fieldsource=url, match={db=fdcaae48}, final]
-		   % \step[fieldset=eprinttype, fieldvalue={\emph{LexisNexis Academic}\addperiod\space EBSCO}]
-		   % \step[fieldset=eprintclass, fieldvalue={fdcaae48}]
-		   %           }
-		   %       \map{% EBSCO eprint Academic Search Complete database
-		   % \step[fieldsource=url, match={db=a9h}, final]
-		   % \step[fieldset=eprinttype, fieldvalue={\emph{Academic Search Complete}\addperiod\space EBSCO}]
-		   % \step[fieldset=eprintclass, fieldvalue={a9h}]
-		   %           }
 
 \endinput
 
