@@ -11,31 +11,23 @@
 
 \begin{document}
 	
-\section{todo} % (fold)
-\label{sec:todo}
-\begin{itemize}
-	\item Toggle for location
-	\item Toggle for remote location
-	\item Toggle for ISBN, etc.
-\end{itemize}
-% section todo (end)
-	
-\section{samples below} % (fold)
-\label{sec:samples_below}
-Just testing.
-
+\section{Sample citations in text}
 Here is a normal citation to an incollection work \autocite[7]{haggis99aa}. We will follow that up with a second citation to the same work \autocite[8]{haggis99aa}. Then we reference a book \autocite[194]{public08aa}. Finally, we reference an online work \autocite{Grammar-Girl2008}.
 
 Here is a citation for a thesis \autocite[22]{webb84aa}. We will cite it a second time \autocite[23]{webb84aa}. Next is a citation for a film \autocite{jhabvala85aa}. We will follow that up with a reference for a reference entry \autocite{reference-noon89aa}. After that is a citation for an entire issue of a journal \autocite{appiah92aa}. Keeping up the theme of unusual entry types, we add a reference for an unpublished work \autocite{salviatiXXaa}. Next we cite a review \autocite[224]{slater01aa}. Finally we reference an anonymous review \autocite[785]{danish1972aa}.
 
 Here is a citation for one work by an author with multiple works \autocite[12]{askme06aa}. We follow it up with a citation for a different work by the same author \autocite[34]{askme92aa}. Next, we show another call back to the first work \autocite[45]{askme06aa}, and we end it with a third reference to the first work \autocite[56]{askme06aa}. Here is a citation for a work with many authors \autocite[34]{Babich:2011dg}. And here is a second citation to the same work \autocite[32]{Babich:2011dg}.
 
-A typical citation \autocite[12]{morrison02aa}. Immediately subsequent citation to the same source \autocite[34]{morrison02aa}. Immediately subsequent citations lacking page reference \autocite{morrison02aa}. Citation to a text by a prolific author \autocite[12]{frye57ab}. Subsequent immediate citations to the same source \autocite[34]{frye57ab}. Citation to new source, same author \autocite[56]{frye91aa}. Citation interrupting those by Frye \autocite[101]{morrison02aa}. Author tracker starts over \autocite[78]{frye91aa}. Suppressing the author's name for an entry with a single attribution to a given author prints only the page numbers \autocite*[102]{morrison02aa}. Suppressing the name of a prolific author will print enough information to avoid ambiguity \autocite*[91]{frye57ab}. Suppressing author's name without a page number prints the title of the work \autocite*{morrison02aa}. Different author citation to reset trackers \autocite[91]{frye91aa}. Typical citation \autocite[12]{morrison02aa}. Citation ignoring the previous citation \mancite\autocite[34]{morrison02aa}.
+A typical citation \autocite[12]{morrison02aa}. Immediately subsequent citation to the same source \autocite[34]{morrison02aa}. Immediately subsequent citations lacking page reference \autocite{morrison02aa}. Citation to a text by a prolific author \autocite[12]{frye57ab}. Subsequent immediate citations to the same source \autocite[34]{frye57ab}. Citation to new source, same author \autocite[56]{frye91aa}.\footnote{The title of the new work ought to be printed here. I've just noticed this error right before submitting 1.9 to CTAN; expect this error to be fixed in the next update.} Citation interrupting those by Frye \autocite[101]{morrison02aa}. Author tracker starts over \autocite[78]{frye91aa}. Suppressing the author's name for an entry with a single attribution to a given author prints only the page numbers \autocite*[102]{morrison02aa}. Suppressing the name of a prolific author will print enough information to avoid ambiguity \autocite*[91]{frye57ab}. Suppressing author's name without a page number prints the title of the work \autocite*{morrison02aa}. Different author citation to reset trackers \autocite[91]{frye91aa}. Typical citation \autocite[12]{morrison02aa}. Citation using \verb|\mancite| to ignore the previous citation \mancite\autocite[34]{morrison02aa}.
+
+\section{Items still incomplete in the transition to version 1.9}
+\begin{itemize}
+	\item Toggle for showing publication location
+	\item Toggle for showing URL
+	\item Toggle for ISBN, etc.
+\end{itemize}
 
 \nocite{*}
-
-% section samples_below (end)
-
 
 \printbibliography
 \end{document}
