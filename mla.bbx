@@ -433,7 +433,7 @@
 \newbibmacro*{mla:reprint}{%
   \iffieldundef{origtitle}%
     {\newunit}%
-    {\iffieldundef{origlanguage}
+    {\iflistundef{origlanguage}
       {\setunit{\newunitpunct\bibstring{reprintof}\addspace}}%
       {\setunit{\newunitpunct\bibstring{transof}\addspace}}%
 }%
