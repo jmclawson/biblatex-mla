@@ -1,21 +1,23 @@
 Changelog for version 2.0
 - changes for compatibility with the 9th edition of the MLA handbook, which is very similar to that of the 8th edition; call "style=mla" to use the new style.
 - renamed support for the older 7th edition; use "style=mla7" to use that older style.
-- added support for skipping style intelligence in source mapping (first added in version 1.9); use "style=mla-strict" to skip all of these.
+- the new "mla-strict" style bypasses attempted intelligence in source mapping first added in version 1.9
 - added additional source mappings to match MLA style 
-- added database support for a custom @mlasource entry type, with two containers designed after the explanations in the MLA Handbook.
-- added support for @manual, @misc, @movie, @patent, and @report entrytypes
-- added "longdash" package option to revert from em-dash to hyphens for repeated author names in the bibliography
-- added "showlocation" package option and entry option to override the default of omitting publisher locations
-- added support for datecirca
+- support added for a new containerized entrytype @mlasource to match the MLA Handbook
+- support added for @manual, @misc, @movie, @patent, and @report entrytypes
+- by default, the bibliography now uses em-dashes instead of hyphens for repeated author names
+- new "longdash=false" package option reverts from em-dash to hyphens for repeated author names in the bibliography
+- new "showlocation" package option and entry option override the default of omitting publisher locations
+- change in function of "totalnames" entry option; now, the number of names in a citation will match the bibliographic entry
+- added default support for "datecirca"; use a tilde after a date to indicate vagueness
 - fixed errors in code to make biblatex-mla work with the current version of Biblatex, especially with dates
 - fixed presentation of multi-volume books
 - fixed problems in presentation of the titleaddon field to accommodate more use cases
-- fixed support for untitled works and works with unformatted titles
-- fixed confusing logic of ibid citations with prenotes (by removing the logic altogether)
-- fixed styling of titles in citations for @bookinbook, @inbook, @mvbook, and @online entries
+- improved support for untitled works and works with unformatted titles
+- removed confusing logic of ibid citations with prenotes
+- corrected styling of titles in citations for @bookinbook, @inbook, @mvbook, and @online entries
 - fixed multiple citation errors using simpler, suggested code from moewe
-- fixed missing booktitle in citations to prolific authors when title undefined
+- added booktitle in citations when title undefined
 - updated localizations for Spanish and Portuguese
 
 Changelog for version 1.9
