@@ -3,7 +3,7 @@ Biblatex-mla provides Biblatex support for references and citations in the
 style defined by the Modern Language Association (MLA). The style is a common
 standard for writers in the humanities and is outlined in the MLA Style Manual
 and the MLA Handbook for Writers of Research Papers. These files follow
-definitions for the 7th and 8th editions of the MLA Handbook.  Before using 
+definitions for the 9th, 8th, and 7th editions of the MLA Handbook.  Before using 
 biblatex-mla, you will need to install Biblatex. Biblatex is commonly 
 included with most installations of LaTeX, but it can also be found at 
 http://www.ctan.org/pkg/biblatex
@@ -11,7 +11,7 @@ http://www.ctan.org/pkg/biblatex
 
 Manual Installation:
 1. Locate your latex installation folder
-	- In OS X, it can be found at 
+	- In OS X, it can probably be found at 
 		~/Library/texmf/tex/latex/
 2. Create a new folder called "biblatex-mla" if there isn't already one there
 3. Place the biblatex-mla files into this folder
@@ -22,12 +22,15 @@ Usage:
 your Latex preface:
 		\usepackage[american]{babel} 
 		\usepackage{csquotes} 
-		\usepackage[style=mla-new]{biblatex}
+		\usepackage[style=mla]{biblatex}
 		\addbibresource{<bibfile>}
-	- (replace "style=mla-new" with "style=mla" if you'd prefer to use the 
-	  style described in the old edition of the Handbook)
+	- (replace "style=mla" with "style=mla7" if you'd prefer to use the 
+	  style described in the older 7th edition of the handbook)
+	- (replace "style=mla" with "style=mla-strict" if you'd prefer to avoid some  
+	  attempted cleverness to apply transformations to entries, including 
+	  publishers, URLs and eprint fields)
 	- (replace "<bibfile>" with the name of your .bib bibliography file)
-	- to use MLA-style footnotes, use the "autocite=footnote" package option
+	- to use MLA-style footnotes (no longer well supported), use the "autocite=footnote" package option
 2. Cite a text with \autocite{<key>}, cite a page with
 \autocite[<page>]{<key>}, and include a citational prenote---"'To be or not to
 be,' he wrote (Shakespeare qtd. in Brown 34)"---with
