@@ -1,6 +1,6 @@
-% english-mla.lbx v0.4.5 2013/03/24
+% english-mla.lbx v2.0 2021/05/12
 
-\ProvidesFile{english-mla.lbx}[2013/03/24 v0.4.5 biblatex style localization] 
+\ProvidesFile{english-mla.lbx}[2021/05/12 v2.0 biblatex style localization] 
 \InheritBibliographyExtras{english}
 
 \DeclareBibliographyExtras{%
@@ -13,17 +13,17 @@
       {}
       {\mkbibmonth{\thefield{#2}}%
        \iffieldundef{#1}{}{\space}}%
-    \mkdatezeros{\thefield{#1}}}%
+    \mkyearzeros{\thefield{#1}}}%
   \protected\def\mkbibdateshort#1#2#3{%
     \iffieldundef{#3}
       {}
-      {\mkdatezeros{\thefield{#3}}%
+      {\mkdayzeros{\thefield{#3}}%
        \iffieldundef{#2}{}{/}}%
     \iffieldundef{#2}
       {}
-      {\mkdatezeros{\thefield{#2}}%
+      {\mkmonthzeros{\thefield{#2}}%
        \iffieldundef{#1}{}{/}}%
-    \mkdatezeros{\thefield{#1}}}%
+    \mkyearzeros{\thefield{#1}}}%
 }
 
 \DeclareBibliographyStrings{% 
@@ -31,21 +31,21 @@
   bibliography     = {{Works Cited}{Works Cited}},
   references       = {{Works Cited}{Works Cited}},
   compilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},% 0.95
-  bycompilerandeditor = {{compiled and edited by}{comp\adddotspace and ed\adddot}},% 0.95
+  bycompilerandeditor = {{compiled and edited by}{compiled and edited by}},% 0.95
   % typecompilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},% 0.7
   % bytypecompilerandeditor = {{compiled and edited by}{comp\adddotspace and ed\adddot}},% 0.7
   % typegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
   % bytypegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
-  generaleditor    = {{general editor}{gen\adddotspace ed\adddot}},
+  generaleditor    = {{gen\adddot ed\adddot}{general editor}},
   bytranslator     = {{translated by}{translated by}},
   byeditor         = {{edited by}{edited by}},
   % byserieseditor   = {{general editor}{general editor}},% not used?
   % page             = {{\unskip}{\unskip}},
   % pages            = {{\unskip}{\unskip}},
-  byeditortr       = {{ed\adddotspace and trans\adddot}{ed\adddotspace and trans\adddot}},
+  byeditortr       = {{ed\adddotspace and trans\adddot}{edited and translated}},
   byeditorco       = {{ed\adddotspace and comm\adddot}{ed\adddotspace and comm\adddot}},
   byeditoran       = {{ed\adddotspace and annot\adddot}{ed\adddotspace and annot\adddot}},
-  byeditorin       = {{ed\adddotspace and introd\adddot}{ed\adddotspace and introd\adddot}},
+  byeditorin       = {{ed\adddotspace and introd\adddot}{edited and introduced by}},
   byeditorfo       = {{ed\adddotspace and forew\adddot}{ed\adddotspace and forew\adddot}},
   byeditoraf       = {{ed\adddotspace and afterw\adddot}{ed\adddotspace and afterw\adddot}},
   byeditortrco     = {{ed, trans\adddot, and comm\adddot}{ed, trans\adddot, and comm\adddot}},
@@ -76,10 +76,11 @@
   bytranslatoranin = {{trans\adddot, annot\adddot, and introd\adddot}{trans\adddot, annot\adddot, and introd\adddot}},
   bytranslatoranfo = {{trans\adddot, annot\adddot, and forew\adddot}{trans\adddot, annot\adddot, and forew\adddot}},
   bytranslatoranaf = {{trans\adddot, annot\adddot, and afterw\adddot}{trans\adddot, annot\adddot, and afterw\adddot}},
+  circa            = {{ca\adddot}{circa}},
   newseries        = {{ns}{ns}},
   oldseries        = {{os}{os}},
   reprintof        = {{reprint of}{rpt\adddotspace of}},% 0.7.1 fixed
-  phdthesis        = {{Diss\adddot}{Diss\adddot}},
+  phdthesis        = {{PhD dissertation}{PhD dissertation}},
   reviewof         = {{rev\adddotspace of}{rev\adddotspace of}},
   specissue        = {{spec\adddot\addspace issue of}{spec\adddot\addspace issue of}},
   section          = {{sec\adddot}{sec\adddot}},
@@ -88,16 +89,27 @@
   withintroduction = {{introd\adddot}{introd\adddot}},
   withforeword     = {{forew\adddot}{forew\adddot}},
   withafterword    = {{afterw\adddot}{afterw\adddot}},
-  phd              = {{Diss\adddot}{Diss\adddot}},
-  dphil            = {{Diss\adddot}{Diss\adddot}},
+  phd              = {{PhD dissertation}{PhD dissertation}},
+  dphil            = {{DPhil dissertation}{DPhil dissertation}},
   lic              = {{Licentiate thesis}{Licentiate thesis}},
-  ma               = {{{MA}\adddotspace thesis}{{MA}\adddotspace thesis}},
-  ms               = {{{MS}\adddotspace thesis}{{MS}\adddotspace thesis}},
-  msc              = {{{MS}c\adddotspace thesis}{{MS}c\adddotspace thesis}},
-  mphil            = {{{MP}hil\adddotspace thesis}{{MP}hil\adddotspace thesis}},
-  mlitt            = {{{ML}itt\adddotspace thesis}{{ML}itt\adddotspace thesis}},
-  manuscript       = {{ms\adddot}{ms\adddot}},
-  typescript       = {{ts\adddot}{ts\adddot}},
+  ma               = {{{MA} thesis}{{MA} thesis}},
+  ms               = {{{MS} thesis}{{MS} thesis}},
+  msc              = {{{MS}c thesis}{{MS}c thesis}},
+  mphil            = {{{MP}hil thesis}{{MP}hil thesis}},
+  mlitt            = {{{ML}itt thesis}{{ML}itt thesis}},
+  manuscript       = {{manuscript}{manuscript}},
+  patentde         = {{Deutsches Patent- und Markenamt}{DE}},
+  patenteu         = {{European Patent Office}{EU}},
+  patentfr         = {{Institut National de la Propriété Industrielle}{FR}},
+  patentuk         = {{The Intellectual Property Office of the United Kingdom}{UK}},
+  patentus         = {{United States Patent and Trademark Office}{US}},
+  % patreq           = {{patent request}{pat\adddot\ req\adddot}},
+  % patreqde         = {{German patent request}{German pat\adddot\ req\adddot}},
+  % patreqeu         = {{European patent request}{European pat\adddot\ req\adddot}},
+  patreqfr         = {{Institut National de la Propriété Industrielle}{FR pat\adddot req\adddot}},
+  % patrequk         = {{British patent request}{British pat\adddot\ req\adddot}},
+  % patrequs         = {{U.S\adddotspace patent request}{U.S\adddotspace pat\adddot\ req\adddot}},
+  typescript       = {{typescript}{typescript}},
   director         = {{dir\adddot}{dir\adddot}},
   screenplay       = {{adapt\adddot}{adapt\adddot}},
   adaptation       = {{adapt\adddot}{adapt\adddot}},
