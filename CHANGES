@@ -1,7 +1,7 @@
 Changelog for version 2.0
 - changes for compatibility with the 9th edition of the MLA handbook, which is very similar to that of the 8th edition; call "style=mla" to use the new style.
 - renamed support for the older 7th edition; use "style=mla7" to use that older style.
-- the new "mla-strict" style bypasses attempted intelligence in source mapping first added in version 1.9
+- the new "style=mla-strict" option bypasses attempted intelligence in source mapping first added in version 1.9
 - added additional source mappings to match MLA style 
 - support added for a new containerized entrytype @mlasource to match the MLA Handbook
 - support added for @manual, @misc, @movie, @patent, and @report entrytypes
