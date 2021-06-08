@@ -1,6 +1,7 @@
 % !TEX TS-program = xelatex
 \documentclass{article}
-\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\setmainfont{Times}
 \usepackage[american]{babel}
 \usepackage{csquotes}
 % \setlength{\parindent}{0.5in}
@@ -16,7 +17,8 @@ urlcolor=black
 \addbibresource{samples.bib}
 
 \begin{document}
-	
+
+\section{Citations to Sources}
 Here is a normal citation to an incollection work \autocite[7]{haggis99aa}. We will follow that up with a second citation to the same work \autocite[8]{haggis99aa}. Then we reference a book \autocite[194]{public08aa}. Finally, we reference an online work \autocite{Grammar-Girl2008}.
 
 Here is a citation for a thesis \autocite[22]{webb84aa}. We will cite it a second time \autocite[23]{webb84aa}. Next is a citation for a film \autocite{jhabvala85aa}. We will follow that up with a reference for a reference entry \autocite{reference-noon89aa}. After that is a citation for an entire issue of a journal \autocite{appiah92aa}. Keeping up the theme of unusual entry types, we add a reference for an unpublished work \autocite{salviatiXXaa}. Next we cite a review \autocite[224]{slater01aa}. Finally we reference an anonymous review \autocite[785]{danish1972aa}.
@@ -25,7 +27,18 @@ Here is a citation for one work by an author with multiple works \autocite[12]{a
 
 Here's a citation for a native MLA-style, nonsemantic entry fashioned from containers \autocite{mla:shaw}. This ``containerized'' type is not generally recommended for widespread use, but it is included here to allow for maximum compatibility with the 9th edition of the \emph{MLA Handbook}. Here's a citation for a patent with the option enabled to show all authors in a citation and entry \autocite[12]{sorace}. Here's a citation for another patent without this option set \autocite[102]{laufenberg}. Here's a citation to a personal interview \autocite{misc:smith}, and here's one to an online lecture \autocite{elkm}.
 
-A typical citation \autocite[12]{morrison02aa}. Immediately subsequent citation to the same source \autocite[34]{morrison02aa}. Immediately subsequent citations lacking page reference \autocite{morrison02aa}. Citation to a text by a prolific author \autocite[12]{frye57ab}. Subsequent immediate citations to the same source \autocite[34]{frye57ab}. Citation to new source, same author \autocite[56]{frye91aa}. Citation interrupting those by Frye \autocite[101]{morrison02aa}. Author tracker starts over \autocite[78]{frye91aa}. Suppressing Morrison's name for an entry with a single attribution to a given author prints only the page numbers \autocite*[102]{morrison02aa}. Suppressing the name of a prolific author like Frye will print enough information to avoid ambiguity \autocite*[91]{frye57ab}. Suppressing Morrison's name without a page number prints the title of the work \autocite*{morrison02aa}. Different author citation to reset trackers \autocite[91]{frye91aa}. Typical citation \autocite[12]{morrison02aa}. Citation using \verb|\mancite| to ignore the previous citation \mancite\autocite[34]{morrison02aa}.
+Here's a book-length work by Tolstoy, showing a citation using non-Latin characters \autocite[22]{tolstoy:kreutzer}. Here's an entry with a general editor \autocite{crane69ab}; notice, too, that the publisher name is automatically truncated. Here's an essay-length work by Tolstoy with the title styled differently \autocite[22]{tolstoy:readers}. 
+
+This is another typical citation \autocite[12]{morrison02aa}. This is an immediately subsequent citation to the same source \autocite[34]{morrison02aa}, followed by an example of immediately subsequent citations lacking page reference \autocite{morrison02aa}. This one shows a citation to a text by a prolific author \autocite[12]{frye57ab}. Subsequent immediate citations to the same source look like this \autocite[34]{frye57ab}. Citations to a different source, same author, look like this \autocite[56]{frye91aa}. A citation to a source by a different author will reset some of these trackers \autocite[101]{morrison02aa}. Another citation to a different author again resets the author tracker \autocite[78]{frye91aa}. Suppressing the author's name for someone like Morrison with only one source in the bibliography will print only the page numbers \autocite*[102]{morrison02aa}. Suppressing the name of a prolific author like Frye will print enough information to avoid ambiguity \autocite*[91]{frye57ab}. Suppressing Morrison's name without a page number prints the title of the work \autocite*{morrison02aa}. Different author citation to reset trackers \autocite[91]{frye91aa}. Typical citation \autocite[12]{morrison02aa}. Citation using \verb|\mancite| to ignore the previous citation \mancite\autocite[34]{morrison02aa}.
+
+\section{Metadata from Sources}
+In addition to the above citations, it is also possible to use commands within a sentence to reference specific metadata for sources without having to look up this metadata directly. Using correct styling, these commands will print the full or shortened names of a work's author(s), the full or shortened title, and the year of publication, respectively: \verb|\citeauthor{}|, \verb|\citeauthor*{}|, \verb|\citetitle{}|, \verb|\citetitle*{}|, and \verb|\citeyear{}|. The starred and unstarred variants of these commands might eventually swap places, so please keep this instability in mind with future updates.
+
+This is the unstarred use of the first command to reference the full names of \citeauthor{appiah92aa}. It is followed by the starred use to cite just the last names of \citeauthor*{appiah92aa}. 
+
+Here's an unstarred command to cite the title of a source with a defined \verb!shorttitle! field: \citetitle{wpa00aa}. Here's the starred version, which prints the long version of the title: \citetitle*{wpa00aa}. Here's the same effect using a work with no short title: \citetitle{librodehorasisabel}. And here's the starred variant of the same source, showing no change: \citetitle*{librodehorasisabel}. The command also works for a title which ought to be printed in quotation marks: \citetitle{Babich:2011dg}. Even though the command appears before the final period, this punctuation is pulled inside the quotation marks when using American localization.
+
+Finally, here's an example showing the year alongside the title and author, using code to explain that our version of \citetitle{interview:amis} by \citeauthor{interview:amis} was published in \citeyear{interview:amis}.
 
 \nocite{*}
 
