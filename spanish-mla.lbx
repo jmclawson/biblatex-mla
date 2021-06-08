@@ -18,17 +18,17 @@
       {}
       {\mkbibmonth{\thefield{#2}}%
        \iffieldundef{#1}{}{\space}}%
-    \mkdatezeros{\thefield{#1}}}%
+    \mkyearzeros{\thefield{#1}}}%
   \protected\def\mkbibdateshort#1#2#3{%
     \iffieldundef{#3}
       {}
-      {\mkdatezeros{\thefield{#3}}%
+      {\mkdayzeros{\thefield{#3}}%
        \iffieldundef{#2}{}{/}}%
     \iffieldundef{#2}
       {}
-      {\mkdatezeros{\thefield{#2}}%
+      {\mkmonthzeros{\thefield{#2}}%
        \iffieldundef{#1}{}{/}}%
-    \mkdatezeros{\thefield{#1}}}%
+    \mkyearzeros{\thefield{#1}}}%
 }
 
 \DeclareBibliographyStrings{%
@@ -91,19 +91,36 @@
   msc              = {{MSc\addabbrvspace tesis}{MSc\addabbrvspace tesis}},% 0.6
   mphil            = {{MPhil\addabbrvspace tesis}{MPhil\addabbrvspace tesis}},% 0.6
   mlitt            = {{MLitt\addabbrvspace tesis}{MLitt\addabbrvspace tesis}},% 0.6
-  %  manuscript       = {{ms\adddot}{ms\adddot}},% FIXME
-  %  typescript       = {{ts\adddot}{ts\adddot}},% FIXME
-  %  director         = {{dir\adddot}{dir\adddot}},% FIXME
-  %  screenplay       = {{adapt\adddot}{adapt\adddot}},% FIXME
-  %  adaptation       = {{adapt\adddot}{adapt\adddot}},% FIXME
-  %  adaptor          = {{adapt\adddot}{adapt\adddot}},% FIXME
-  %  performer        = {{perf\adddot}{perf\adddot}},% FIXME
-  %  performers       = {{perf\adddot}{perf\adddot}},% FIXME
-  %  composer         = {{composer\adddot}{composer\adddot}},% FIXME
-  %  composedby       = {{composed~by}{composed~by}},% FIXME
-  %  producer         = {{prod\adddot}{prod\adddot}},% FIXME
-  %  with             = {{with}{with}},% FIXME
-  %  proceedings      = {{proc\adddot}{proc\adddot}},% FIXME
+  % FIXME 2.0 check the following for quality of Spanish translation
+  manuscript       = {{manuscrito}{manuscrito}},
+  patentde         = {{Deutsches Patent- und Markenamt}{DE}},% localised in German
+  patenteu         = {{Oficina Europea de Patentes}{EU}},
+  patentfr         = {{Institut National de la Propriété Industrielle}{FR}},% localised in French
+  patentuk         = {{The Intellectual Property Office of the United Kingdom}{UK}},% localised in English
+  patentus         = {{United States Patent and Trademark Office}{US}},% localised in English
+  % patreq           = {{patent request}{pat\adddot\ req\adddot}},
+  % patreqde         = {{German patent request}{German pat\adddot\ req\adddot}},
+  % patreqeu         = {{European patent request}{European pat\adddot\ req\adddot}},
+  patreqfr         = {{Institut National de la Propriété Industrielle}{FR pat\adddot req\adddot}},
+  % patrequk         = {{British patent request}{British pat\adddot\ req\adddot}},
+  % patrequs         = {{U.S\adddotspace patent request}{U.S\adddotspace pat\adddot\ req\adddot}},
+  typescript       = {{mecanografiado}{mecanografiado}},
+  director         = {{dir\adddot}{dir\adddot}},
+  screenplay       = {{adapt\adddot}{adapt\adddot}},
+  adaptation       = {{adapt\adddot}{adapt\adddot}},
+  adaptor          = {{adapt\adddot}{adapt\adddot}},
+  performer        = {{ejecutante}{ejecutante},
+  performers       = {{ejecutantes}{ejecutantes},
+  composer         = {{comp\adddot}{comp\adddot}},
+  composedby       = {{compuesto~por}{compuesto~por}},
+  producer         = {{prod\adddot}{prod\adddot}},
+  with             = {{con}{con}},
+  proceedings      = {{actas}{actas}},
+  transof          = {{traducción~de}{traducción~de}},
+  volstodate       = {{volúmenes hasta ahora}{volúmenes hasta ahora}},
+  supptotitle      = {{a}{a}},
+  print            = {{impresión}{impresión}},
+  web              = {{web}{web}},
 }
 
 \endinput
