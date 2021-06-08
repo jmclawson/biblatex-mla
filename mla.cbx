@@ -1,11 +1,13 @@
-% mla-this.cbx, v1.9 2016/11/01 * compatible with biblatex 3.4
-% Maintained at <https://github.com/jmclawson/biblatex-mla> by James Clawson.
+% mla.cbx, v2.0 2021/06/07 * compatible with biblatex 3.16
+% Maintained at <https://github.com/jmclawson/biblatex-mla>.
 %
-% Feel free to improve, redistribute, and adapt to your own ends. Please share improvements in formatting and MLA standards compliance back to James Clawson: <clawson@gmail.com>.
+% Feel free to improve, redistribute, and adapt to your own ends. Please share improvements back to the project on GitHub or to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla-this.cbx}[2016/11/01 v1.9 biblatex citation style]
+\ProvidesFile{mla.cbx}[2021/06/07 v2.0 biblatex citation style]
+
+\RequireCitationStyle{mla-footnotes}
 
 \newboolean{cbx@firstlonghand}%
 \DeclareBibliographyOption{firstlonghand}[true]{\setboolean{cbx@firstlonghand}{#1}}
@@ -23,8 +25,7 @@
     \let\everypar\mypkg@everypar
   }{}}
 
-% The following is taken from biblatex-chicago-notes-df for parity of feature set.  I don't like the naming of the option there ("strict"), so even though consistency trumps (or defines) clarity, I changed the name for now.
-\DeclareBibliographyOption{footnoterulestrict}[true]{% 0.7 renamed
+\DeclareBibliographyOption{footnoterulestrict}[true]{%
   \let\splitfootnoterule\footnoterule
   \renewcommand\footnoterule{}%
   \advance\skip\footins 4\p@\@plus2\p@\relax
@@ -39,7 +40,7 @@
     \xdef\split@prev{\the\insertpenalties}%
   }}
 
-\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=long,urldate=long,mancitepar=false,datezeros=false}%
+\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=comp,urldate=long,mancitepar=false,datezeros=false,datecirca=true,eprint=true}%
 
 \newbool{cbx@named}%
 \newbool{cbx@mlafootnotes}%
@@ -55,7 +56,6 @@
   \global\let\cbx@tempa=\empty
   \global\undef\cbx@lasthash}
 
-% 0.7.1 trying to get \citereset working again after I fiddled around with \InitializeCitationStyle to add mladraft stuff
 \renewcommand*{\citereset}{%
   \usebibmacro{cite:reset}
   \@ifstar
@@ -91,9 +91,7 @@
   \csxdef{cbx@lastcite@\thefield{entrykey}}{\the\value{instcount}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% In-Line Citations %%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newbibmacro*{cite:mla}{%
@@ -128,7 +126,7 @@
       \usebibmacro{cite:mla:title}}%
      {\ifnameundef{labelname}%
         {\global\boolfalse{cbx@named}\usebibmacro{cite:mla:title}}%
-        {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}} %
+        {\ifthenelse{\iffieldequalstr{entrytype}{incollection} \or \iffieldequalstr{entrytype}{inreference} \or \iffieldequalstr{entrytype}{review}}%
            {\ifnameundef{author}%
                {\global\boolfalse{cbx@named}%
                 \usebibmacro{cite:mla:title}}%
@@ -156,10 +154,23 @@
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}}%
 
+\newbibmacro*{just:title:it}{%
+  \iffieldequalstr{entrytype}{mlasource}%
+    {\iffieldundef{titletype}%
+	  {\iffieldundef{titlea}%
+	    {\printtext[bibhyperref]{\printfield[mla:complete]{labeltitle}}}%
+	    {\printtext[bibhyperref]{\printfield[mla:part]{labeltitle}}}}%
+	  {\printtext[bibhyperref]{\printfield[mla:\thefield{titletype}]{labeltitle}}}}%
+	{\ifthenelse{\(\iffieldequalstr{entrytype}{unpublished}\OR\iffieldequalstr{entrytype}{misc}\)%
+    \AND\NOT\iffieldundef{entrysubtype}}% 2.0 added clear (next line)
+	  {\printtext[bibhyperref]{\printfield[citetitle:\strfield{entrysubtype}]{labeltitle}}\clearfield{title}}%
+	  {\iffieldequalstr{entrysubtype}{untitled}%
+	    {\printtext[bibhyperref]{\printfield[noformat]{labeltitle}}}%
+		{\printtext[bibhyperref]{\printfield[citetitle:\strfield{entrytype}]{labeltitle}}}}}}
+
 \newbibmacro*{cite:mla:title}{%
   \ifnameundef{labelname}%
-    {\printtext[bibhyperref]{%
-       \printfield[citetitle:\strfield{entrytype}]{labeltitle}}}%
+    {\usebibmacro{just:title:it}}%
     {\ifsingletitle%
       {}%
       {\usebibmacro{cite:mla:title:internal}}}%
@@ -186,10 +197,9 @@
         {\printtext[bibhyperref]{%
          \printfield[mla:capital]{entrysubtype}}}%
         {}}}%
-    {\printtext[bibhyperref]{%
-       \printfield[citetitle:\strfield{entrytype}]{labeltitle}}}}%
+    {\usebibmacro{just:title:it}}}%
 
-% %%%%%%%%%% for ibid, idem, opcit %%%%%%%%
+%%%%%%%%%%% for ibid, idem, opcit %%%%%%%%
 
 \newbibmacro*{cite:idem}{%
   \ifsingletitle%
@@ -201,20 +211,19 @@
 
 \newbibmacro*{cite:ibid}{%
   \iffieldundef{postnote}%
-    {\usebibmacro{cite:mla:noibid}}%
+    {\usebibmacro{cite:mla:noibid}}% 2.0 - check: add check here to see whether author should be printed?
     {\global\booltrue{cbx@hyperpages}}%
   \usebibmacro{cite:save}%
   \iffieldundef{prenote}%
     {}%
-    {\usebibmacro{cite:mla:noibid}\usebibmacro{cite:reset}}}%
+    {}}% 2.0 removed confusing attempt to disambiguate with prenotes
 
 \renewcommand*{\postnotedelim}{\addspace}%
 
 \renewbibmacro*{postnote}{%
-  \iffieldundef{postnote}
-    {}
-	{\setunit{\addspace}%
-	\ifbool{cbx@hyperpages}%
+  \iffieldundef{postnote}%
+    {}%
+	{\ifbool{cbx@hyperpages}%
       {\printtext[bibhyperref]{\printfield[ibidpostnote]{postnote}}}%
       {\printfield[ibidpostnote]{postnote}}}}%
 
@@ -232,414 +241,6 @@
         {}}%
     {\usebibmacro{postnote}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%% Footnote Citations %%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newbibmacro*{cite:mla:foot}{%
-  \ifciteseen%
-    {\usebibmacro{cite:mla:seen}}%
-    {\ifbool{cbx@nofullfootnote}%
-      {\usebibmacro{cite:mla:seen}}%
-      {\usedriver{}{footcite:\strfield{entrytype}}}%
-    }}
-
-\newbibmacro*{cite:foot:name}{%
-  \global\boolfalse{cbx@named}%
-    \usebibmacro{cite:foot:author/editor}%
-    \savefield{namehash}{\cbx@lasthash}}%
-
-\newbibmacro*{cite:foot:author:review}{%
-  \global\boolfalse{cbx@named}%
-  \ifnameundef{author}%
-    {}%
-    {\usebibmacro{cite:foot:author}%
-      \savefield{namehash}{\cbx@lasthash}%
-      \global\booltrue{cbx@named}%
-    }}%
-
-\newbibmacro*{cite:foot:author/editor}%
-{\ifthenelse{\ifuseauthor\AND\NOT\ifnameundef{author}}%
-  {\usebibmacro{cite:foot:author}}%
-  {\usebibmacro{cite:foot:editor}}}%
-
-\newbibmacro*{cite:foot:author}{%
-  \ifbool{bbx@totalnames}%
-    {\printnames[byauthor][-\value{listtotal}]{author}}%
-    {\printnames[byauthor]{author}}%
-  \clearname{author}\global\booltrue{cbx@named}%
-  \printfield{nameaddon}}
-
-\newbibmacro*{cite:foot:editor}{%
-  \ifthenelse{\ifuseeditor\AND\NOT\ifnameundef{editor}}%
-    {\ifbool{bbx@totalnames}%
-       {\printnames[byeditor][[-\value{listtotal}]]{editor}}%
-       {\printnames[byeditor]{editor}}%
-     \setunit*{\addcomma\space}%
-     \usebibmacro{editorstrg}%
-     \clearname{editor}\global\booltrue{cbx@named}}%
-    {\ifusetranslator%
-       {\printnames[byeditor]{translator}%
-        \setunit*{\addcomma\space}%
-        \usebibmacro{translatorstrg}%
-        \clearname{translator}\global\booltrue{cbx@named}}%
-       {}%
-    }}%
-
-\newbibmacro*{cite:foot:byauthor:incollection}{%
-  \ifthenelse{\ifuseauthor\OR%
-              \ifnameundef{author}\OR%
-              \ifnamesequal{author}{bookauthor}}%
-    {}%
-    {\biblcstring{byauthor}\addspace%
-     \printnames[byauthor]{author}}}
-
-\newbibmacro*{cite:foot:byauthor}{%
-  \ifthenelse{\ifuseauthor\OR%
-              \ifnameundef{author}}%
-    {}%
-    {\bibstring{byauthor}\addspace\printnames[byauthor]{author}}}
-
-\newbibmacro*{cite:foot:bybookauthor}{%
-  \ifthenelse{\ifnameundef{bookauthor}\OR%
-      \(\ifnamesequal{author}{bookauthor}\AND\ifuseauthor\)}%
-    {}%
-    {\bibstring{byauthor}\addspace\printnames[byauthor]{bookauthor}}}
-
-\DeclareBibliographyDriver{footcite:booklet}{%
-  \usedriver{}{footcite:book}}
-
-\DeclareBibliographyDriver{footcite:collection}{%
-  \usedriver{}{footcite:book}}
-
-\DeclareBibliographyDriver{footcite:reference}{%
-  \usedriver{}{footcite:book}}
-
-\DeclareBibliographyDriver{footcite:book}{%
-  \usebibmacro{cite:foot:name}%
-  \ifbool{cbx@named}% 0.7.1
-    {\setunit{\newunitpunct}}%
-    {\setunit{}}%
-  \usebibmacro{cite:foot:title}%
-  \newunit%
-  \usebibmacro{cite:foot:byauthor}%
-  \newunit%
-  \usebibmacro{cite:foot:byeditor}%
-  \newunit%
-  \usebibmacro{cite:foot:bytranslator}%
-  \newunit%
-  \printfield{edition}%
-  \newunit%
-  \iffieldundef{maintitle}%
-    {\printfield{volume}%
-     \printfield{part}}%
-    {}%
-  \newunit%
-  \printfield{volumes}%
-  \newunit%
-  \usebibmacro{series+number}%
-  \setunit{\addspace}%
-  \usebibmacro{cite:foot:publisher+location+year}}
-
-\newbibmacro*{cite:foot:publisher+location+year}{%
-  \printtext[parens]{%
-      \printfield[noformat]{origyear}%
-      \setunit*{\addsemicolon\addspace}%
-      \printlist{location}%
-      \iflistundef{publisher}%
-        {\setunit*{\addspace}}%
-        {\setunit*{\addcolon\space}}%
-      \printlist{publisher}%
-      \newunit%
-      \printfield{year}}}
-
-\DeclareBibliographyDriver{footcite:article}{%
-  \usebibmacro{cite:foot:name}%
-  \newunit%
-  \usebibmacro{cite:foot:title}%
-  \newunit%
-  \usebibmacro{cite:foot:byauthor:incollection}%
-  \newunit%
-  \usebibmacro{cite:foot:bytranslator}%
-  \newunit%
-  \usebibmacro{journal+issuetitle}%
-  \newunit%
-  \iffieldundef{url}{}{\usebibmacro{cite:foot:url+urldate}}%
-  \setunit{\addcolon\addspace}%
-  \iffieldundef{postnote}%
-    {\printfield{pages}}%
-    {}}%
-
-\newbibmacro*{cite:foot:url+urldate}{%
-  \printtext{\biburldatelong}%
-  \setunit{\addspace}%
-  \printfield{url}}
-
-\DeclareBibliographyDriver{footcite:inreference}{%
-  \usedriver{}{footcite:incollection}}
-
-\DeclareBibliographyDriver{footcite:incollection}{%
-  \usebibmacro{cite:foot:name}%
-  \ifbool{cbx@named}% 0.7.1
-    {\setunit{\newunitpunct}}%
-    {\setunit{}}%
-  \ifthenelse{%
-    \iffieldequalstr{entrysubtype}{book}%
-    \OR%
-    \iffieldequalstr{entrysubtype}{play}}%
-      {\usebibmacro{cite:foot:title:incollection:italics}}%
-      {\usebibmacro{cite:foot:title}}%
-  \newunit%
-  \printfield[mla:lowercase]{titleaddon}%
-  \newunit%
-  \usebibmacro{cite:foot:byauthor:incollection}%
-  \newunit%
-  \ifbool{bbx@uniquetranslator}%
-    {\usebibmacro{cite:foot:bytranslator}\clearname{translator}}%
-    {}%
-  \ifthenelse{%
-    \iffieldequalstr{entrysubtype}{book}%
-    \OR%
-    \iffieldequalstr{entrysubtype}{play}}%
-      {\setunit{\addcomma\addspace\bibstring{in}\addspace}}%
-      {\newunit}%
-  \printtext[citetitle:book]{%
-    \printfield[noformat]{booktitle}%
-    \setunit{\subtitlepunct}%
-    \printfield[noformat]{booksubtitle}%
-  }%
-  \usebibmacro{cite:foot:bybookauthor}%
-  \newunit%
-  \usebibmacro{cite:foot:byeditor}% ...check for spacing
-  \newunit%
-  \iffieldsequal{year}{edition}%
-    {\printfield{year}~\bibstring{edition}\clearfield{year}}%
-    {\printfield[foot:cite:edition:format]{edition}\isdot}%
-  \newunit%
-  \iffieldundef{maintitle}%
-    {\printfield{volume}%
-     \printfield{part}}%
-    {}%
-  \newunit%
-  \printfield{volumes}%
-  \newunit%
-  \usebibmacro{series+number}%
-  \setunit{\addspace}%
-  \iffieldundef{year}%
-      {}%
-      {\usebibmacro{cite:foot:publisher+location+year}}%
-  \setunit{\addspace}%
-  \iffieldundef{postnote}%
-    {\printfield{pages}}%
-    {}%
-  }%
-
-\DeclareBibliographyDriver{footcite:phdthesis}{%
-  \usedriver{}{footcite:thesis}}
-
-\DeclareBibliographyDriver{footcite:thesis}{%
-  \usebibmacro{cite:foot:name}%
-  \newunit%
-  \usebibmacro{title}%
-  \newunit%
-  \ifbibstring{\thefield{type}}%
-      {\printtext[default]{\bibstring{\thefield{type}}}}%
-      {\printtext[default]{\printfield{type}}}%
-  \newunit%
-  \printlist{institution}%
-  \newunit%
-  \iffieldequalstr{entrysubtype}{published}%
-    {\printfield{origyear}\clearfield{origyear}}%
-    {\printfield{year}}%
-  \newunit%
-  \iffieldequalstr{entrysubtype}{published}%
-    {\usebibmacro{series+number}%
-      \setunit{\addspace}%
-      \usebibmacro{cite:foot:publisher+location+year}}%
-    {}}
-
-\DeclareBibliographyDriver{footcite:review}{%
-  \usebibmacro{cite:foot:author:review}%
-  \ifbool{cbx@named}%
-    {\setunit{\newunitpunct}}%
-    {\setunit{}}%
-  \usebibmacro{cite:foot:title}%
-  \setunit*{\newunitpunct}%
-  \printtext[bibhyperref]%
-    {\bibstring{reviewof}\addspace\printfield{booktitle}}%
-  \newunit%
-  \ifnameundef{bookauthor}%
-    {\printtext[reviewededitor]{\printnames[default]{editor}}}%
-    {\printtext[reviewedauthor]{\printnames[default]{bookauthor}}}%
-  \newunit%
-  \usebibmacro{journal+issuetitle}%
-  \newunit%
-  \iffieldundef{url}{}{\usebibmacro{cite:foot:url+urldate}}%
-  \setunit{\addcolon\addspace}%
-  \iffieldundef{postnote}%
-    {\printfield{pages}}%
-    {}}%
-
-\DeclareBibliographyDriver{footcite:video}{%
-  \setbool{cbx@named}{false}%
-  \ifnamesequal{labelname}{author}%
-    {\usebibmacro{mla:video:name:first:footnote}{author}%
-     \setbool{cbx@named}{true}}%
-    {}%
-  \ifnamesequal{labelname}{editor}%
-    {\usebibmacro{mla:video:name:first:footnote}{editor}%
-     \setbool{cbx@named}{true}}%
-    {}%
-  \ifbool{cbx@named}%
-    {\setunit{\newunitpunct}}%
-    {\setunit{}}%
-  \printtext[bibhyperref]{\printfield{title}}%
-  \newunit%
-  \ifnameundef{bookauthor}%
-    {}%
-    {\printtext[reviewedauthor]{\printnames[byeditor]{bookauthor}}}%
-  \newunit%
-  \usebibmacro{mla:video:name:second:footnote}{author}%
-  \newunit%
-  \usebibmacro{mla:video:name:second:footnote}{editor}%
-  \newunit%
-  \usebibmacro{mla:video:name:second:footnote}{namea}%
-  \newunit%
-  \usebibmacro{mla:video:name:second:footnote}{nameb}%
-  \newunit%
-  \usebibmacro{mla:video:name:second:footnote}{namec}%
-  \newunit%
-  \printfield{origyear}%
-  \newunit%
-  \printfield{howpublished}%
-  \newunit%
-  \printlist{publisher}%
-  \newunit%
-  \printfield{year}%
-  \addperiod}
-
-\DeclareBibliographyDriver{footcite:suppcollection}{%
-  \usedriver{}{footcite:suppbook}}
-
-\DeclareCiteCommand{\titleandsubtitle}
-  {\boolfalse{citetracker}%
-   \boolfalse{pagetracker}%
-   \usebibmacro{prenote}}
-  {\indexfield{indextitle}%
-   \printtext[citetitle]{%
-     \printfield[noformat]{title}%
-     \iffieldundef{subtitle}{}{\subtitlepunct}%
-     \printfield[noformat]{subtitle}}}%
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\DeclareBibliographyDriver{footcite:suppbook}{%
-  \usebibmacro{cite:foot:name}%
-  \newunit%
-  \usebibmacro{cite:foot:title}%
-  \newunit%
-  \printfield{entrysubtype}%
-  \newunit%
-  \usebibmacro{booktitle}%
-  \setunit{\newunitpunct\bibstring{bytypeauthor}\addspace}%
-  \ifnamesequal{labelname}{bookauthor}% 0.7
-    {\printnames[mla:last]{bookauthor}}%
-    {\printnames[byauthor]{bookauthor}}%
-  \newunit%
-  \usebibmacro{byeditor+others}%
-  \newunit%
-  \printfield{edition}%
-  \newunit%
-  \iffieldundef{maintitle}%
-    {\printfield{volume}%
-     \printfield{part}}%
-    {}%
-  \newunit%
-  \printfield{volumes}%
-  \newunit%
-  \usebibmacro{series+number}%
-  \setunit{\addspace}%
-  \usebibmacro{cite:foot:publisher+location+year}%
-  \setunit{\addspace}%
-  \iffieldundef{postnote}%
-    {\printfield{pages}}%
-    {}}
-
-\DeclareBibliographyDriver{footcite:unpublished}{%
-  \usebibmacro{cite:foot:name}%
-  \newunit%
-  \usebibmacro{mla:title:unpublished}%
-  \newunit%
-  \newunit%
-  \printfield{note}%
-  \newunit%
-  \usebibmacro{mla:all:type:foot}%
-  \setunit*{\isdot\addspace}%
-  \printfield{number}%
-  \newunit%
-  \printfield{library}%
-  \setunit{\addcomma\addspace}%
-  \printlist{location}%
-  \newunit%
-  \printfield{addendum}%
-  \usebibmacro{finentry}}
-
-\DeclareBibliographyDriver{footcite:periodical}{%
-  \usebibmacro{cite:foot:editor}%
-  \setunit{\labelnamepunct}\newblock%
-  \usebibmacro{mla:article:journal+issuetitle}%
-  \newunit\newblock
-  \printfield{note}%
-  \setunit{\addcolon\addspace}\newblock
-  \iffieldundef{postnote}%
-    {\printfield{pages}}%
-    {}%
-  \newunit\newblock
-  \usebibmacro{url+urldate}%
-  \newunit\newblock
-  \printfield{addendum}%
-  \newunit\newblock
-  \usebibmacro{pageref}%
-  \usebibmacro{finentry}}
-
-\newbibmacro*{cite:foot:title}{%
-  \iffieldundef{title}%
-    {}%
-    {\printtext[bibhyperref]{%
-    \printtext[citetitle:\strfield{entrytype}]{%
-      \printfield[noformat]{title}%
-      \setunit{\subtitlepunct}%
-      \printfield[noformat]{subtitle}}}%
-    }}%
-
-\newbibmacro*{cite:foot:title:incollection:italics}{%
-  \printtext[bibhyperref]{%
-    \printtext[title:book]{%
-      \printfield[noformat]{title}%
-      \setunit{\subtitlepunct}%
-      \printfield[noformat]{subtitle}}%
-  }}%
-
-\newbibmacro*{cite:foot:bytranslator}{%
-  \ifnameundef{translator}%
-    {}%
-    {\printtext[default]{\bibstring{bytranslator}\addspace%
-      \printnames[cite:foot:translator]{translator}}}}
-
-\newbibmacro*{cite:foot:byeditor}{%
-  \ifthenelse{\ifnameundef{editor}\OR%
-     \( \iffieldequalstr{entrytype}{collection}\AND%
-       \ifnameundef{author} \)}%
-    {}%
-    {\usebibmacro{byeditor+others}}}
-
-\newbibmacro*{mla:foot:postnote}{%
-  \iffieldundef{postnote}%
-    {\unspace}%
-    {\unspace\addspace\printfield[footpostnote]{postnote}}%
-  \usebibmacro{cite:reset}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Format Declarations %%%%%%%%%%%%%%%%%%
@@ -648,65 +249,48 @@
 \DeclareFieldFormat{citetitle:article}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:inreference}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:book}{\mkbibemph{#1}}
+\DeclareFieldFormat{citetitle:bookinbook}{\mkbibemph{#1}}% NEW in 2.0
 \DeclareFieldFormat{citetitle:booklet}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:incollection}{\mkbibquote{#1}}
-\DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}% 1.4.9
+\DeclareFieldFormat{citetitle:inbook}{\mkbibquote{#1}}% NEW in 2.0
+\DeclareFieldFormat{citetitle:mvbook}{\mkbibemph{#1}}% NEW in 2.0
+\DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}%
 \DeclareFieldFormat{citetitle:inproceedings}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:unpublished}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:thesis}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:video}{\mkbibemph{#1}}
 \DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}%
 \DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
+\DeclareFieldFormat[mlasource]{mla:unstyled}{#1\unspace}%
+\DeclareFieldFormat[mlasource]{mla:complete}{\mkbibemph{#1}\unspace}%
+\DeclareFieldFormat[mlasource]{mla:part}{\mkbibquote{#1}}%
 \DeclareFieldFormat{ibidpostnote}{#1}%
 \DeclareFieldFormat{footpostnote}{#1}%
 \DeclareFieldFormat{mlarepeatedcites}{\fbox{#1}%
   \marginpar{\hfill\footnotesize{$\clubsuit$}}}%
-\@ifpackagelater{biblatex}{2016/03/01}{%
-  \DeclareNameFormat{cite:foot:editor}{%
-    \nameparts{#1}%
-    \usebibmacro{name:given-family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\partnamesuffix}%
-    \usebibmacro{name:andothers}}%
-  \DeclareNameFormat{cite:foot:translator}{%
-    \nameparts{#1}%
-    \usebibmacro{name:given-family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\partnamesuffix}%
-    \usebibmacro{name:andothers}}%
-}{%
-  \DeclareNameFormat{cite:foot:editor}{%
-    \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
-    \usebibmacro{name:andothers}}%
-  \DeclareNameFormat{cite:foot:translator}{%
-    \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
-    \usebibmacro{name:andothers}}%
-}%
-\DeclareFieldFormat{foot:cite:edition:format}{%
-  \ifinteger{#1}%
-    {\mkbibordinal{#1}~\bibstring{edition}}%
-    {\printtext[mla:lowercase]{#1}}}
-\DeclareFieldFormat{supptotitle}%
-  {\bibstring{supptotitle}\addspace\mkbibemph{#1}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% Cite Commands %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% updated for parity with mla-new.cbx
 
 \renewbibmacro*{prenote}{%
-  \iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote}
+  \iffieldundef{prenote}%
+    {\global\undef\cbx@lastprenote}%
     {\printfield{prenote}%
      \prenotedelim%
      \ifthenelse{\iffieldequals{prenote}{\cbx@lastprenote} \and \iffieldequals{entrykey}{\cbx@lastkey}}%
        {}%
-       {\usebibmacro{cite:reset}}%
+       {}%\usebibmacro{cite:reset}}% 2.0 remove "clever" ibid reset with prenotes
      \savefield{prenote}{\cbx@lastprenote}}}
 
 \DeclareCiteCommand{\parencite}[\mkbibparens]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}
-  {}
+  {\multicitedelim}
   {\ifthenelse{\iffieldequals{postnote}{\cbx@lastpostnote} \and \iffieldequals{entrykey}{\cbx@lastkey}}%
     {\usebibmacro{locpostnote}}%
     {\usebibmacro{postnote}}%
@@ -716,47 +300,43 @@
   {\global\undef\cbx@lasthash\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
-  {}
+  {\multicitedelim}
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand{\cite}% 1.9 added support for smart switching when used in footnote
-  {\iffootnote{\iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote
-	\printtext{See\addspace}}}
-	\usebibmacro{prenote}}%
+\newbibmacro{mla:prenote:see}{% Suggested by moewe on StackExchange
+  \iffootnote
+    {\iffieldundef{prenote}
+       {\global\undef\cbx@lastprenote
+        \printtext{See\addspace}}
+       {\usebibmacro{prenote}}}
+    {}}
+
+\DeclareCiteCommand{\cite}%
+  {\usebibmacro{mla:prenote:see}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}%
-  {}%
+  {\multicitedelim}%
   {\usebibmacro{postnote}}
   
-\DeclareCiteCommand{\textcite}
-  {\iffootnote{\iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote
-	\printtext{See\addspace}}}
-	\usebibmacro{prenote}}%
+\DeclareCiteCommand{\textcite}%
+  {\usebibmacro{mla:prenote:see}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla}}%
-  {}%
+  {\multicitedelim}%
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand{\headlesscite}% 1.9 added alias to starred command for Chicago compatibility
-  {\iffootnote{\iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote
-	\printtext{See\addspace}}}
-	\usebibmacro{prenote}}%
+\DeclareCiteCommand{\headlesscite}%
+  {\usebibmacro{mla:prenote:see}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
-  {}%
+  {\multicitedelim}%
   {\usebibmacro{postnote}}
 
-\DeclareCiteCommand*{\cite}% 1.9 added support for smart switching when used in footnote
-  {\iffootnote{\iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote
-	\printtext{See\addspace}}}
-	\usebibmacro{prenote}}%
+\DeclareCiteCommand*{\cite}%
+  {\usebibmacro{mla:prenote:see}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
-  {}%
+  {\multicitedelim}%
   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand{\footcite}[\mkbibfootnote]
@@ -767,24 +347,18 @@
    \global\booltrue{cbx@mlafootnotes}%
    \renewcommand*{\newunitpunct}{\addcomma\space}%
    \usebibmacro{cite:mla:foot}}
-  {}
+  {\multicitedelim}
   {\usebibmacro{mla:foot:postnote}}
 
-\DeclareCiteCommand{\fullcite}%
-  {\iffootnote{\iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote
-	\printtext{See\addspace}}}
-	\usebibmacro{prenote}}%
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{mla:prenote:see}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:title}}
   {}%
   {\usebibmacro{postnote}}
 
 \DeclareCiteCommand{\headlessfullcite}
-  {\iffootnote{\iffieldundef{prenote}
-    {\global\undef\cbx@lastprenote
-	\printtext{See\addspace}}}
-	\usebibmacro{prenote}}%
+  {\usebibmacro{mla:prenote:see}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:mla:starred:title}}
   {}%
@@ -799,21 +373,82 @@
        {\printnames{author}%
         \savefield{namehash}{\cbx@lasthash}}}
     {\let\cbx@lasthash\undefined}}}
-
-% \DeclareCiteCommand{\fullcite}
-%   {\usebibmacro{mla:fullcite:prenote}\usebibmacro{prenote}}
-%   {\usedriver
-%      {\DeclareNameAlias{sortname}{default}\DeclareNameAlias{default}{last-first}}
-%      {\thefield{entrytype}}}
-%   {\multicitedelim}
-%   {\usebibmacro{postnote}}
-
-\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]%
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite:mla}}
+ 
+ \DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]% 2.0 changed to align with footcite
+   {\bibsentence%
+    \usebibmacro{cite:init}%
+    \usebibmacro{prenote}}
+   {\usebibmacro{citeindex}%
+    \global\booltrue{cbx@mlafootnotes}%
+    \renewcommand*{\newunitpunct}{\addcomma\space}%
+    \usebibmacro{cite:mla:foot}}
+   {\multicitedelim}
+   {\usebibmacro{mla:foot:postnote}}
+   
+\DeclareCiteCommand{\titleandsubtitle}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\indexfield{indextitle}%
+   \printtext[bibhyperref]{\printtext[citetitle]{% 2.0 added hyperref
+     \printfield[noformat]{title}%
+     \iffieldundef{subtitle}{}{\subtitlepunct}%
+     \printfield[noformat]{subtitle}}}}%
   {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
+  {\usebibmacro{postnote}}
+  
+\DeclareCiteCommand{\citeauthor}%
+  {\usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexnames{labelname}}
+     {}%
+   \printnames[given-family]{labelname}%FUTURE add check for citeseen (to print first name on first mention)
+   }
+  {\multicitedelim}
+  {\usebibmacro{postnote}\usebibmacro{cite:save}}
+  
+\DeclareCiteCommand*{\citeauthor}%
+  {\usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexnames{labelname}}
+     {}%
+   \printnames[family]{labelname}%
+   % \ifentryseen{labelname}%FUTURE skeleton to check for first mention - doesn't work just now
+   %   {\printnames{labelname}}% TRUE
+   %   {\printnames[given-family]{labelname}}% FALSE
+   }
+  {\multicitedelim}
+  {\usebibmacro{postnote}\usebibmacro{cite:save}}
+
+\DeclareCiteCommand{\citetitle}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexfield{indextitle}}
+     {}%
+   \ifthenelse{\iffieldequalstr{entrytype}{unpublished}%
+   			   \AND\NOT%
+   			   \iffieldundef{entrysubtype}}%
+     {\printfield[citetitle:\strfield{entrysubtype}]{labeltitle}}%
+	 {\printfield[citetitle]{labeltitle}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand*{\citetitle}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexfield{indextitle}}
+     {}%
+   \ifthenelse{\iffieldequalstr{entrytype}{unpublished}%
+   			   \AND\NOT%
+   			   \iffieldundef{entrysubtype}}%
+     {\printfield[citetitle:\strfield{entrysubtype}]{title}}%
+	 {\printfield[citetitle]{title}}}%
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
 
 \newbibmacro*{cite:mla:starred:title}{%
   \ifciteibid
@@ -830,11 +465,16 @@
 
 \newbibmacro*{cite:mla:title:alone}{%
   \printtext[bibhyperref]{% suggested by StackExchange user Audrey
-  \printfield[citetitle:\strfield{entrytype}]{labeltitle}}%
-  \ifthenelse{\iffieldequalstr{entrytype}{suppbook}\and\iffieldundef{title}}%
-    {\printtext[bibhyperref]{%
-      \printfield[mla:capital]{entrysubtype}}}%
-    {}}
+  \ifthenelse{%
+    \iffieldequalstr{entrytype}{unpublished}\AND\NOT\iffieldundef{entrysubtype}%
+	}%
+	{\printfield[citetitle:\strfield{entrysubtype}]{labeltitle}}%
+	{\ifthenelse{\iffieldequalstr{entrytype}{suppbook}\and\iffieldundef{title}}%
+    	{\printtext[bibhyperref]{%
+		  \printfield[mla:capital]{entrysubtype}}}%
+    	{\printfield[citetitle:\strfield{entrytype}]{labeltitle}}}%
+  }%
+}
 
 
 \endinput
