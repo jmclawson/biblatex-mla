@@ -19,6 +19,7 @@ Changelog for version 2.0
 - fixed multiple citation errors using simpler, suggested code from moewe
 - added booktitle in citations when title undefined
 - updated localizations for Spanish and Portuguese
+- improved documentation
 
 Changelog for version 1.9
 - changes for compatibility with the latest MLA edition; use "style=mla-new" to change the Works Cited to the new style
