@@ -196,7 +196,10 @@
          \OR\iffieldequalstr{entrytype}{suppcollection}}%
         {\printtext[bibhyperref]{%
          \printfield[mla:capital]{entrysubtype}}}%
-        {}}}%
+        {\iffieldundef{booktitle}% 2.0 fallback to print booktitle
+		  {}%
+		  {\printfield{booktitle}}%
+		}}}%
     {\usebibmacro{just:title:it}}}%
 
 %%%%%%%%%%% for ibid, idem, opcit %%%%%%%%
