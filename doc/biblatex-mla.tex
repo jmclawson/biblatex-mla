@@ -1,14 +1,12 @@
-% biblatex-mla.tex v1.9 2016/11/01
+% biblatex-mla.tex v2.0 2021/06/07
 % Maintained at <https://github.com/jmclawson/biblatex-mla/> by James Clawson.
 %
 % This material is subject to the LaTeX Project Public License. Feel free to improve, redistribute, and adapt to your own ends, as allowed by that license. (See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for license details.) For inclusion in future versions, please share improvements in formatting and MLA standards compliance back to James Clawson: <biblatex-mla@konx.net>.
-%
-% File is in constant progress. Things are messy. Ignore platypi.
 
-\documentclass{ltxdockit}[2011/03/25]
+\documentclass{ltxdockit}
 \usepackage{xcolor}
-\usepackage{btxdockit}
-\usepackage[latin9]{inputenc}
+% \usepackage{btxdockit}
+% \usepackage[latin9]{inputenc}
 \usepackage[american]{babel}
 \usepackage[strict]{csquotes}
 \usepackage[style=mla,mancitepar=false]{biblatex}
@@ -88,8 +86,8 @@ citecolor=black,%
   subtitle={\mla{} Style Using \biblatex},
   url={\biblatexmlahome},
   author={James Clawson},
-  email={biblatex-mla@konx.net},
-  revision={1.9},
+  email={},%},
+  revision={2.0},
   date={\today}}
 
 \hypersetup{%
@@ -101,6 +99,9 @@ citecolor=black,%
 % colors
 
 \definecolor{spot}{rgb}{1,0.5,0}
+\definecolor{new}{rgb}{0,0.5,1}
+
+\newcommand*{\newthis}{\textbf{\textcolor{new}{|(new in 2.0)|}} }
 
 % tables
 
@@ -175,7 +176,7 @@ citecolor=black,%
 
 \renewcommand*{\multinamedelim}{\addspace\bibstring{and}\space}
 
-\newcommand{\mlafullexample}[2]{\newline%
+\newcommand{\mlafullexample}[2]{%\newline%
 \mlabibbox{orange}{\begin{description}\item\mlaexample{#1}\end{description}}%
 \normalfont{#2}\selectlanguage{american}%
 \mlaprintbox{white}{\begin{description}\item\normalfont\fullcite{#1}\end{description}}}
@@ -286,14 +287,14 @@ citecolor=black,%
 % subsection examples (end)
 
 \section{Version Note}
-This beta update is for testing compatibility with the 8\superscript{th} edition of the \emph{MLA Handbook}, published April 2016. This current version supports both the old edition (by using \sty{style=mla} in the preamble) and the newer edition (using \sty{style=mla-new}); an upcoming version of \biblatexmla will deprecate support for the 7\superscript{th} edition in favor of the 8\superscript{th}. See \secref{mla:sec:use} for more on switching between editions.
+This update is to improve compatibility with the 9\superscript{th} edition of the \emph{MLA Handbook}, published April 2021. See \secref{mla:sec:use} for more on switching between editions.
 
 \section{Introduction}
 \label{int}
 
 \Biblatexmla provides support to \biblatex, \bibtex, and \latex for citations and Works Cited lists in the style established by the Modern Language Association (\mla). For commands and options to change package defaults, see \secref{mla:subsec:commands} and \secref{mla:subsec:options}, respectively, below.
 
-\mla style, a common standard for writers in the humanities, is outlined in the \emph{MLA Style Manual}, in its 3\superscript{rd} edition, and the \emph{MLA Handbook for Writers of Research Papers}, now in its 8\superscript{th} edition. \Biblatexmla follows the style outlined in the latter of these. It also follows the logic of the \mla{} when citing similar material repeatedly, trimming unnecessary information from citations where necessary. \Biblatexmla is compatible with \biblatex's support for \sty{hyperref} and \sty{tex4ht}, and the main word in each citation (either the author's name, the title, or the page number) serves as a link to the particular entry in the Works Cited. For anything not covered by this manual, please also see the \biblatex documentation or contact me by email.
+\mla style, a common standard for writers in the humanities, is outlined in the \emph{MLA Style Manual}, in its 3\superscript{rd} edition, and the \emph{MLA Handbook for Writers of Research Papers}, now in its 9\superscript{th} edition. \Biblatexmla follows the style outlined in the latter of these. It also follows the logic of the \mla{} when citing similar material repeatedly, trimming unnecessary information from citations where necessary. \Biblatexmla is compatible with \biblatex's support for \sty{hyperref} and \sty{tex4ht}, and the main word in each citation (either the author's name, the title, or the page number) serves as a link to the particular entry in the Works Cited. For anything not covered by this manual, please also see the \biblatex documentation or reach out via GitHub.
 
 \newpage
 \section{Use}
@@ -301,19 +302,10 @@ This beta update is for testing compatibility with the 8\superscript{th} edition
 
 To ensure American-style quotation marks (if that's your thing),%
 %%
-\footnote{Other localization files, \sty{mla-spanish.lbx}, \sty{mla-portuguese.lbx}, and \sty{mla-italian.lbx}, are also available to use \biblatexmla in languages other than English. These and other localization files are included in \biblatexmla releases, but they will not always be the latest versions available. Updated and new localization files will be kept on GitHub (\mylink{\biblatexmlahome}) once they are ready. There is also support for proper punctuation in non-American dialects of English. Try \mycode{british}, \mycode{canadian}, or other Babel identifiers, such as \mycode{spanish}.} %
+\footnote{Other localization files, \sty{mla-spanish.lbx}, \sty{mla-portuguese.lbx}, and \sty{mla-italian.lbx}, are also available to use \biblatexmla in languages other than English. These and other localization files are included in \biblatexmla releases, but they have fallen out of sync with the English versions. The latest version of these files will be kept on GitHub (\mylink{\biblatexmlahome}); new translations are welcome. There is also support for proper punctuation in non-American dialects of English. Try \mycode{british}, \mycode{canadian}, or other Babel identifiers, such as \mycode{spanish}.} %
 %%
-you need to call the \sty{babel} and \sty{csquotes} packages in the preamble
+call the \sty{babel} and \sty{csquotes} packages in the preamble
 of your \latex document:
-\begin{quote}
-	\begin{verbatim}
-		\usepackage[american]{babel}
-		\usepackage{csquotes}
-		\usepackage[style=mla-new]{biblatex}
-		\addbibresource{<bibfile.bib>}
-	\end{verbatim}	
-\end{quote}
-To use the style called for by the previous (7\superscript{th}) edition of the \emph{MLA Handbook}, drop the ``new'' from the third line: 
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[american]{babel}
@@ -323,15 +315,42 @@ To use the style called for by the previous (7\superscript{th}) edition of the \
 	\end{verbatim}	
 \end{quote}
 
-Replace <|<bibfile.bib>|> with the name of your .bib bibliography file. The style (provisionally) supports footnote citations with the \mycode{autocite=footnote} package option. Some of the other options supported by \biblatexmla include \mycode{firstlonghand}, \mycode{mladraft}, \mycode{annotation}, \mycode{noremoteinfo}, \mycode{nofullfootnote}, \mycode{publimedium}, and \mycode{guessmedium}, all discussed in \secref{mla:subsec:options}.
+By default, \biblatexmla will transform some data in ways preferred by \mla style: for example, URLs will omit protocol prefixes like |http://|, some URLs will be converted to eprint entries, and publisher names will be simplified to abbreviate ``University Press'' to ``UP.'' To skip these transformations, change the style referenced in the third line to \textbf{|mla-strict|}:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[american]{babel}
+		\usepackage{csquotes}
+		\usepackage[style=mla-strict]{biblatex}
+		\addbibresource{<bibfile.bib>}
+	\end{verbatim}	
+\end{quote}
+
+To use the older style called for by the 7\superscript{th} edition of the \emph{MLA Handbook}, change this line to \textbf{|mla7|}: 
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[american]{babel}
+		\usepackage{csquotes}
+		\usepackage[style=mla7]{biblatex}
+		\addbibresource{<bibfile.bib>}
+	\end{verbatim}	
+\end{quote}
+
+Replace <|<bibfile.bib>|> with the name of your .bib bibliography file. The style (provisionally) supports footnote citations with the \mycode{autocite=footnote} package option. Some of the other options supported by \biblatexmla include \mycode{firstlonghand}, \mycode{noremoteinfo}, \mycode{showlocation}, and others discussed in \secref{mla:subsec:options}.
 
 
-\subsection{Citation commands}
+\subsection{Commands}
 \label{mla:subsec:commands}
 
 The standard commands for \biblatexmla generally follow those defined by \biblatex. Included below are the most typical commands. For more commands and options, reference the \biblatex manual.
 
+\subsubsection{Typical Commands}
+\label{mla:subsubsec:typical}
+
 \begin{commandlist}
+
+\commanditem{printbibliography}
+
+Insert the list of Works Cited; typically used at the end of a document. As may be expected, this command will print a bibliography including full, alphabetized, MLA-style entries for every source cited using one of the below citation commands.
 
 \commanditem{autocite}
 	
@@ -363,9 +382,7 @@ When citing a page number without any prenote, only one set of square brackets i
 	\end{verbatim}	
 \end{quote}
 
-\commanditem{autocite*}
-
-Suppress the author's name in a citation. See \tabref{use:cit:all} for examples. Use this starred variant of the above command when indicating the author's name in the sentence calling the citation.
+To omit the name of the author (or editor) responsible for the source when they've already been named in the sentence, use the starred version (\cmd{autocite*[z][y]\{x\}}) of this command.
 
 \commanditem{autocites}
 
@@ -377,43 +394,21 @@ Insert a citation for multiple sources at once. The respective citations will be
 \end{quote}
 The curled braces always indicate the bibkey, and the squared braces respectively belong to the curly braces that follow them.
 
-\commanditem{cite}
+\commanditem{parencite}
 
-Insert a citation without parentheses.
+Insert a citation inside parentheses. Indicate page numbers and any prenote like ``qtd.\ in'' in the spaces marked |y| and |z| below, respectively: 
 
-\commanditem{cite*}
+\begin{quote}
+	\begin{verbatim}
+		\parencite[z][y]{x} 
+	\end{verbatim}	
+\end{quote}
 
-Insert a citation without parentheses and without the author's name.
+All of these citation commands follow the pattern described above for |\autocite{}|, which is the preferred citation command to use. To omit the source author or editor, use the starred version of this command: \cmd{parencite*[z][y]\{x\}}
 
-\commanditem{headlesscite}
+\commanditem{footcite}
 
-Suppress the author's name in a citation. This command is an alias to \cmd{autocite*} to make it easier to use \biblatexmla with \biblatexcms.
-
-\commanditem{textcite}
-
-Print a citation without parentheses. This command may be useful in certain circumstances, such as a citation that must come within a parenthetical aside.
-
-% (these commands aren't yet working.)
-% 
-% \commanditem{fullcite}
-%
-% Print a full citation where a shortened citation might otherwise come.
-%
-% \commanditem{headlessfullcite}
-%
-% Except for the author's name, print a nearly-full citation where a shortened citation might otherwise come.
-
-\commanditem{mancite}
-
-Reset most trackers that shorten subsequent citations. See \tabref{use:cit:all} for an example. If \biblatexmla is getting so ambitious in shortening subsequent citations that it leads to ambiguity, use this command before the ambiguous citation.
-
-\commanditem{citereset}
-
-Reset all citation trackers for \biblatexmla.%
-
-\commanditem{printbibliography}
-
-Insert the list of Works Cited.
+Insert a citation in a footnote. The |\footcite| command should be reserved for occasional use in favor of the general use of |\autocite| with the package option |autocite=footnote|, mentioned above. To omit the name of the author or editor, use the starred version of this command: \cmd{footcite*[z][y]\{x\}}
 
 \end{commandlist}
 
@@ -469,6 +464,63 @@ Insert the list of Works Cited.
 \label{use:cit:all}
 \end{table}
 
+\clearpage
+
+\subsubsection{In-Text Commands}
+\label{mla:subsubsec:intext}
+
+\begin{commandlist}
+
+\commanditem{cite}
+
+Insert a citation without parentheses or footnote styling. These kinds of citations aren't often used in writing for \mla{}-related fields, but the command may be useful within a parenthetical aside or a footnote. To omit the name of the author or editor, use the starred version of this command: \cmd{cite*[z][y]\{x\}}
+	
+\commanditem{citeauthor}
+
+Print the names of the author(s) or editor(s) associated with a source. In its current form, the unstarred command will always print given and family names, while the starred variant (\cmd{citeauthor*\{x\}}) will omit given names.
+
+\commanditem{citetitle}
+
+Print the title of a source. The unstarred version will print the |shorttitle| if it is available; the starred version (\cmd{citetitle*\{x\}}) will always print the full title.
+
+\commanditem{citeyear}
+
+Print the year associated with a source.
+
+% (these commands aren't yet working.)
+% 
+% \commanditem{fullcite}
+%
+% Print a full citation where a shortened citation might otherwise come.
+%
+% \commanditem{headlessfullcite}
+%
+% Except for the author's name, print a nearly-full citation where a shortened citation might otherwise come.
+
+\end{commandlist}
+
+\subsubsection{Special Commands}
+\label{mla:subsubsec:special}
+
+\begin{commandlist}
+
+\commanditem{mancite}
+
+Reset most trackers that would shorten subsequent citations. See \tabref{use:cit:all} for an example. If \biblatexmla{}'s ambition to shorten citations leads to ambiguity, using this command before a citation should print the longer version.
+
+\commanditem{citereset}
+
+Reset all citation trackers for \biblatexmla.%
+
+\commanditem{headlesscite}
+
+Suppress the author's name in a citation. This command provides an alias to \cmd{autocite*} to make it easier for anyone using \biblatexmla and \biblatexcms interchangeably.
+
+\commanditem{textcite}
+
+An alias to |\cite|, above.
+
+\end{commandlist}
 
 \subsection{Package Options}
 \label{mla:subsec:options}
@@ -476,30 +528,14 @@ Insert the list of Works Cited.
 \Biblatexmla defaults to the recommendations established by the \mla{}, but there may be times when it is appropriate to change some of these options for publication or other uses. Package options change the default functionality of \biblatexmla.
 
 \begin{optionslist}
-\optionitem{autocite=footnote}
-
-Using \mycommand{autocite} with biblatex-mla defaults to \mla{}-preferred inline, parenthetical citations. To style citations as footnotes, set the \mycode{autocite=footnote} option in your preamble:
-\begin{quote}
-	\begin{verbatim}
-		\usepackage[style=mla,autocite=footnote]{biblatex} 
-	\end{verbatim}	
-\end{quote}
-
-\optionitem{firstlonghand}\label{mla:internal:firstlonghand}
-The first citation of a source with a shorthand defined will always print a citation with author's name and, potentially, the \sty{shorttitle} field. (For more on this field, see section \secref{mla:subsec:unnusualfields}, below.) Add \mycode{firstlonghand=false} to your preamble to disable this option and print only the shorthand even on the first citation:
-\begin{quote}
-	\begin{verbatim}
-		\usepackage[style=mla,firstlonghand=false]{biblatex} 
-	\end{verbatim}	
-\end{quote}
-
-\optionitem{nofullfootnote}\label{mla:internal:nofullfootnote}
-When using biblatex-mla for footnotes, the style file will provide full bibliographic detail for the first citation of every source. To turn off this option, add to your preamble \mycode{nofullfootnote}:
-\begin{quote}
-	\begin{verbatim}
-		\usepackage[style=mla,autocite=footnote,nofullfootnote]{biblatex} 
-	\end{verbatim}	
-\end{quote}
+% \optionitem{autocite=footnote}
+%
+% Using \mycommand{autocite} with biblatex-mla defaults to \mla{}-preferred inline, parenthetical citations. To style citations as footnotes, set the \mycode{autocite=footnote} option in your preamble:
+% \begin{quote}
+% 	\begin{verbatim}
+% 		\usepackage[style=mla,autocite=footnote]{biblatex}
+% 	\end{verbatim}
+% \end{quote}
 
 \optionitem{annotation}
 It is possible to print annotations to entries in the Works Cited if the \mycode{annotation} field is defined in an entry. To turn on this option, add \mycode{annotation=true} to your
@@ -510,35 +546,29 @@ preamble:
 	\end{verbatim}	
 \end{quote}
 
-\optionitem{mladraft}
-When using \mla{} parenthetical citations, it is best practice to cite only when necessary to avoid ambiguity. \Biblatexmla can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \biblatexmla will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
+\optionitem{firstlonghand}\label{mla:internal:firstlonghand}
+The first citation of a source with a shorthand defined will always print a citation with author's name and, potentially, the \sty{shorttitle} field. (For more on this field, see section \secref{mla:subsec:unnusualfields}, below.) Add \mycode{firstlonghand=false} to your preamble to disable this option and print only the shorthand even on the first citation:
 \begin{quote}
 	\begin{verbatim}
-		\usepackage[style=mla,mladraft=true]{biblatex}
+		\usepackage[style=mla,firstlonghand=false]{biblatex} 
 	\end{verbatim}	
 \end{quote}
-
-\optionitem{noremoteinfo}\label{mla:internal:noremoteinfo}
-Modeled after the implementation in biblatex-apa to suppress remote information in the \sty{.bib} file from being printed in the bibliography, this option affects \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint} fields.
-\begin{quote}
-	\begin{verbatim}
-		\usepackage[style=mla,noremoteinfo=true]{biblatex}
-	\end{verbatim}	
-\end{quote}
-
-\optionitem{showmedium}
-\Biblatexmla version 0.9 introduced support for the 3\superscript{rd} edition of the \emph{Style Manual}, requiring the publication medium of each entry to be printed in the list of Works Cited. By default, \biblatexmla will do the same, using the \sty{howpublished} field. Turn off this option---and the other new changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
-\begin{quote}
-	\begin{verbatim}
-		\usepackage[style=mla,showmedium=false]{biblatex}
-	\end{verbatim}	
-\end{quote}
+% \noindent\begin{minipage}{\linewidth}
+% \end{minipage}
 
 \optionitem{guessmedium}
-An entry with no defined \sty{howpublished} field will default either to a <Web> publication (if there's a defined \sty{url} field or \sty{eprint} field) or a <Print> publication (if there's not). To avoid \biblatexmla guessing the publication medium, thereby printing nothing when the field is undefined, deactivate the \mycode{guessmedium} option:
+When using the |style=mla7| option, an entry with no defined \sty{howpublished} field will default either to a <Web> publication (if there's a defined \sty{url} field or \sty{eprint} field) or a <Print> publication (if there's not). To avoid \biblatexmla guessing the publication medium, thereby printing nothing when the field is undefined, deactivate the \mycode{guessmedium} option:
 \begin{quote}
 	\begin{verbatim}
-		\usepackage[style=mla,guessmedium=false]{biblatex}
+		\usepackage[style=mla7,guessmedium=false]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{longdash}\label{mla:internal:longdash}
+\newthis The 9\superscript{th} edition of the \emph{\mla Handbook} clarifies that dashes indicating multiple entries by one author can either be styled wih three em-dashes or three hyphens. From version 2.0, \biblatexmla defaults to em-dashes, but setting |longdash| to false in the document header reverts to using hyphens:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,longdash=false]{biblatex}
 	\end{verbatim}	
 \end{quote}
 
@@ -550,6 +580,55 @@ Although perhaps they should, the author trackers in \biblatexmla do not by defa
 	\end{verbatim}	
 \end{quote}
 
+\optionitem{mladraft}
+When using \mla{} parenthetical citations, it is best practice to cite only when necessary to avoid ambiguity. \Biblatexmla can flag consecutive citations to the same page range, allowing you to defer citations to the end. In draft mode, \biblatexmla will place a clover ($\clubsuit$) in the margin, along with a single footnote explanation. To use the tool outside of draft mode, set the \mycode{mladraft} option in your preamble to true; similarly, to avoid seeing these clovers and the footnote in draft mode, set the option to false:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,mladraft=true]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{nofullfootnote}\label{mla:internal:nofullfootnote}
+When using \biblatexmla for footnotes, the style file will provide full bibliographic detail for the first citation of every source. To turn off this option, add to your preamble \mycode{nofullfootnote}:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,autocite=footnote,nofullfootnote]{biblatex} 
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{noremoteinfo}\label{mla:internal:noremoteinfo}
+Modeled after the implementation in |biblatex-apa| to suppress remote information in the \sty{.bib} file from being printed in the bibliography, this option affects \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint} fields.
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,noremoteinfo=true]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{showlocation}\label{mla:internal:showlocation}
+\newthis The 8\superscript{th} and 9\superscript{th} editions of the \emph{\mla Handbook} advise witholding publication location for most entries, so \biblatexmla omits showing the |location| field for many entry types. To show these location fields for all sources when they exist, use the |showlocation| option in the document header:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla,showlocation=true]{biblatex}
+	\end{verbatim}	
+\end{quote}
+
+Alternatively, selectively show the location for individual entries by defining the |options| field in the |.bib| file:
+\begin{quote}
+	\begin{verbatim}
+		@book{dewey99aa,
+		  ...
+		  options = {showlocation=true}
+		}
+	\end{verbatim}	
+\end{quote}
+
+\optionitem{showmedium}
+When using the |style=mla7| option, \biblatexmla will print the publication medium at the end of each entry in the list of Works Cited. Turn off this option---and some other new changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
+\begin{quote}
+	\begin{verbatim}
+		\usepackage[style=mla7,showmedium=false]{biblatex}
+	\end{verbatim}	
+\end{quote}
 
 \end{optionslist}
 
@@ -558,23 +637,23 @@ Although perhaps they should, the author trackers in \biblatexmla do not by defa
 
 % I lost my original documentation files, including original style files I created to maintain them, so I'm transitioning everything to Philipp Lehman's \sty{ltxdockit}. This part of the user guide, explaining how to create \sty{bibtex} entries for use with \biblatexmla, will be updated shortly. Until then, please see \S{} 4 (pages 7--20) of the previous version: \mylink{http://konx.net/biblatex-mla/biblatex-mla.pdf}.
 
-\biblatex (and, thus, \biblatexmla) uses \bibtex-style databases to manage the citations and list of works cited. While these databases are just flat text files, there are many good programs available to help manage them. Zotero, Endnote, and other commercial programs, for example, can export as \bibtex; each of these will nevertheless export with varying degrees of success. Standalone \bibtex managers such as JabRef and BibDesk use \sty{.bib} files as their native filetype and are much more reliable for managing your list of sources. Whether exporting from a program, managing .bib files in a standalone editor, or manipulating them in a text editor, it is necessary to be familiar with fields available to \biblatexmla---especially as some of these are unique \biblatex and \biblatexmla. Below are the different \sty{@types} and the \mycode{fields} available to them. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (e.g., \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
-
+\biblatex uses \bibtex-style databases to manage the citations and list of works cited. With some notable distinctions, \biblatexmla tries to follow typical \biblatex conventions for fields and entry types. % The guide below explains some  are the different \sty{@types} and the \mycode{fields} available to them. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (e.g., \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
+% 
 % \subsection{Typical fields} % (fold)
 % \label{sub:typical_fields}
 %
-% The best way to acquaint oneself with \biblatexmla is to explore the included \sty{.bib} files, \sty{.tex} files, and the resulting \sty{.pdf} output. Much of the the bibfile database is pretty obvious. Take a look at \tabref{fig:example-book}, for example.
+% The best way to acquaint oneself with \biblatexmla is to explore the included \sty{.bib} file, \sty{.tex} files, and the resulting \sty{.pdf} output. Much of the the bibfile database is pretty obvious. Take a look at \tabref{fig:example-book}, for example.
 % \begin{table}[tbp]
 % 	\centering
 % 		\includegraphics[width=4.8in]{example-book.pdf}
 % 	\caption{A standard \sty{.bib} file \mycode{@book} entry and its corresponding output in the list of Works Cited, beneath.}
 % 	\label{fig:example-book}
 % \end{table}
-%
 % In addition to many of the standard fields one might expect to find, \biblatexmla is also capable of handling unusual fields, described below. For a fuller consideration of the fields supported by \biblatexmla, see the example files and consult the Biblatex manual.
-
-
-% \mlafullexample{douglas93aa}{The above entry, found in the \sty{.bib} file, outputs to the below entry in the list of works cited:} %Below are the different \sty{@types} and the fields available to them. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (for example, \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
+% 
+% 
+% \mlafullexample{douglas93aa}{The above entry, found in the \sty{.bib} file, outputs to the below entry in the list of works cited:} %
+Much of the the bibfile database is pretty obvious, so the best way to get acquainted with \biblatexmla is to explore the included \sty{.bib}, \sty{.tex}, and \sty{.pdf} files. Additionally, some of the different \sty{@types} and fields are explained below. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (for example, \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
 
 % subsection typical_fields (end)
 
@@ -595,12 +674,13 @@ Although perhaps they should, the author trackers in \biblatexmla do not by defa
 	\optionitem{options}
 	separate the following options with a comma:
 	\begin{description}
+		\item[noremoteinfo=false] indicates that the ``remote'' information of an entry is to be printed, including the fields \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint}. These fields are usually omitted. See also the global option also called \mycode{noremoteinfo}, on page~\pageref{mla:internal:noremoteinfo}, above, for defining this option on a per-document basis. The \mycode{noremoteinfo} option defaults to true.
+		\item[showlocation=true] \newthis indicates that the publisher's city of operations for an entry is to be printed. These fields are usually omitted. See also the global option also called \mycode{showlocation}, on page~\pageref{mla:internal:showlocation}, above, for defining this option on a per-document basis. The \mycode{showlocation} option defaults to false.
+		\item[totalnames=true] allows the label to include all the names in its list, rather than maxing out at three. The \mycode{totalnames} option defaults to false.
+		\item[uniquetranslator=true] indicates that a translator of a particular \sty{@incollection} entry is unique to that work, rather than the collection at large. The \mycode{uniquetranslator} option defaults to false.
 		\item[useauthor=false] allows the label of the entry to default to something other than the author, when the author field is defined. If the editor is defined, the label will default to that. The \mycode{useauthor} option defaults to true.
 		\item[useeditor=false] allows the label of the entry default to something other than the editor in the case of the author field being undefined or the \mycode{useauthor} option set to false. The \mycode{useeditor} option defaults to true.
 		\item[usetranslator=true] allows the label of the entry to inherit the name of the translator when the author and editor fields are undefined or the \mycode{useauthor} and \mycode{useeditor} options are set to false. The \mycode{usetranslator} option defaults to false.
-		\item[totalnames=true] allows the label to include all the names in its list, rather than maxing out at three. The \mycode{totalnames} option defaults to false.
-		\item[uniquetranslator=true] indicates that a translator of a particular \sty{@incollection} entry is unique to that work, rather than the collection at large. The \mycode{uniquetranslator} option defaults to false.
-		\item[noremoteinfo=false] indicates that the ``remote'' information of an entry is to be printed, including the fields \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint}. These fields are usually omitted. See also the global option also called \mycode{noremoteinfo}, on page~\pageref{mla:internal:noremoteinfo}, above, for defining this option on a per-document basis. The \mycode{noremoteinfo} option defaults to true.
 	\end{description}	
 \end{optionslistNOT}
 
@@ -622,13 +702,13 @@ A book, usually with one author. \mla{}-style book entries are straightforward, 
 	book subtitle; when using \sty{crossref}, also define \sty{booksubtitle} and be sure to define \sty{subtitle} of the child
 
 	\optionitem{location}
-	entryplace of publication
+	place of publication; ignored unless |showlocation| is |true|
 
 	\optionitem{publisher}
 	publishing house
 
 	\optionitem{date}
-	date of publication; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
+	date of publication; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range. Use a tilde to indicate uncertainty: \sty{{\raisebox{0.5ex}{\texttildelow}}1400} will print as ``circa 1400'' in the list of Works Cited.
 \end{optionslistNOT}
 
 Other fields might come in handy for further granularity:
@@ -638,7 +718,7 @@ Other fields might come in handy for further granularity:
 	original publication date, for reprints; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
 
 	\optionitem{edition}
-	edition number
+	edition number, preferably an integer
 
 	\optionitem{volume}
 	volume number of book
@@ -712,25 +792,25 @@ Finally, the style files also define the following note fields for further clari
 
 \end{optionslistNOT}
 
-Fields not yet supported in biblatex-mla (but which should be supported in future versions) include the following:
-
-\begin{optionslistNOT}
-	\optionitem{howpublished}
-	to be used in support of the MLA-style revisions in the third edition of the \emph{MLA Style Manual} and the 7th edition of the \emph{MLA Handbook}; will default to ``Print''  when undefined
-
-	\optionitem{origlocation}
-	original place of publication (for reprints)
-
-	\optionitem{origpublisher}
-	original publisher (for reprints)
-
-	\optionitem{origtitle}
-	original title (for reprints)
-
-	\optionitem{origlanguage}
-	the original language of a translated, reprinted work. Biblatex-mla will not print information in this field, but if the field has information in it, it will use the phrase ``Trans. of''  before the original title, instead of ``Rept. of''.
-
-\end{optionslistNOT}
+% Fields not yet supported in biblatex-mla (but which should be supported in future versions) include the following:
+%
+% \begin{optionslistNOT}
+% 	\optionitem{howpublished}
+% 	to be used in support of the MLA-style revisions in the third edition of the \emph{MLA Style Manual} and the 7th edition of the \emph{MLA Handbook}; will default to ``Print''  when undefined
+%
+% 	\optionitem{origlocation}
+% 	original place of publication (for reprints)
+%
+% 	\optionitem{origpublisher}
+% 	original publisher (for reprints)
+%
+% 	\optionitem{origtitle}
+% 	original title (for reprints)
+%
+% 	\optionitem{origlanguage}
+% 	the original language of a translated, reprinted work. Biblatex-mla will not print information in this field, but if the field has information in it, it will use the phrase ``Trans. of''  before the original title, instead of ``Rept. of''.
+%
+% \end{optionslistNOT}
 
 \subsubsection*{@booklet}
 Small pamphlet, often without an author listed. In \biblatexmla, \mycode{@booklet} is an alias for \mycode{@book} (see above), and is styled similarly.
@@ -864,14 +944,14 @@ The entry for a @thesis that has been published needs a few additional fields:
 	
 	\optionitem{entrysubtype}
 	
-	\biblatexmla recognizes only two keys in the \sty{entrysubtype} field for the \sty{@thesis}:
+	When using the 7\superscript{th} edition style, which differentiates between published and unpublished dissertation titles, \biblatexmla recognizes two keys in the \sty{entrysubtype} field for the \sty{@thesis}:
 	
 	\begin{description}
 		\item[published] for published theses
 		\item[unpublished] for unpublished theses
 	\end{description}
 	
-	any key other than \sty{published} or \sty{unpublished} will be treated as if it were \sty{unpublished}
+	Any key other than \sty{published} or \sty{unpublished} will be treated as if it were \sty{unpublished}.
 	
 	\optionitem{location}
 	
@@ -1055,7 +1135,7 @@ Note that \sty{@inreference} entries do not need to cite page numbers, though th
 
 \subsubsection*{@letter}
 
-The \sty{@letter} entry type is only partially supported in \biblatexmla in order to begin work to support it further in the future. It is currently built onto the same backend as \sty{@article} entries, so it will accept additional fields used in that entry type.
+The \sty{@letter} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
 
 \begin{optionslistNOT}
 
@@ -1126,7 +1206,7 @@ A foreword, introduction, preface, or other supplementary (and often untitled) m
 \subsection{Other media}
 
 \subsubsection*{@artwork}
-The \sty{@artwork} entry type is only partially supported in \biblatexmla in order to begin work to support it further in the future. It is currently built onto the same backend as \sty{@article} entries, so it accepts additional fields used in that entry type.
+The \sty{@artwork} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
 
 \begin{optionslistNOT}
 
@@ -1147,7 +1227,7 @@ The \sty{@artwork} entry type is only partially supported in \biblatexmla in ord
 \end{optionslistNOT}
 
 \subsubsection*{@audio}
-The \sty{@audio} entry type is only partially supported in \biblatexmla in order to begin work to support it further in the future. It is currently built onto the same backend as \sty{@article} entries, so it accepts additional fields used in that entry type.
+The \sty{@audio} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
 
 \begin{optionslistNOT}
 
@@ -1170,7 +1250,7 @@ The \sty{@audio} entry type is only partially supported in \biblatexmla in order
 \end{optionslistNOT}
 
 \subsubsection*{@image}
-The \sty{@image} entry type is only partially supported in \biblatexmla in order to begin work to support it further in the future. It is currently built onto the same backend as \sty{@article} entries, so it accepts additional fields used in that entry type.
+The \sty{@image} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
 
 \begin{optionslistNOT}
 
@@ -1190,11 +1270,32 @@ The \sty{@image} entry type is only partially supported in \biblatexmla in order
 
 \end{optionslistNOT}
 
+\subsubsection*{@manual}
+\newthis This entry type is an alias for \sty{@book}.
+
+\subsubsection*{@misc}
+\newthis This entry type behaves like \sty{@article} entries, but titles aren't printed inside quotation marks.
+
+\subsubsection*{@movie}
+\newthis This entry type is an alias for \sty{@video}.
+
 \subsubsection*{@music}
 This entry type is an alias for \sty{@audio}.
 
 \subsubsection*{@online}
 This entry type is an alias for \sty{@article}.
+
+\subsubsection*{@patent}
+\newthis This entry type is currently built onto the same backend as \sty{@article} entries, so it accepts additional fields used in that entry type. Additionally, it adds some additional operations to the type field:
+
+\begin{optionslistNOT}
+
+	\optionitem{type} the type of patent, with relation to the country in which it was issued. For instance, \sty{patenteu} or \sty{patentus} will automatically establish some standard expectations for the Works Cited entry of a patent from the European Union or one from the United States. See section 4.9.2.20 of the \biblatex manual for more of these expected strings.
+
+\end{optionslistNOT}
+
+\subsubsection*{@report}
+\newthis This entry type is an alias for \sty{@book}.
 
 \subsubsection*{@unpublished}
 An unpublished manuscript or typescript. \Biblatexmla supports the following fields typical to an unpublished entry:
@@ -1215,14 +1316,24 @@ An unpublished manuscript or typescript. \Biblatexmla supports the following fie
 	
 	\optionitem{note} further information used to classify the collection; typeset before the \sty{type} field
 	
-	\optionitem{type} form of the material. \Biblatexmla defines some MLA-style \sty{@unpublished} types pre-localized; choose from the following strings to get accurate styling:
+	\optionitem{type} form of the material. For example, some of the following strings are recognized:
 	
 	\begin{description}
-		\item[manuscript] for the manuscript of a work; printed as ``Ms.'' or ``ms.'' in English
-		\item[transcript] for the typescript of a work; printed as ``Ts.'' or ``ts.'' in English
+		\item[manuscript] printed as ``Manuscript'' or ``ms'' in English
+		\item[transcript] printed as ``Typescript'' or ``ts'' in English
 	\end{description}
 	
-	For all other types not matching the above codes, \biblatexmla will print the type \sty{field} exactly as entered, respecting all existing capitalization
+	For all other types not matching the above codes, \biblatexmla will print the \sty{type} field exactly as entered, respecting all existing capitalization
+	
+	\optionitem{entrysubtype} \newthis special consideration for styling the title of the work or for indicating that a given title is just a description of the material consulted. The following strings are recognized:
+	
+	\begin{description}
+		\item[untitled] for unstyled titles
+		\item[book] for titles that should be styled like a book
+		\item[article] for titles that should be styled like an article
+	\end{description}
+	
+	\Biblatexmla will further try to style the title to match any type listed in the \sty{entrysubtype} field.
 	
 	\optionitem{number} identifying number (such as a call number, box, or folio reference) in a library or archive
 	
@@ -1282,14 +1393,68 @@ Note that \biblatexmla will print the \sty{author} field before the \sty{title} 
 	
 \end{optionslistNOT}
 
+%%%%%%%
+\subsection{MLA-Style Containers}
+
+\subsubsection*{@mlasource}
+\newthis In addition to these typical \biblatex-supported entry types, \biblatexmla 2.0 introduces support for defining entries using the containerized explanations of sources first described in the 8\superscript{th} edition of the \emph{MLA Handbook}. Because the non-author fields are defined to handle information literally, this kind of entry is in many ways inferior to the above semantically-defined entry types, which should handle punctuation in lists of editor names, strings like ``vol.'' and ``by,'', subtitle punctuation, and other matters. The user will need to keep output in mind as they define the metadata of an \sty{@mlasource} entry. All of these fields are optional, and they should only include information set out in the \emph{MLA Handbook}.
+
+\begin{optionslistNOT}
+
+	\optionitem{author} the name of the person(s) who should be used as the label for a work.
+	
+	\optionitem{title} title of the piece; subtitles and any necessary colons should be included within the |title| field.
+	
+	\optionitem{titletype} a string like \textbf{|complete|}, \textbf{|part|}, or \textbf{|unstyled|} determining how the source's |title| gets printed. This field is typically unnecessary: \biblatexmla assumes |complete| if the source lacks a |titlea| field, and it assumes |part| if the |titlea| field is defined, styling the title in italics or in quotation marks, respectively. Setting this field overrides \biblatexmla{}'s logic.
+	
+	\optionitem{supplemental} any supplemental information for the source.
+	
+	\optionitem{titlea} the title of the first container; \biblatexmla will style |titlea| in italics, but subtitles and any necessary colons should be included within the this field.
+	
+	\optionitem{contributora} any necessary contributors to the first container.
+	
+	\optionitem{versiona} the version or edition of the first container.
+	
+	\optionitem{numbera} the number of the first container.
+	
+	\optionitem{publishera} the publisher of the first container.
+	
+	\optionitem{datea} the date associated with the first container.
+	
+	\optionitem{locationa} the location of the first container.
+	
+	\optionitem{supplementala} any supplemental information for the first container.
+	
+	\optionitem{titleb} the title of the second container; \biblatexmla will style |titleb| in italics, but subtitles and any necessary colons should be included within the this field.
+	
+	\optionitem{contributorb} any necessary contributors to the second container.
+	
+	\optionitem{versionb} the version or edition of the second container.
+	
+	\optionitem{numberb} the number of the second container.
+	
+	\optionitem{publisherb} the publisher of the second container.
+	
+	\optionitem{dateb} the date associated with the second container.
+	
+	\optionitem{locationb} the location of the second container.
+	
+	\optionitem{supplementalb} any supplemental information for the second container.
+	
+	
+
+\end{optionslistNOT}
+
+%%%%%%%
+
 \section{Meta}
 \subsection{License}
 
-\biblatexmla is copyrighted \textcopyright\ 2007--2016, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
+\biblatexmla is copyrighted \textcopyright\ 2007--2021, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
 
 \subsection[Feedback]{Feedback}
 \label{int:feb}
 
-If you have any questions, requests, or other feedback please email me. My email address is at the top of this document. If you end up improving the code to be more accurate to the \mla{} standard, please be kind to the rest of us and share; I'm very happy to incorporate improvements! If anything works differently than you feel it ought to work, please let me know. Apart from time and my willingness to write documentation, I'm limited only by the problems of which I'm unaware.
+If you have any questions, requests, or other feedback please email me or reach out on GitHub. If you end up improving the code to be more accurate to the \mla{} standard, please be kind to the rest of us and share; I'm very happy to incorporate improvements! If anything works differently than you feel it ought to work, please let me know. Apart from time and my willingness to write documentation, I'm limited only by the problems of which I'm unaware.
 
 \end{document}
