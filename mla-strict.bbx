@@ -201,8 +201,9 @@
 \setbool{bbx@annotation}{#1}}
 
 \newboolean{bbx@totalnames}
+\newboolean{cbx@totalnames}
 \DeclareEntryOption{totalnames}[true]{%
-  \setbool{bbx@totalnames}{#1}}
+  \setbool{bbx@totalnames}{#1}\setbool{cbx@totalnames}{#1}}
 
 % for translated incollections where the collection has no shared translator
 \newboolean{bbx@uniquetranslator}%
