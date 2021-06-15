@@ -37,7 +37,10 @@
            \step[fieldsource=publisher, match={University}, replace={U}]
            \step[fieldsource=publisher, match=\regexp{Press\b}, replace={P}]
 		   \step[fieldsource=publisher, match=\regexp{Corporation|Corp.|Incorporated|Inc.|Limited|Ltd.}, replace={}]
-		   \step[fieldsource=url, match=\regexp{http(s)?://}, replace={}]
+		   % \step[fieldsource=url, match=\regexp{http(s)?://}, replace={}]
+          }
+      \map{% abbreviate and drop unneeded parts of institutions
+           \step[fieldsource=institution, match={University}, replace={U}]
           }
       \map{% JSTOR url to eprint
 		   \step[fieldsource=url, match={jstor.org}, final]
@@ -84,6 +87,14 @@
            \step[fieldsource=doi, match=\regexp{http(s)?://dx.doi.org/(.+)}, replace=\regexp{$1}]
            \step[fieldsource=doi, match=\regexp{dx.doi.org/(.+)}, replace=\regexp{$1}]
           }
+		   %       \map{% doi to url when eprinttype set and url empty
+		   %            \step[notfield=url, final]
+		   % \step[field=eprinttype, final]
+		   % \step[field=doi, final]
+		   %            \step[fieldsource=doi, fieldtarget=url]
+		   %            \step[fieldsource=url, match=\regexp{(.+)}, replace=\regexp{https://doi.org/$1}]
+		   %            \step[fieldset=doi, null]
+		   %           }
       \map{ % remove isbns from Works Cited
            \step[fieldsource=isbn, final]
            \step[fieldset=isbn, null]
