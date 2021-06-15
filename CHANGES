@@ -1,3 +1,18 @@
+Changelog for version 2.1a (June 15 - still in progress)
+- defined revsdnamedelim as comma and improved spacing around slash when multiple publishers
+- added context shifting for comma before et al: When names are "Last, First" it should be preceded by a comma, but when names are "First Last" it should not be.
+- added support for url in book entry
+- fixed placement of named series
+- added support for named issues of periodicals that aren't special issues (i.e., for comic books)
+- added internal counter for delaying certain elements of multivolume books, along with a three-way option toggle (auto, true, false) for bibliography and entry
+- dropped styling for proceedings titles; bib files should use "booktitle" field for proceedings published as books
+- print only the last name of book editor / book translator who also wrote the Introduction or Foreword
+- added automatic combining of editor and translator without needing to call the editor before the translator and without needing to set "editortype = {editortr}"
+- compress page ranges (so 250-258 now says 250-58, dropping the redundant hundreds digit); further modified to show leading zeroes (so 101-8 now shows 101-08) FIXME: not yet applied to dates
+- added "project" entrysubtype to @online entries to indicate title should be italics FIXME: make sure citations are also italics; consider: better string? website?
+- in citations, support the "totalnames" entry option to allow citations to match bibliography entries
+- defined "editor", "editors", "byeditor", "translator", and "translators" in language file; defined "compiled by" in language file; changed "newseries" from "ns" to "new series" in the language files FIXME: add this for non-English
+
 Changelog for version 2.0
 - changes for compatibility with the 9th edition of the MLA handbook, which is 
   very similar to that of the 8th edition; call "style=mla" to use the new 
