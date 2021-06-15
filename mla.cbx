@@ -146,10 +146,11 @@
 
 \newbibmacro*{cite:name}{%
  \ifsingletitle%
-  {\printtext[bibhyperref]{%
-    \printnames{labelname}}%
-    \savefield{namehash}{\cbx@lasthash}%
-    \global\booltrue{cbx@named}}%
+  {\ifbool{cbx@totalnames}%
+    {\printtext[bibhyperref]{\printnames[][-\value{listtotal}]{labelname}}}%
+	{\printtext[bibhyperref]{\printnames{labelname}}}%
+   \savefield{namehash}{\cbx@lasthash}%
+   \global\booltrue{cbx@named}}%
   {\printnames{labelname}%
     \savefield{namehash}{\cbx@lasthash}%
     \global\booltrue{cbx@named}}}%
