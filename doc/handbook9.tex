@@ -1,0 +1,684 @@
+% !TEX TS-program = xelatex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Times}
+% \usepackage[utf8]{inputenc}
+\usepackage[american]{babel}
+\usepackage{csquotes}
+% \setlength{\parindent}{0.5in}
+\usepackage[style=mla,dateusetime=true,time=12h]{biblatex}
+\usepackage{hyperref}
+% \usepackage{bidi}
+\hypersetup{colorlinks,% 
+citecolor=black,% 
+% filecolor=black,% 
+linkcolor=black,% 
+urlcolor=black
+}
+
+% \babelfont[arabic]{rm}{Geeza Pro}
+\newfontfamily\arabicfont[Script=Arabic]{Geeza Pro}
+\newcommand{\textarabic}[1]     % Arabic inside LTR
+    {\foreignlanguage{arabic}{{\arabicfont #1}}}
+	% {\foreignlanguage{arabic}{{#1}}}
+	% {\arabicfont #1}
+
+\addbibresource{handbook9.bib}
+
+\begin{document}
+	
+% 	\textarabic{علي وأمه الروسية}
+% \end{document}
+
+\section{Books} % (fold)
+\label{sec:books}
+
+\subsection{By One Author} % (fold)
+\label{ssub:by_one_author}
+\begin{refsection}
+	\nocite{Davis:1998we,Shen-Fu:2011vw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_one_author (end)
+\subsection{By Two Authors} % (fold)
+\label{ssub:by_two_authors}
+\begin{refsection}
+	\nocite{Dorris:1999wo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_two_authors (end)
+\subsection{By More Than Two Authors} % (fold)
+\label{ssub:by_more_than_two_authors}
+\begin{refsection}
+	\nocite{Charon:2017tw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_more_than_two_authors (end)
+\subsection{By an Unknown Author (Anonymous)} % (fold)
+\label{ssub:by_an_unknown_author_anonymous}
+\begin{refsection}
+	\nocite{Beowulf:2004th,LazarillodeTormes:1554vl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_unknown_author_anonymous (end)
+\subsection{By an Organization (Corporate Author), Published by a Different Entity} % (fold)
+\label{ssub:by_an_organization_corporate_author_published_by_a_different_entity}
+\begin{refsection}
+	\nocite{United-Nations:1991vc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_organization_corporate_author_published_by_a_different_entity (end)
+\subsection{By an Organization That Wrote and Published the Work} % (fold)
+\label{ssub:by_an_organization_that_wrote_and_published_the_work}
+\begin{refsection}
+	\nocite{Adirondacks:1990tb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_organization_that_wrote_and_published_the_work (end)
+\subsection{Edited} % (fold)
+\label{ssub:edited}
+\begin{refsection}
+	\nocite{Baron-etal:2007tj,Dunbar:2004tv,Milton:1998ty,Prado:2018vb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection edited (end)
+\subsection{Translated} % (fold)
+\label{ssub:translated}
+\begin{refsection}
+	\nocite{Dostoevsky:1993wh,Stendhal:2002ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection translated (end)
+\subsection{Edited and Translated by the Same Person} % (fold)
+\label{ssub:edited_and_translated_by_the_same_person}
+\begin{refsection}
+	\nocite{Freud:2005wb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection edited_and_translated_by_the_same_person (end)
+\subsection{In a Language Other Than English} % (fold)
+\label{ssub:in_a_language_other_than_english}
+\begin{refsection}
+	\nocite{Chreiteh:2009aa,Fallani:1971vv}
+	\printbibliography[heading=none]
+	% Full support for multiscript entries depends on \href{https://github.com/plk/biblatex/issues/416}{Biblatex issue 416}.
+\end{refsection}
+% subsection in_a_language_other_than_english (end)
+\subsection{With Illustrations} % (fold)
+\label{ssub:with_illustrations}
+\begin{refsection}
+	\nocite{Carroll:2006tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_illustrations (end)
+\subsection{Published in a Numbered or Named Edition} % (fold)
+\label{ssub:published_in_a_numbered_or_named_edition}
+\begin{refsection}
+	\nocite{Milkis:1994vv,Wollstonecraft:2009uf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_a_numbered_or_named_edition (end)
+\subsection{In a Named Series} % (fold)
+\label{ssub:in_a_named_series}
+\begin{refsection}
+	\nocite{Neruda:1991wq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_named_series (end)
+\subsection{With More Than One Publisher} % (fold)
+\label{ssub:with_more_than_one_publisher}
+\begin{refsection}
+	\nocite{Tomlinson:2002tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_more_than_one_publisher (end)
+\subsection{Self-Published} % (fold)
+\label{ssub:self_published}
+\begin{refsection}
+	\nocite{Hocking:2010tz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection self_published (end)
+\subsection{Published before 1900} % (fold)
+\label{ssub:published_before_1900}
+\begin{refsection}
+	\nocite{Goethe:1875vw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_before_1900 (end)
+\subsection{Republished, with Original Publication Date Given in Middle Supplemental Element} % (fold)
+\label{ssub:republished_with_original_publication_date_given_in_middle_supplemental_element}
+\begin{refsection}
+	\nocite{London:1990tn}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection republished_with_original_publication_date_given_in_middle_supplemental_element (end)
+\subsection{Comic Book or Graphic Narrative} % (fold)
+\label{ssub:comic_book_or_graphic_narrative}
+\begin{refsection}
+	\nocite{Clowes:1998wp,Waid:2005up}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection comic_book_or_graphic_narrative (end)
+\subsection{In a Multivolume Set} % (fold)
+\label{sub:in_a_multivolume_set}
+\subsubsection{Individually titled volume in an ongoing series} % (fold)
+\label{ssub:individually_titled_volume_in_an_ongoing_series}
+\begin{refsection}
+	\nocite{Caro:2012wy}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection individually_titled_volume_in_an_ongoing_series (end)
+\subsubsection{Individually titled and edited volume} % (fold)
+\label{ssub:individually_titled_and_edited_volume}
+\begin{refsection}
+	\nocite{Howells:1968wo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection individually_titled_and_edited_volume (end)
+\subsubsection{All volumes of the multivolume set} % (fold)
+\label{ssub:all_volumes_of_the_multivolume_set}
+\begin{refsection}
+	\nocite{Rampersad:2002va}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection all_volumes_of_the_multivolume_set (end)
+\subsubsection{One volume without an individual title} % (fold)
+\label{ssub:one_volume_without_an_individual_title}
+\begin{refsection}
+	\nocite{Wellek:1992ws}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection one_volume_without_an_individual_title (end)
+% subsection in_a_multivolume_set (end)
+\subsection{From Conference Proceedings} % (fold)
+\label{sub:from_conference_proceedings}
+\begin{refsection}
+	\nocite{Chang:2000uv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_conference_proceedings (end)
+\subsection{Published in an E-Book Version} % (fold)
+\label{sub:published_in_an_e_book_version}
+\begin{refsection}
+	\nocite{Handbook:2021aa,OConnor:2009un}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_an_e_book_version (end)
+\subsection{Published on a Website} % (fold)
+\label{sub:published_on_a_website}
+\begin{refsection}
+	\nocite{Gikandi:2000vz,Miller:2016vg}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_on_a_website (end)
+\subsection{Published in an App} % (fold)
+\label{sub:published_in_an_app}
+\begin{refsection}
+	\nocite{Bible-app:2016ab}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_an_app (end)
+\subsection{Published in Audiobook Format} % (fold)
+\label{sub:published_in_audiobook_format}
+\begin{refsection}
+	\nocite{Lee:2014vk}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_audiobook_format (end)
+% section books (end)
+
+\section{Contributions to Books} % (fold)
+\label{sec:contributions_to_books}
+\subsection{Play} % (fold)
+\label{sub:play}
+\begin{refsection}
+	\nocite{Euripides:1998tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection play (end)
+\subsection{Translation} % (fold)
+\label{sub:translation}
+\begin{refsection}
+	\nocite{Fagih:2003uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection translation (end)
+\subsection{Poem} % (fold)
+\label{sub:poem}
+\begin{refsection}
+	\nocite{Marvell:1979tp}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection poem (end)
+\subsection{Short Story} % (fold)
+\label{sub:short_story}
+\begin{refsection}
+	\nocite{Poe:1902wd,Hopi:1986wu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection short_story (end)
+\subsection{Introduction, Preface, Foreword, or Afterword} % (fold)
+\label{sub:introduction_preface_foreword_or_afterword}
+\subsubsection{With a generic label in place of title} % (fold)
+\label{ssub:with_a_generic_label_in_place_of_title}
+\begin{refsection}
+	\nocite{Felstiner:2001aa,Gere:2021aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_generic_label_in_place_of_title (end)
+\subsubsection{With a unique title} % (fold)
+\label{ssub:with_a_unique_title}
+\begin{refsection}
+	\nocite{Seyhan:2008wz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_unique_title (end)
+\subsubsection{With a unique title and a generic label given as a supplemental element} % (fold)
+\label{ssub:with_a_unique_title_and_a_generic_label_given_as_a_supplemental_element}
+\begin{refsection}
+	\nocite{Wallach:2000we}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_unique_title_and_a_generic_label_given_as_a_supplemental_element (end)
+% subsection introduction_preface_foreword_or_afterword (end)
+\subsection{Essay} % (fold)
+\label{sub:essay}
+\begin{refsection}
+	\nocite{Dewar:2007wn}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection essay (end)
+\subsection{Republished Essay, with Original Publication Information} % (fold)
+\label{sub:republished_essay_with_original_publication_information}
+\begin{refsection}
+	\nocite{Johnson:2014ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection republished_essay_with_original_publication_information (end)
+\subsection{Republished Work, with Original Publication Date} % (fold)
+\label{sub:republished_work_with_original_publication_date}
+\begin{refsection}
+	\nocite{Franklin:1992vl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection republished_work_with_original_publication_date (end)
+% section contributions_to_books (end)
+
+\section{Contributions to Scholarly Journals} % (fold)
+\label{sec:contributions_to_scholarly_journals}
+\subsection{With a Volume Number and Issue Number} % (fold)
+\label{sub:with_a_volume_number_and_issue_number}
+\begin{refsection}
+	\nocite{Boggs:2016tp}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_volume_number_and_issue_number (end)
+\subsection{With an Issue Number} % (fold)
+\label{sub:with_an_issue_number}
+\begin{refsection}
+	\nocite{Kafka:2007tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_an_issue_number (end)
+\subsection{With a Season} % (fold)
+\label{sub:with_a_season}
+\begin{refsection}
+	\nocite{Belton:2008uo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_season (end)
+\subsection{By an Organization (Corporate Author)} % (fold)
+\label{sub:by_an_organization_corporate_author}
+\begin{refsection}
+	\nocite{MLA-Ad-Hoc:2007tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_organization_corporate_author (end)
+\subsection{With a Translator} % (fold)
+\label{sub:with_a_translator}
+\begin{refsection}
+	\nocite{Tibullus:2002ub}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_translator (end)
+\subsection{In a Language Other Than English} % (fold)
+\label{sub:in_a_language_other_than_english}
+\begin{refsection}
+	\nocite{Litvak:2006vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_language_other_than_english (end)
+\subsection{In a Journal with More Than One Series} % (fold)
+\label{sub:in_a_journal_with_more_than_one_series}
+\begin{refsection}
+	\nocite{Helmling:2006ug}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_journal_with_more_than_one_series (end)
+\subsection{In a Special Issue of a Journal} % (fold)
+\label{sub:in_a_special_issue_of_a_journal}
+\begin{refsection}
+	\nocite{Charney:2011wk}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_special_issue_of_a_journal (end)
+\subsection{In a Database, with a DOI} % (fold)
+\label{sub:in_a_database_with_a_doi}
+\begin{refsection}
+	\nocite{Bockelman:uu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_database_with_a_doi (end)
+\subsection{In a Database, with a Permalink} % (fold)
+\label{sub:in_a_database_with_a_permalink}
+\begin{refsection}
+	\nocite{Goldman:2010wd}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_database_with_a_permalink (end)
+\subsection{From an Online Journal} % (fold)
+\label{sub:from_an_online_journal}
+\begin{refsection}
+	\nocite{Alpert-Abrams:2016wb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_an_online_journal (end)
+\subsection{PDF of an Online Journal Article} % (fold)
+\label{sub:pdf_of_an_online_journal_article}
+\begin{refsection}
+	\nocite{Fisher:vu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection pdf_of_an_online_journal_article (end)
+\subsection{Supplementary Data for an Online Journal Article} % (fold)
+\label{sub:supplementary_data_for_an_online_journal_article}
+\begin{refsection}
+	\nocite{Moskowitz:uw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection supplementary_data_for_an_online_journal_article (end)
+\subsection{Published Online ahead of Print} % (fold)
+\label{sub:published_online_ahead_of_print}
+\begin{refsection}
+	\nocite{Erhardt:2020wl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_online_ahead_of_print (end)
+\subsection{Entire Special Issues of Journals} % (fold)
+\label{sub:entire_special_issues_of_journals}
+\begin{refsection}
+	\nocite{AppiahGates:1992uw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection entire_special_issues_of_journals (end)
+% section contributions_to_scholarly_journals (end)
+
+\section{Contributions to News Publications} % (fold)
+\label{sec:contributions_to_news_publications}
+\subsection{Opinion or Editorial} % (fold)
+\label{sub:opinion_or_editorial}
+\begin{refsection}
+	\nocite{Editorial-Board:vc,Gergen:un}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection opinion_or_editorial (end)
+\subsection{Reported by a News Service} % (fold)
+\label{sub:reported_by_a_news_service}
+\begin{refsection}
+	\nocite{Evacuation:wj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection reported_by_a_news_service (end)
+\subsection{One-Page Article} % (fold)
+\label{sub:one_page_article}
+\begin{refsection}
+	\nocite{Magra:ws,Perrier:vv,Soloski:wi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection one_page_article (end)
+\subsection{Consecutively Paginated Article} % (fold)
+\label{sub:consecutively_paginated_article}
+\begin{refsection}
+	\nocite{Sharpe:wa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection consecutively_paginated_article (end)
+\subsection{Nonconsecutively Paginated Article} % (fold)
+\label{sub:nonconsecutively_paginated_article}
+\begin{refsection}
+	\nocite{Haughney:ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection nonconsecutively_paginated_article (end)
+\subsection{Published Online, without Page Numbers} % (fold)
+\label{sub:published_online_without_page_numbers}
+\begin{refsection}
+	\nocite{Parker-Pope:wm,Tribble:tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_online_without_page_numbers (end)
+\subsection{With City of Publication Given} % (fold)
+\label{sub:with_city_of_publication_given}
+\begin{refsection}
+	\nocite{Alaton:tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_city_of_publication_given (end)
+\subsection{In a Series} % (fold)
+\label{sub:in_a_series}
+\begin{refsection}
+	\nocite{Glatter:wx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_series (end)
+% section contributions_to_news_publications (end)
+
+\section{Contributions to Magazines} % (fold)
+\label{sec:contributions_to_magazines}
+\subsection{With No Season, Volume Number, or Issue Number} % (fold)
+\label{sub:with_no_season_volume_number_or_issue_number}
+\begin{refsection}
+	\nocite{Deresiewicz:un,Giant:ta}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_no_season_volume_number_or_issue_number (end)
+\subsection{With Season, Volume Number, and Issue Number} % (fold)
+\label{sub:with_season_volume_number_and_issue_number}
+\begin{refsection}
+	\nocite{Riis:2017vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_season_volume_number_and_issue_number (end)
+% section contributions_to_magazines (end)
+
+\section{Reviews} % (fold)
+\label{sec:reviews}
+\subsection{Titled and Signed (by an Author)} % (fold)
+\label{sub:titled_and_signed_by_an_author}
+\begin{refsection}
+	\nocite{Tommasini:tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection titled_and_signed_by_an_author (end)
+\subsection{Untitled and Signed (by an Author)} % (fold)
+\label{sub:untitled_and_signed_by_an_author}
+\begin{refsection}
+	\nocite{Rohrbaugh:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection untitled_and_signed_by_an_author (end)
+\subsection{Titled and Unsigned (Anonymous)} % (fold)
+\label{sub:titled_and_unsigned_anonymous}
+\begin{refsection}
+	\nocite{Racial:vh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection titled_and_unsigned_anonymous (end)
+\subsection{Untitled and Unsigned (Anonymous)} % (fold)
+\label{sub:untitled_and_unsigned_anonymous}
+\begin{refsection}
+	\nocite{YouWill:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection untitled_and_unsigned_anonymous (end)
+% section reviews (end)
+
+\section{Websites} % (fold)
+\label{sec:websites}
+\subsection{Digital Monograph with Author and Publisher} % (fold)
+\label{sub:digital_monograph_with_author_and_publisher}
+\begin{refsection}
+	\nocite{Bauch:tb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection digital_monograph_with_author_and_publisher (end)
+\subsection{Site with Editors and No Publisher} % (fold)
+\label{sub:site_with_editors_and_no_publisher}
+\begin{refsection}
+	\nocite{BlakeArchive:uh,VisualizingEmancipation:uf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection site_with_editors_and_no_publisher (end)
+\subsection{Site with Editors and a Publisher} % (fold)
+\label{sub:site_with_editors_and_a_publisher}
+\begin{refsection}
+	\nocite{PiersPEA:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection site_with_editors_and_a_publisher (end)
+\subsection{Site Written and Published by an Organization} % (fold)
+\label{sub:site_written_and_published_by_an_organization}
+\begin{refsection}
+	\nocite{Folgerpedia:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection site_written_and_published_by_an_organization (end)
+\subsection{Jointly Published Site} % (fold)
+\label{sub:jointly_published_site}
+\begin{refsection}
+	\nocite{Manifold:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection jointly_published_site (end)
+% section websites (end)
+
+\section{Works Contained on a Website} % (fold)
+\label{sec:works_contained_on_a_website}
+\subsection{From a Book} % (fold)
+\label{sub:from_a_book}
+\begin{refsection}
+	\nocite{Poe:1902aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_book (end)
+\subsection{From a Book, Contained in a Database} % (fold)
+\label{sub:from_a_book_contained_in_a_database}
+\begin{refsection}
+	\nocite{Toorn:2017ti}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_book_contained_in_a_database (end)
+\subsection{From a Scholarly Journal, Published Online} % (fold)
+\label{sub:from_a_scholarly_journal_published_online}
+\begin{refsection}
+	\nocite{Fisek:te}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_scholarly_journal_published_online (end)
+\subsection{From a Scholarly Journal, Published in a Database} % (fold)
+\label{sub:from_a_scholarly_journal_published_in_a_database}
+\subsubsection{Originally published online} % (fold)
+\label{ssub:originally_published_online}
+\begin{refsection}
+	\nocite{Chan:uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection originally_published_online (end)
+\subsubsection{Originally published in print} % (fold)
+\label{ssub:originally_published_in_print}
+\begin{refsection}
+	\nocite{Goldman:2010uv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection originally_published_in_print (end)
+% subsection from_a_scholarly_journal_published_in_a_database (end)
+\subsection{With Supplementary Material or Data Set} % (fold)
+\label{sub:with_supplementary_material_or_data_set}
+\subsubsection{Published separately} % (fold)
+\label{ssub:published_separately}
+\begin{refsection}
+	\nocite{ReplicationNonDemocratic:ws}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection published_separately (end)
+\subsubsection{Published alongside the work} % (fold)
+\label{ssub:published_alongside_the_work}
+\begin{refsection}
+	\nocite{Moskowitz:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection published_alongside_the_work (end)
+% subsection with_supplementary_material_or_data_set (end)
+\subsection{From a News Publication} % (fold)
+\label{sub:from_a_news_publication}
+\begin{refsection}
+	\nocite{Parker-Pope:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_news_publication (end)
+\subsection{From a Magazine} % (fold)
+\label{sub:from_a_magazine}
+\begin{refsection}
+	\nocite{Chou:vq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_magazine (end)
+\subsection{From a Blog} % (fold)
+\label{sub:from_a_blog}
+\begin{refsection}
+	\nocite{Hayes:vy}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_blog (end)
+\subsection{From the Comment Section} % (fold)
+\label{sub:from_the_comment_section}
+\begin{refsection}
+	\nocite{Max-the-Pen:ve}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_the_comment_section (end)
+\subsection{From a Discussion List} % (fold)
+\label{sub:from_a_discussion_list}
+\begin{refsection}
+	\nocite{Grooms:tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_discussion_list (end)
+\subsection{On Social Media} % (fold)
+\label{sub:on_social_media}
+\begin{refsection}
+	\nocite{Chaucer-Doth-Tweet:tx,Lilly:ui,MacLeod:wm,Modern-Language-Association:ub,Ng:wg,Thomas:vq,World-Wildlife-Fund:vz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection on_social_media (end)
+\subsection{On a Repository or Preprint Server} % (fold)
+\label{sub:on_a_repository_or_preprint_server}
+\begin{refsection}
+	\nocite{Wang:wj,Werner:vh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection on_a_repository_or_preprint_server (end)
+\subsection{Work with No Publication Date} % (fold)
+\label{sub:work_with_no_publication_date}
+\begin{refsection}
+	\nocite{Beaton:vx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection work_with_no_publication_date (end)
+% section works_contained_on_a_website (end)
+
+
+
+
+\end{document}
