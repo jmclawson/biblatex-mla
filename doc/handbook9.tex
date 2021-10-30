@@ -7,6 +7,8 @@
 \usepackage{csquotes}
 % \setlength{\parindent}{0.5in}
 \usepackage[style=mla,dateusetime=true,time=12h]{biblatex}
+\usepackage{bibtex_documentation}
+\usepackage{shortvrb}
 \usepackage{hyperref}
 % \usepackage{bidi}
 \hypersetup{colorlinks,% 
@@ -16,19 +18,23 @@ linkcolor=black,%
 urlcolor=black
 }
 
-% \babelfont[arabic]{rm}{Geeza Pro}
+\MakeShortVerb{\|}
+
+\addbibresource{handbook9_clean.bib}
+
 \newfontfamily\arabicfont[Script=Arabic]{Geeza Pro}
 \newcommand{\textarabic}[1]     % Arabic inside LTR
     {\foreignlanguage{arabic}{{\arabicfont #1}}}
-	% {\foreignlanguage{arabic}{{#1}}}
-	% {\arabicfont #1}
 
-\addbibresource{handbook9.bib}
+% \newcommand{\bibcitem}[1]{\lstinputlisting[linerange=#1-end,includerangemarker=false,breaklines=true,postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space} ]{\thebibfile}\nocite{#1}}
+% \renewcommand{\bibcitem}[1]{\nocite{#1}}
 
 \begin{document}
 	
-% 	\textarabic{علي وأمه الروسية}
-% \end{document}
+\section*{A Note on Bibtex and this document}
+The examples below show one way to achieve the output of the \emph{MLA Handbook}'s appendix, but \texttt{.bib} files do allow for some flexibility. For instance, some entries record a name in \{\texttt{Last, First}\} format, while others use \{\texttt{First Last}\}. Except in certain cases of names having additional parts, either option should work well. 
+
+For presentation purposes, line breaks have been introduced and marked with an arrow (\textcolor{gray}{$\hookrightarrow$}). These line breaks and arrows should not be recreated in the \texttt{.bib} file.
 
 \section{Books} % (fold)
 \label{sec:books}
@@ -36,70 +42,78 @@ urlcolor=black
 \subsection{By One Author} % (fold)
 \label{ssub:by_one_author}
 \begin{refsection}
-	\nocite{Davis:1998we,Shen-Fu:2011vw}
+	\bibcitem{Davis:1998we}
+	\bibcitem{Shen:Fu:2011vw}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_one_author (end)
 \subsection{By Two Authors} % (fold)
 \label{ssub:by_two_authors}
 \begin{refsection}
-	\nocite{Dorris:1999wo}
+	\bibcitem{Dorris:1999wo}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_two_authors (end)
 \subsection{By More Than Two Authors} % (fold)
 \label{ssub:by_more_than_two_authors}
 \begin{refsection}
-	\nocite{Charon:2017tw}
+	\bibcitem{Charon:2017tw}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_more_than_two_authors (end)
 \subsection{By an Unknown Author (Anonymous)} % (fold)
 \label{ssub:by_an_unknown_author_anonymous}
 \begin{refsection}
-	\nocite{Beowulf:2004th,LazarillodeTormes:1554vl}
+	\bibcitem{Beowulf:2004th}
+	\bibcitem{LazarillodeTormes:1554vl}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_an_unknown_author_anonymous (end)
 \subsection{By an Organization (Corporate Author), Published by a Different Entity} % (fold)
 \label{ssub:by_an_organization_corporate_author_published_by_a_different_entity}
 \begin{refsection}
-	\nocite{United-Nations:1991vc}
+	\bibcitem{United:Nations:1991vc}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_an_organization_corporate_author_published_by_a_different_entity (end)
 \subsection{By an Organization That Wrote and Published the Work} % (fold)
 \label{ssub:by_an_organization_that_wrote_and_published_the_work}
 \begin{refsection}
-	\nocite{Adirondacks:1990tb}
+	\bibcitem{Adirondacks:1990tb}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_an_organization_that_wrote_and_published_the_work (end)
 \subsection{Edited} % (fold)
 \label{ssub:edited}
 \begin{refsection}
-	\nocite{Baron-etal:2007tj,Dunbar:2004tv,Milton:1998ty,Prado:2018vb}
+	\bibcitem{Baron:etal:2007tj}
+	\bibcitem{Dunbar:2004tv}
+	\bibcitem{Milton:1998ty}
+	\bibcitem{Prado:2018vb}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection edited (end)
 \subsection{Translated} % (fold)
 \label{ssub:translated}
 \begin{refsection}
-	\nocite{Dostoevsky:1993wh,Stendhal:2002ty}
+	\bibcitem{Dostoevsky:1993wh}
+	\bibcitem{Stendhal:2002ty}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection translated (end)
 \subsection{Edited and Translated by the Same Person} % (fold)
 \label{ssub:edited_and_translated_by_the_same_person}
 \begin{refsection}
-	\nocite{Freud:2005wb}
+	\bibcitem{Freud:2005wb}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection edited_and_translated_by_the_same_person (end)
 \subsection{In a Language Other Than English} % (fold)
 \label{ssub:in_a_language_other_than_english}
 \begin{refsection}
-	\nocite{Chreiteh:2009aa,Fallani:1971vv}
+Consult the {\tt .bib} file for the full entry with Arabic.
+	\bibcitem{Chreiteh:2009aa}
+	\bibcitem{Fallani:1971vv}
 	\printbibliography[heading=none]
 	% Full support for multiscript entries depends on \href{https://github.com/plk/biblatex/issues/416}{Biblatex issue 416}.
 \end{refsection}
@@ -107,56 +121,58 @@ urlcolor=black
 \subsection{With Illustrations} % (fold)
 \label{ssub:with_illustrations}
 \begin{refsection}
-	\nocite{Carroll:2006tm}
+	\bibcitem{Carroll:2006tm}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_illustrations (end)
 \subsection{Published in a Numbered or Named Edition} % (fold)
 \label{ssub:published_in_a_numbered_or_named_edition}
 \begin{refsection}
-	\nocite{Milkis:1994vv,Wollstonecraft:2009uf}
+	\bibcitem{Milkis:1994vv}
+	\bibcitem{Wollstonecraft:2009uf}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_in_a_numbered_or_named_edition (end)
 \subsection{In a Named Series} % (fold)
 \label{ssub:in_a_named_series}
 \begin{refsection}
-	\nocite{Neruda:1991wq}
+	\bibcitem{Neruda:1991wq}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_named_series (end)
 \subsection{With More Than One Publisher} % (fold)
 \label{ssub:with_more_than_one_publisher}
 \begin{refsection}
-	\nocite{Tomlinson:2002tc}
+	\bibcitem{Tomlinson:2002tc}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_more_than_one_publisher (end)
 \subsection{Self-Published} % (fold)
 \label{ssub:self_published}
 \begin{refsection}
-	\nocite{Hocking:2010tz}
+	\bibcitem{Hocking:2010tz}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection self_published (end)
 \subsection{Published before 1900} % (fold)
 \label{ssub:published_before_1900}
 \begin{refsection}
-	\nocite{Goethe:1875vw}
+	\bibcitem{Goethe:1875vw}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_before_1900 (end)
 \subsection{Republished, with Original Publication Date Given in Middle Supplemental Element} % (fold)
 \label{ssub:republished_with_original_publication_date_given_in_middle_supplemental_element}
 \begin{refsection}
-	\nocite{London:1990tn}
+	\bibcitem{London:1990tn}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection republished_with_original_publication_date_given_in_middle_supplemental_element (end)
 \subsection{Comic Book or Graphic Narrative} % (fold)
 \label{ssub:comic_book_or_graphic_narrative}
 \begin{refsection}
-	\nocite{Clowes:1998wp,Waid:2005up}
+	\bibcitem{Clowes:1998wp}
+	\bibcitem{Waid:2005up}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection comic_book_or_graphic_narrative (end)
@@ -165,28 +181,28 @@ urlcolor=black
 \subsubsection{Individually titled volume in an ongoing series} % (fold)
 \label{ssub:individually_titled_volume_in_an_ongoing_series}
 \begin{refsection}
-	\nocite{Caro:2012wy}
+	\bibcitem{Caro:2012wy}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection individually_titled_volume_in_an_ongoing_series (end)
 \subsubsection{Individually titled and edited volume} % (fold)
 \label{ssub:individually_titled_and_edited_volume}
 \begin{refsection}
-	\nocite{Howells:1968wo}
+	\bibcitem{Howells:1968wo}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection individually_titled_and_edited_volume (end)
 \subsubsection{All volumes of the multivolume set} % (fold)
 \label{ssub:all_volumes_of_the_multivolume_set}
 \begin{refsection}
-	\nocite{Rampersad:2002va}
+	\bibcitem{Rampersad:2002va}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection all_volumes_of_the_multivolume_set (end)
 \subsubsection{One volume without an individual title} % (fold)
 \label{ssub:one_volume_without_an_individual_title}
 \begin{refsection}
-	\nocite{Wellek:1992ws}
+	\bibcitem{Wellek:1992ws}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection one_volume_without_an_individual_title (end)
@@ -194,35 +210,37 @@ urlcolor=black
 \subsection{From Conference Proceedings} % (fold)
 \label{sub:from_conference_proceedings}
 \begin{refsection}
-	\nocite{Chang:2000uv}
+	\bibcitem{Chang:2000uv}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_conference_proceedings (end)
 \subsection{Published in an E-Book Version} % (fold)
 \label{sub:published_in_an_e_book_version}
 \begin{refsection}
-	\nocite{Handbook:2021aa,OConnor:2009un}
+	\bibcitem{Handbook:2021aa}
+	\bibcitem{OConnor:2009un}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_in_an_e_book_version (end)
 \subsection{Published on a Website} % (fold)
 \label{sub:published_on_a_website}
 \begin{refsection}
-	\nocite{Gikandi:2000vz,Miller:2016vg}
+	\bibcitem{Gikandi:2000vz}
+	\bibcitem{Miller:2016vg}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_on_a_website (end)
 \subsection{Published in an App} % (fold)
 \label{sub:published_in_an_app}
 \begin{refsection}
-	\nocite{Bible-app:2016ab}
+	\bibcitem{Bible:app:2016ab}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_in_an_app (end)
 \subsection{Published in Audiobook Format} % (fold)
 \label{sub:published_in_audiobook_format}
 \begin{refsection}
-	\nocite{Lee:2014vk}
+	\bibcitem{Lee:2014vk}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_in_audiobook_format (end)
@@ -233,28 +251,29 @@ urlcolor=black
 \subsection{Play} % (fold)
 \label{sub:play}
 \begin{refsection}
-	\nocite{Euripides:1998tx}
+	\bibcitem{Euripides:1998tx}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection play (end)
 \subsection{Translation} % (fold)
 \label{sub:translation}
 \begin{refsection}
-	\nocite{Fagih:2003uj}
+	\bibcitem{Fagih:2003uj}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection translation (end)
 \subsection{Poem} % (fold)
 \label{sub:poem}
 \begin{refsection}
-	\nocite{Marvell:1979tp}
+	\bibcitem{Marvell:1979tp}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection poem (end)
 \subsection{Short Story} % (fold)
 \label{sub:short_story}
 \begin{refsection}
-	\nocite{Poe:1902wd,Hopi:1986wu}
+	\bibcitem{Poe:1902wd}
+	\bibcitem{Hopi:1986wu}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection short_story (end)
@@ -263,21 +282,22 @@ urlcolor=black
 \subsubsection{With a generic label in place of title} % (fold)
 \label{ssub:with_a_generic_label_in_place_of_title}
 \begin{refsection}
-	\nocite{Felstiner:2001aa,Gere:2021aa}
+	\bibcitem{Felstiner:2001aa}
+	\bibcitem{Gere:2021aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection with_a_generic_label_in_place_of_title (end)
 \subsubsection{With a unique title} % (fold)
 \label{ssub:with_a_unique_title}
 \begin{refsection}
-	\nocite{Seyhan:2008wz}
+	\bibcitem{Seyhan:2008wz}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection with_a_unique_title (end)
 \subsubsection{With a unique title and a generic label given as a supplemental element} % (fold)
 \label{ssub:with_a_unique_title_and_a_generic_label_given_as_a_supplemental_element}
 \begin{refsection}
-	\nocite{Wallach:2000we}
+	\bibcitem{Wallach:2000we}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection with_a_unique_title_and_a_generic_label_given_as_a_supplemental_element (end)
@@ -285,21 +305,21 @@ urlcolor=black
 \subsection{Essay} % (fold)
 \label{sub:essay}
 \begin{refsection}
-	\nocite{Dewar:2007wn}
+	\bibcitem{Dewar:2007wn}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection essay (end)
 \subsection{Republished Essay, with Original Publication Information} % (fold)
 \label{sub:republished_essay_with_original_publication_information}
 \begin{refsection}
-	\nocite{Johnson:2014ty}
+	\bibcitem{Johnson:2014ty}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection republished_essay_with_original_publication_information (end)
 \subsection{Republished Work, with Original Publication Date} % (fold)
 \label{sub:republished_work_with_original_publication_date}
 \begin{refsection}
-	\nocite{Franklin:1992vl}
+	\bibcitem{Franklin:1992vl}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection republished_work_with_original_publication_date (end)
@@ -310,105 +330,105 @@ urlcolor=black
 \subsection{With a Volume Number and Issue Number} % (fold)
 \label{sub:with_a_volume_number_and_issue_number}
 \begin{refsection}
-	\nocite{Boggs:2016tp}
+	\bibcitem{Boggs:2016tp}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_a_volume_number_and_issue_number (end)
 \subsection{With an Issue Number} % (fold)
 \label{sub:with_an_issue_number}
 \begin{refsection}
-	\nocite{Kafka:2007tm}
+	\bibcitem{Kafka:2007tm}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_an_issue_number (end)
 \subsection{With a Season} % (fold)
 \label{sub:with_a_season}
 \begin{refsection}
-	\nocite{Belton:2008uo}
+	\bibcitem{Belton:2008uo}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_a_season (end)
 \subsection{By an Organization (Corporate Author)} % (fold)
 \label{sub:by_an_organization_corporate_author}
 \begin{refsection}
-	\nocite{MLA-Ad-Hoc:2007tc}
+	\bibcitem{MLA:Ad:Hoc:2007tc}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection by_an_organization_corporate_author (end)
 \subsection{With a Translator} % (fold)
 \label{sub:with_a_translator}
 \begin{refsection}
-	\nocite{Tibullus:2002ub}
+	\bibcitem{Tibullus:2002ub}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_a_translator (end)
 \subsection{In a Language Other Than English} % (fold)
 \label{sub:in_a_language_other_than_english}
 \begin{refsection}
-	\nocite{Litvak:2006vi}
+	\bibcitem{Litvak:2006vi}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_language_other_than_english (end)
 \subsection{In a Journal with More Than One Series} % (fold)
 \label{sub:in_a_journal_with_more_than_one_series}
 \begin{refsection}
-	\nocite{Helmling:2006ug}
+	\bibcitem{Helmling:2006ug}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_journal_with_more_than_one_series (end)
 \subsection{In a Special Issue of a Journal} % (fold)
 \label{sub:in_a_special_issue_of_a_journal}
 \begin{refsection}
-	\nocite{Charney:2011wk}
+	\bibcitem{Charney:2011wk}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_special_issue_of_a_journal (end)
 \subsection{In a Database, with a DOI} % (fold)
 \label{sub:in_a_database_with_a_doi}
 \begin{refsection}
-	\nocite{Bockelman:uu}
+	\bibcitem{Bockelman:uu}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_database_with_a_doi (end)
 \subsection{In a Database, with a Permalink} % (fold)
 \label{sub:in_a_database_with_a_permalink}
 \begin{refsection}
-	\nocite{Goldman:2010wd}
+	\bibcitem{Goldman:2010wd}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_database_with_a_permalink (end)
 \subsection{From an Online Journal} % (fold)
 \label{sub:from_an_online_journal}
 \begin{refsection}
-	\nocite{Alpert-Abrams:2016wb}
+	\bibcitem{Alpert:Abrams:2016wb}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_an_online_journal (end)
 \subsection{PDF of an Online Journal Article} % (fold)
 \label{sub:pdf_of_an_online_journal_article}
 \begin{refsection}
-	\nocite{Fisher:vu}
+	\bibcitem{Fisher:vu}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection pdf_of_an_online_journal_article (end)
 \subsection{Supplementary Data for an Online Journal Article} % (fold)
 \label{sub:supplementary_data_for_an_online_journal_article}
 \begin{refsection}
-	\nocite{Moskowitz:uw}
+	\bibcitem{Moskowitz:uw}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection supplementary_data_for_an_online_journal_article (end)
 \subsection{Published Online ahead of Print} % (fold)
 \label{sub:published_online_ahead_of_print}
 \begin{refsection}
-	\nocite{Erhardt:2020wl}
+	\bibcitem{Erhardt:2020wl}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_online_ahead_of_print (end)
 \subsection{Entire Special Issues of Journals} % (fold)
 \label{sub:entire_special_issues_of_journals}
 \begin{refsection}
-	\nocite{AppiahGates:1992uw}
+	\bibcitem{AppiahGates:1992uw}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection entire_special_issues_of_journals (end)
@@ -419,56 +439,60 @@ urlcolor=black
 \subsection{Opinion or Editorial} % (fold)
 \label{sub:opinion_or_editorial}
 \begin{refsection}
-	\nocite{Editorial-Board:vc,Gergen:un}
+	\bibcitem{Editorial:Board:vc}
+	\bibcitem{Gergen:un}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection opinion_or_editorial (end)
 \subsection{Reported by a News Service} % (fold)
 \label{sub:reported_by_a_news_service}
 \begin{refsection}
-	\nocite{Evacuation:wj}
+	\bibcitem{Evacuation:wj}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection reported_by_a_news_service (end)
 \subsection{One-Page Article} % (fold)
 \label{sub:one_page_article}
 \begin{refsection}
-	\nocite{Magra:ws,Perrier:vv,Soloski:wi}
+	\bibcitem{Magra:ws}
+	\bibcitem{Perrier:vv}
+	\bibcitem{Soloski:wi}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection one_page_article (end)
 \subsection{Consecutively Paginated Article} % (fold)
 \label{sub:consecutively_paginated_article}
 \begin{refsection}
-	\nocite{Sharpe:wa}
+	\bibcitem{Sharpe:wa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection consecutively_paginated_article (end)
 \subsection{Nonconsecutively Paginated Article} % (fold)
 \label{sub:nonconsecutively_paginated_article}
 \begin{refsection}
-	\nocite{Haughney:ty}
+	\bibcitem{Haughney:ty}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection nonconsecutively_paginated_article (end)
 \subsection{Published Online, without Page Numbers} % (fold)
 \label{sub:published_online_without_page_numbers}
 \begin{refsection}
-	\nocite{Parker-Pope:wm,Tribble:tc}
+	\bibcitem{Parker:Pope:wm}
+	\bibcitem{Tribble:tc}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection published_online_without_page_numbers (end)
 \subsection{With City of Publication Given} % (fold)
 \label{sub:with_city_of_publication_given}
 \begin{refsection}
-	\nocite{Alaton:tc}
+	\bibcitem{Alaton:tc}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_city_of_publication_given (end)
 \subsection{In a Series} % (fold)
 \label{sub:in_a_series}
 \begin{refsection}
-	\nocite{Glatter:wx}
+	\bibcitem{Glatter:wx}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection in_a_series (end)
@@ -479,14 +503,15 @@ urlcolor=black
 \subsection{With No Season, Volume Number, or Issue Number} % (fold)
 \label{sub:with_no_season_volume_number_or_issue_number}
 \begin{refsection}
-	\nocite{Deresiewicz:un,Giant:ta}
+	\bibcitem{Deresiewicz:un}
+	\bibcitem{Giant:ta}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_no_season_volume_number_or_issue_number (end)
 \subsection{With Season, Volume Number, and Issue Number} % (fold)
 \label{sub:with_season_volume_number_and_issue_number}
 \begin{refsection}
-	\nocite{Riis:2017vi}
+	\bibcitem{Riis:2017vi}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection with_season_volume_number_and_issue_number (end)
@@ -497,28 +522,28 @@ urlcolor=black
 \subsection{Titled and Signed (by an Author)} % (fold)
 \label{sub:titled_and_signed_by_an_author}
 \begin{refsection}
-	\nocite{Tommasini:tm}
+	\bibcitem{Tommasini:tm}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection titled_and_signed_by_an_author (end)
 \subsection{Untitled and Signed (by an Author)} % (fold)
 \label{sub:untitled_and_signed_by_an_author}
 \begin{refsection}
-	\nocite{Rohrbaugh:aa}
+	\bibcitem{Rohrbaugh:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection untitled_and_signed_by_an_author (end)
 \subsection{Titled and Unsigned (Anonymous)} % (fold)
 \label{sub:titled_and_unsigned_anonymous}
 \begin{refsection}
-	\nocite{Racial:vh}
+	\bibcitem{Racial:vh}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection titled_and_unsigned_anonymous (end)
 \subsection{Untitled and Unsigned (Anonymous)} % (fold)
 \label{sub:untitled_and_unsigned_anonymous}
 \begin{refsection}
-	\nocite{YouWill:aa}
+	\bibcitem{YouWill:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection untitled_and_unsigned_anonymous (end)
@@ -529,35 +554,36 @@ urlcolor=black
 \subsection{Digital Monograph with Author and Publisher} % (fold)
 \label{sub:digital_monograph_with_author_and_publisher}
 \begin{refsection}
-	\nocite{Bauch:tb}
+	\bibcitem{Bauch:tb}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection digital_monograph_with_author_and_publisher (end)
 \subsection{Site with Editors and No Publisher} % (fold)
 \label{sub:site_with_editors_and_no_publisher}
 \begin{refsection}
-	\nocite{BlakeArchive:uh,VisualizingEmancipation:uf}
+	\bibcitem{BlakeArchive:uh}
+	\bibcitem{VisualizingEmancipation:uf}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection site_with_editors_and_no_publisher (end)
 \subsection{Site with Editors and a Publisher} % (fold)
 \label{sub:site_with_editors_and_a_publisher}
 \begin{refsection}
-	\nocite{PiersPEA:aa}
+	\bibcitem{PiersPEA:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection site_with_editors_and_a_publisher (end)
 \subsection{Site Written and Published by an Organization} % (fold)
 \label{sub:site_written_and_published_by_an_organization}
 \begin{refsection}
-	\nocite{Folgerpedia:aa}
+	\bibcitem{Folgerpedia:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection site_written_and_published_by_an_organization (end)
 \subsection{Jointly Published Site} % (fold)
 \label{sub:jointly_published_site}
 \begin{refsection}
-	\nocite{Manifold:aa}
+	\bibcitem{Manifold:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection jointly_published_site (end)
@@ -568,21 +594,21 @@ urlcolor=black
 \subsection{From a Book} % (fold)
 \label{sub:from_a_book}
 \begin{refsection}
-	\nocite{Poe:1902aa}
+	\bibcitem{Poe:1902aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_book (end)
 \subsection{From a Book, Contained in a Database} % (fold)
 \label{sub:from_a_book_contained_in_a_database}
 \begin{refsection}
-	\nocite{Toorn:2017ti}
+	\bibcitem{Toorn:2017ti}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_book_contained_in_a_database (end)
 \subsection{From a Scholarly Journal, Published Online} % (fold)
 \label{sub:from_a_scholarly_journal_published_online}
 \begin{refsection}
-	\nocite{Fisek:te}
+	\bibcitem{Fisek:te}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_scholarly_journal_published_online (end)
@@ -591,14 +617,14 @@ urlcolor=black
 \subsubsection{Originally published online} % (fold)
 \label{ssub:originally_published_online}
 \begin{refsection}
-	\nocite{Chan:uj}
+	\bibcitem{Chan:uj}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection originally_published_online (end)
 \subsubsection{Originally published in print} % (fold)
 \label{ssub:originally_published_in_print}
 \begin{refsection}
-	\nocite{Goldman:2010uv}
+	\bibcitem{Goldman:2010uv}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection originally_published_in_print (end)
@@ -608,14 +634,14 @@ urlcolor=black
 \subsubsection{Published separately} % (fold)
 \label{ssub:published_separately}
 \begin{refsection}
-	\nocite{ReplicationNonDemocratic:ws}
+	\bibcitem{ReplicationNonDemocratic:ws}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection published_separately (end)
 \subsubsection{Published alongside the work} % (fold)
 \label{ssub:published_alongside_the_work}
 \begin{refsection}
-	\nocite{Moskowitz:aa}
+	\bibcitem{Moskowitz:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsubsection published_alongside_the_work (end)
@@ -623,62 +649,616 @@ urlcolor=black
 \subsection{From a News Publication} % (fold)
 \label{sub:from_a_news_publication}
 \begin{refsection}
-	\nocite{Parker-Pope:aa}
+	\bibcitem{Parker:Pope:aa}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_news_publication (end)
 \subsection{From a Magazine} % (fold)
 \label{sub:from_a_magazine}
 \begin{refsection}
-	\nocite{Chou:vq}
+	\bibcitem{Chou:vq}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_magazine (end)
 \subsection{From a Blog} % (fold)
 \label{sub:from_a_blog}
 \begin{refsection}
-	\nocite{Hayes:vy}
+	\bibcitem{Hayes:vy}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_blog (end)
 \subsection{From the Comment Section} % (fold)
 \label{sub:from_the_comment_section}
 \begin{refsection}
-	\nocite{Max-the-Pen:ve}
+	\bibcitem{Max:the:Pen:ve}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_the_comment_section (end)
 \subsection{From a Discussion List} % (fold)
 \label{sub:from_a_discussion_list}
 \begin{refsection}
-	\nocite{Grooms:tx}
+	\bibcitem{Grooms:tx}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection from_a_discussion_list (end)
 \subsection{On Social Media} % (fold)
 \label{sub:on_social_media}
 \begin{refsection}
-	\nocite{Chaucer-Doth-Tweet:tx,Lilly:ui,MacLeod:wm,Modern-Language-Association:ub,Ng:wg,Thomas:vq,World-Wildlife-Fund:vz}
+	\bibcitem{Chaucer:Doth:Tweet:tx}
+	\bibcitem{Lilly:ui}
+	\bibcitem{MacLeod:wm}
+	\bibcitem{Modern:Language:Association:ub}
+	\bibcitem{Ng:wg}
+	\bibcitem{Thomas:vq}
+	\bibcitem{World:Wildlife:Fund:vz}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection on_social_media (end)
 \subsection{On a Repository or Preprint Server} % (fold)
 \label{sub:on_a_repository_or_preprint_server}
 \begin{refsection}
-	\nocite{Wang:wj,Werner:vh}
+	\bibcitem{Wang:wj}
+	\bibcitem{Werner:vh}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection on_a_repository_or_preprint_server (end)
 \subsection{Work with No Publication Date} % (fold)
 \label{sub:work_with_no_publication_date}
 \begin{refsection}
-	\nocite{Beaton:vx}
+	\bibcitem{Beaton:vx}
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection work_with_no_publication_date (end)
 % section works_contained_on_a_website (end)
 
+\section{Entries in Reference Works} % (fold)
+\label{sec:entries_in_reference_works}
+\subsection{Unsigned (Anonymous)} % (fold)
+\label{sub:unsigned_anonymous}
+\begin{refsection}
+	\bibcitem{Patanjali:1996wu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection unsigned_anonymous (end)
+\subsection{Signed (by an Author)} % (fold)
+\label{sub:signed_by_an_author}
+\begin{refsection}
+	\bibcitem{Botterill:2004tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection signed_by_an_author (end)
+\subsection{From a Dictionary} % (fold)
+\label{sub:from_a_dictionary}
+\begin{refsection}
+	\bibcitem{Content:2020tl}
+	\bibcitem{Content:2003ug}
+	\bibcitem{Emoticon:2003ur}
+	\bibcitem{Emoticon:2018ws}
+	\bibcitem{Heavy:2018ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_dictionary (end)
+% section entries_in_reference_works (end)
 
+\section{Films and Videos} % (fold)
+\label{sec:films_and_videos}
+\subsection{With One Publisher} % (fold)
+\label{sub:with_one_publisher}
+\begin{refsection}
+	\bibcitem{OpeningNight:tf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_one_publisher (end)
+\subsection{With Copublishers} % (fold)
+\label{sub:with_copublishers}
+\begin{refsection}
+	\bibcitem{Sairat:vz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_copublishers (end)
+\subsection{Foreign Language Film with Original Title Given Optionally} % (fold)
+\label{sub:foreign_language_film_with_original_title_given_optionally}
+\begin{refsection}
+	\bibcitem{LikeWater:1993:og}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection foreign_language_film_with_original_title_given_optionally (end)
+\subsection{With Original Release Date Given as Supplemental Element} % (fold)
+\label{sub:with_original_release_date_given_as_supplemental_element}
+\begin{refsection}
+	\bibcitem{BladeRunner::1992tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_original_release_date_given_as_supplemental_element (end)
+\subsection{Viewed through an App} % (fold)
+\label{sub:film_viewed_through_an_app}
+\begin{refsection}
+	\bibcitem{ET:1982:vj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection film_viewed_through_an_app (end)
+\subsection{Uploaded to a Sharing Site} % (fold)
+\label{sub:uploaded_to_a_sharing_site}
+\begin{refsection}
+	\bibcitem{WhatIsMLA:2016:wq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection uploaded_to_a_sharing_site (end)
+% section films_and_videos (end)
+\section{Television Episodes} % (fold)
+\label{sec:television_episodes}
+\subsection{Viewed as a Television Broadcast} % (fold)
+\label{sub:viewed_as_a_television_broadcast}
+\begin{refsection}
+	\bibcitem{Hush:1999:vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection viewed_as_a_television_broadcast (end)
+\subsection{Viewed on a Website} % (fold)
+\label{sub:tv_viewed_on_a_website}
+\begin{refsection}
+	\bibcitem{IBorg:1992:wz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection tv_viewed_on_a_website (end)
+\subsection{Viewed on Physical Media} % (fold)
+\label{sub:tv_viewed_on_physical_media}
+\begin{refsection}
+	\bibcitem{Hush:1999:vg}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection tv_viewed_on_physical_media (end)
+\subsection{Viewed through an App} % (fold)
+\label{sub:tv_viewed_through_an_app}
+\begin{refsection}
+	\bibcitem{NewNormal:2016:vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection tv_viewed_through_an_app (end)
+\subsection{Without an Episode Title} % (fold)
+\label{sub:without_an_episode_title}
+\begin{refsection}
+	\bibcitem{Fleabag:2019:tq}
+	\bibcitem{Jeopardy:2019:td}
+	\bibcitem{SaturdayNight:2019:vu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection without_an_episode_title (end)
+% section television_episodes (end)
 
+\section{Audiovisual Works} % (fold)
+\label{sec:audiovisual_works}
+\subsection{Audiobook} % (fold)
+\label{sub:audiobook}
+\begin{refsection}
+	\bibcitem{Lee:2014aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection audiobook (end)
+\subsection{Musical Recording} % (fold)
+\label{sub:musical_recording}
+\subsubsection{Album} % (fold)
+\label{ssub:album}
+Either set a |booktitle| with no |title|, or set |title| with  |entrysubtype={album}|.
+\begin{refsection}
+	\bibcitem{Beatles:aa}
+	\bibcitem{SigurRos:vq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection album (end)
+\subsubsection{Song} % (fold)
+\label{ssub:song}
+\begin{refsection}
+	\bibcitem{Beyonce:ta}
+	\bibcitem{Lopez:tu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection song (end)
+\subsubsection{With medium of publication given in final supplemental element} % (fold)
+\label{ssub:with_medium_of_publication_given_in_final_supplemental_element}
+\begin{refsection}
+	\bibcitem{Schubert:wm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_medium_of_publication_given_in_final_supplemental_element (end)
+\subsubsection{With original recording date given in middle supplemental element} % (fold)
+\label{ssub:with_original_recording_date_given_in_middle_supplemental_element}
+\begin{refsection}
+	\bibcitem{Beethoven:ui}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_original_recording_date_given_in_middle_supplemental_element (end)
+% subsection musical_recording (end)
+\subsection{Literary Reading, Spoken-Word Recording, or Podcast} % (fold)
+\label{sub:literary_reading_spoken_word_recording_or_podcast}
+\subsubsection{With the same author and narrator} % (fold)
+\label{ssub:with_the_same_author_and_narrator}
+\begin{refsection}
+	\bibcitem{Li:ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_the_same_author_and_narrator (end)
+\subsubsection{With a different author and narrator} % (fold)
+\label{ssub:with_a_different_author_and_narrator}
+\begin{refsection}
+	\bibcitem{Chaucer:uf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_different_author_and_narrator (end)
+\subsubsection{With podcast specified as the version} % (fold)
+\label{ssub:with_podcast_specified_as_the_version}
+% subsubsection with_podcast_specified_as_the_version (end)
+\begin{refsection}
+	\bibcitem{YiyunLiReads:ub}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection literary_reading_spoken_word_recording_or_podcast (end)
+\subsection{Live Radio Broadcast} % (fold)
+\label{sub:live_radio_broadcast}
+\begin{refsection}
+	\bibcitem{PoeMusic:wi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection live_radio_broadcast (end)
+\subsection{Art Exhibition} % (fold)
+\label{sub:art_exhibition}
+\begin{refsection}
+	\bibcitem{Cave:wf}
+	\bibcitem{Unbound:wy}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection art_exhibition (end)
+\subsection{Sculpture or Other Object} % (fold)
+\label{sub:sculpture_or_other_object}
+\subsubsection{With format given in final supplemental element} % (fold)
+\label{ssub:with_format_given_in_final_supplemental_element}
+\begin{refsection}
+	\bibcitem{Rodin:uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_format_given_in_final_supplemental_element (end)
+\subsubsection{Untitled} % (fold)
+\label{ssub:untitled_sculpture}
+\begin{refsection}
+	\bibcitem{JarWithSerpent:xv}
+	\bibcitem{Mackintosh:wj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection untitled_sculpture (end)
+% subsection sculpture_or_other_object (end)
+\subsection{Painting} % (fold)
+\label{sub:painting}
+\subsubsection{Viewed firsthand} % (fold)
+\label{ssub:painting_viewed_firsthand}
+\begin{refsection}
+	\bibcitem{Bearden:vp}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection painting_viewed_firsthand (end)
+\subsubsection{Viewed online} % (fold)
+\label{ssub:painting_viewed_online}
+\begin{refsection}\citereset
+	\bibcitem{Bearden:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection painting_viewed_online (end)
+\subsubsection{Viewed in a book} % (fold)
+\label{ssub:painting_viewed_in_a_book}
+\begin{refsection}\citereset
+	\bibcitem{Velazquez:2016ud}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection painting_viewed_in_a_book (end)
+% subsection painting (end)
+\subsection{Photograph} % (fold)
+\label{sub:photograph}
+\subsubsection{Viewed firsthand} % (fold)
+\label{ssub:photo_viewed_firsthand}
+\begin{refsection}
+	\bibcitem{Cameron:wo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection photo_viewed_firsthand (end)
+\subsubsection{Viewed online} % (fold)
+\label{ssub:photo_viewed_online}
+\begin{refsection}
+	\bibcitem{Sheldon:tr}
+	\bibinclude{sheldon2014}
+	\bibcitem{Silver:tj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection photo_viewed_online (end)
+% subsection photograph (end)
+\subsection{Illustrated Work or Cartoon} % (fold)
+\label{sub:illustrated_work_or_cartoon}
+\begin{refsection}
+	\bibcitem{Beaton:vx}
+	\bibcitem{Karasik:vt}
+	\bibcitem{Trudeau:tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection illustrated_work_or_cartoon (end)
+\subsection{Slides} % (fold)
+\label{sub:slides}
+\begin{refsection}
+	\bibcitem{Benton:wd}
+	\bibcitem{Monet:ug}
+	\bibcitem{SlideLinus:wh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection slides (end)
+% section audiovisual_works (end)
+
+% \section{Text Accompanying Audio and Visual Works} % (fold)
+% \label{sec:text_accompanying_audio_and_visual_works}
+%
+% % section text_accompanying_audio_and_visual_works (end)
+%
+% \section{Librettos and Musical Scores} % (fold)
+% \label{sec:librettos_and_musical_scores}
+%
+% % section librettos_and_musical_scores (end)
+%
+% \section{Performances} % (fold)
+% \label{sec:performances}
+%
+% % section performances (end)
+%
+% \section{Live Presentations (Lectures, Talks, Conference Presentations, and Speeches)} % (fold)
+% \label{sec:live_presentations_lectures_talks_conference_presentations_and_speeches}
+%
+% % section live_presentations_lectures_talks_conference_presentations_and_speeches (end)
+%
+% \section{Interviews} % (fold)
+% \label{sec:interviews}
+%
+% % section interviews (end)
+%
+% \section{Personal Communications} % (fold)
+% \label{sec:personal_communications}
+%
+% % section personal_communications (end)
+%
+% \section{Letters} % (fold)
+% \label{sec:letters}
+%
+% % section letters (end)
+%
+% \section{E-mails and Text Messages} % (fold)
+% \label{sec:e_mails_and_text_messages}
+%
+% % section e_mails_and_text_messages (end)
+%
+% \section{E-mail Newsletters} % (fold)
+% \label{sec:e_mail_newsletters}
+%
+% % section e_mail_newsletters (end)
+%
+% \section{Press Releases} % (fold)
+% \label{sec:press_releases}
+%
+% % section press_releases (end)
+%
+% \section{Advertisements} % (fold)
+% \label{sec:advertisements}
+%
+% % section advertisements (end)
+%
+% \section{Reports} % (fold)
+% \label{sec:reports}
+%
+% % section reports (end)
+%
+% \section{Scripture} % (fold)
+% \label{sec:scripture}
+%
+% % section scripture (end)
+%
+% \section{Dissertations and Theses} % (fold)
+% \label{sec:dissertations_and_theses}
+%
+% % section dissertations_and_theses (end)
+%
+% \section{Brochures and Pamphlets} % (fold)
+% \label{sec:brochures_and_pamphlets}
+%
+% % section brochures_and_pamphlets (end)
+%
+% \section{Maps, Charts, and Tables} % (fold)
+% \label{sec:maps_charts_and_tables}
+%
+% % section maps_charts_and_tables (end)
+%
+% \section{Unpublished Works} % (fold)
+% \label{sec:unpublished_works}
+%
+% % section unpublished_works (end)
+%
+% \section{Works Published Informally in a Repository or Preprint Server} % (fold)
+% \label{sec:works_published_informally_in_a_repository_or_preprint_server}
+%
+% % section works_published_informally_in_a_repository_or_preprint_server (end)
+%
+% \section{Digital Media} % (fold)
+% \label{sec:digital_media}
+%
+% % section digital_media (end)
+%
+% \section{Works Missing Publication Information} % (fold)
+% \label{sec:works_missing_publication_information}
+%
+% % section works_missing_publication_information (end)
+%
+% \section{Government Publications} % (fold)
+% \label{sec:government_publications}
+%
+% % section government_publications (end)
+%
+% \section{Legal Works} % (fold)
+% \label{sec:legal_works}
+%
+% % section legal_works (end)
+
+\section*{Remaining Sections} % (fold)
+\addcontentsline{toc}{section}{Remaining Sections}
+\label{sec:remaining_sections}
+
+This document is not yet complete. Many source types below are already well supported in \texttt{biblatex-mla}. Please check with existing materials to see how to work with one of these types.
+
+\begin{enumerate}
+	\setcounter{enumi}{12}
+	\item Text Accompanying Audio and Visual Works
+	\begin{itemize}
+		\item Text Accompanying Audio Works (Including Liner Notes)
+		\begin{itemize}
+			\item Titled, with format given in final supplemental element
+			\item Untitled
+			\item Undated
+			\item Unsigned (anonymous)
+		\end{itemize}
+		\item Museum Wall Text
+	\end{itemize}
+	
+	\item Librettos and Musical Scores
+	
+	\item Performances
+	\begin{itemize}
+		\item Play
+		\item Concert
+		\item Dance
+		\item Performance Art
+	\end{itemize}
+	
+	\item Live Presentations (Lectures, Talks, Conference Presentations, and Speeches)
+	\begin{itemize}
+		\item Video Recording of Live Presentation
+		\item Transcript or Captioning of Live Presentation Accompanying Video Recording
+		\item Transcript of Live Presentation Published without Accompanying Audio or Video
+	\end{itemize}
+	
+	\item Interviews
+	\begin{itemize}
+		\item Interviewer’s Name Not Given
+		\item Interviewer’s Name Given
+		\item Unpublished
+	\end{itemize}
+	
+	\item Personal Communications
+	
+	\item Letters
+	\begin{itemize}
+		\item Published
+		\begin{itemize}
+			\item In a book
+			\item To the editor, published in a news publication
+		\end{itemize}
+		\item Unpublished
+		\begin{itemize}
+			\item In a personal collection
+			\item In an archive
+		\end{itemize}
+	\end{itemize}
+	
+	\item E-mails and Text Messages
+	
+	\item E-mail Newsletters
+	
+	\item Press Releases
+	
+	\item Advertisements
+	\begin{itemize}
+		\item Filmed Commercial
+		\item Print Advertisement
+		\item Billboard
+		\item Digital Advertisement
+	\end{itemize}
+	
+	\item Reports
+	\begin{itemize}
+		\item Written and Published by the Same Organization
+		\item With a Different Author and Publisher
+		\item Executive Summary
+	\end{itemize}
+	
+	\item Scripture
+	\begin{itemize}
+		\item With a General Editor
+		\item With a Translator Specified
+		\item In a Named Version
+		\item Published in an App
+	\end{itemize}
+	
+	\item Dissertations and Theses
+
+	\item Brochures and Pamphlets
+
+	\item Maps, Charts, and Tables
+
+	\item Unpublished Works
+	\begin{itemize}
+		\item Letter, Memo, or Other Written Communication
+		\item Interview
+		\item Forthcoming Work
+		\item Essay Manuscript
+		\item Book Manuscript
+		\item Manuscript in an Archive
+		\item Classroom Materials
+		\begin{itemize}
+			\item Syllabus
+			\item On a learning management system
+			\item In a printed course pack
+		\end{itemize}
+	\end{itemize}
+	
+	\item Works Published Informally in a Repository or Preprint Server
+	
+	\item Digital Media
+	\begin{itemize}
+		\item Video Game
+		\item Virtual Reality Experience
+	\end{itemize}
+	
+	\item Works Missing Publication Information
+	\begin{itemize}
+		\item Without an Author
+		\item Untitled
+		\begin{itemize}
+			\item Description in Title of Source element
+			\item Poem with first line used as title
+		\end{itemize}
+		\item Without a Publisher
+		\item Without a Date of Publication
+		\item Without Page Numbers
+	\end{itemize}
+	
+	\item Government Publications
+	\begin{itemize}
+		\item With Government Name as It Appears on Source
+		\item With Government Name Standardized to Consolidate Entries
+	\end{itemize}
+	
+	\item Legal Works
+	\begin{itemize}
+		\item United States Supreme Court
+		\begin{itemize}
+			\item Decisions
+			\item Dissenting opinions
+		\end{itemize}
+		\item Federal Statutes (United States Code)
+		\item Public Laws
+		\item Federal Appeals Court Decisions
+		\item Federal Bills
+		\item Hearings
+		\item Executive Orders
+		\item State Court of Appeals, Unpublished Decisions
+		\item State Senate Bills
+		\item Constitutions
+		\item Treaties
+		\item Resolutions of International Governing Bodies
+	\end{itemize}
+	
+\end{enumerate}
+
+% section remaining_sections (end)
 
 \end{document}
