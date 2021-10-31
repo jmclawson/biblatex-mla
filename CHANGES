@@ -1,17 +1,55 @@
-Changelog for version 2.1a (June 15 - still in progress)
-- defined revsdnamedelim as comma and improved spacing around slash when multiple publishers
-- added context shifting for comma before et al: When names are "Last, First" it should be preceded by a comma, but when names are "First Last" it should not be.
-- added support for url in book entry
-- fixed placement of named series
-- added support for named issues of periodicals that aren't special issues (i.e., for comic books)
-- added internal counter for delaying certain elements of multivolume books, along with a three-way option toggle (auto, true, false) for bibliography and entry
-- dropped styling for proceedings titles; bib files should use "booktitle" field for proceedings published as books
-- print only the last name of book editor / book translator who also wrote the Introduction or Foreword
-- added automatic combining of editor and translator without needing to call the editor before the translator and without needing to set "editortype = {editortr}"
-- compress page ranges (so 250-258 now says 250-58, dropping the redundant hundreds digit); further modified to show leading zeroes (so 101-8 now shows 101-08) FIXME: not yet applied to dates
-- added "project" entrysubtype to @online entries to indicate title should be italics FIXME: make sure citations are also italics; consider: better string? website?
-- in citations, support the "totalnames" entry option to allow citations to match bibliography entries
-- defined "editor", "editors", "byeditor", "translator", and "translators" in language file; defined "compiled by" in language file; changed "newseries" from "ns" to "new series" in the language files FIXME: add this for non-English
+Changelog for version 2.1 (Oct 31)
+- Added internal counter for delaying certain elements of multivolume books, 
+  along with a three-way option toggle (auto, true, false) for bibliography and 
+  entry. The MLA allows for a few different ways to display the information for 
+  a multivolume set when citing a book from that set, whether displaying it 
+  alongside the book information or delaying it for an additional container. 
+  With the default "containerized=auto" setting, biblatex-mla tries to choose a 
+  method based on the number of fields defined, but setting the option to 
+  "true" or "false" will force the behavior for an entry. 
+- Substantially updated the display of audiovisual sources. Among other things, 
+  new entry options "uniquenamea", "uniquenameb", and "uniquenamec=true" allow 
+  for the indication that the namea, nameb, or namec field should apply to an 
+  individual work, rather than to a larger collection in which it is included. 
+  This option makes it possible to show, for instance, that the director of a 
+  single episode of a TV show is not responsible for the whole series.
+- Changed the display of page ranges to match MLA guidelines, compressing them 
+  accordingly: 250-258 now displays as 250-58, dropping the redundant hundreds 
+  digit; additionally, 101-108 displays as 101-08, deliberately retaining 
+  leading zeroes. FIXME: This feature is not yet correctly applied to date 
+  ranges, as for the eventdate field.
+- Add pluralization to number marker, showing "nos. 3-4" instead of "no. 3-4."
+- Added "website" entrysubtype to @online entries to display a title in 
+  italics.
+- In citations, support the "totalnames" entry option to allow citations to 
+  match bibliography entries beyond the typical maximum number.
+- Print only the last name of book editor / book translator who is also the 
+  author of the entry.
+- Added support for named issues of periodicals that aren't special issues 
+  (i.e., for comic books).
+- Added support for automatic combining of editor and translator without needing 
+  to call the editor before the translator and without needing to set 
+  "editortype = {editortr}".
+- Defined revsdnamedelim as comma and improved spacing around slash when 
+  multiple publishers.
+- Added context shifting for comma before et al: When names are "Last, First" 
+  the phrase should now be preceded by a comma, and when names are "First Last" 
+  it should not be.
+- Added support for including a url in a book entry.
+- Fixed placement of named series.
+- Defined and edited various bibstrings: Defined "editor", "editors", 
+  "byeditor", "translator", "translators", and "numbers" in language file; 
+  defined "compiled by" in language file; changed "newseries" from "ns" to "new 
+  series" in the language files; corrected "screenplay" and added "byscreenplay" 
+  in language file; added "tvseason" and "tvepisode" to language file. FIXME: 
+  These strings have yet to be added or modified for for non-English languages.
+- BREAKING: @video and @movie are no longer aliases for each other. The first of 
+  these is now reserved for shorter videos with titles that should be placed in 
+  quotation marks (e.g., a YouTube video or a TV episode), while the latter is 
+  reserved for works with titles that belong in italics (e.g., a feature-length 
+  film).
+- BREAKING: Dropped styling for proceedings titles; bib files should use 
+  "booktitle" field for proceedings published as books.
 
 Changelog for version 2.0
 - changes for compatibility with the 9th edition of the MLA handbook, which is 
