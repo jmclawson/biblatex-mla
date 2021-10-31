@@ -1,11 +1,11 @@
-% mla.cbx, v2.0 2021/06/07 * compatible with biblatex 3.16
+% mla.cbx, v2.1 2021/10/31 * compatible with biblatex 3.16
 % Maintained at <https://github.com/jmclawson/biblatex-mla>.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements back to the project on GitHub or to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla.cbx}[2021/06/07 v2.0 biblatex citation style]
+\ProvidesFile{mla.cbx}[2021/10/31 v2.1 biblatex citation style]
 
 \RequireCitationStyle{mla-footnotes}
 
@@ -65,7 +65,61 @@
      \blx@ibidreset@force
      \blx@idemreset@force
      \blx@opcitreset@force
-     \blx@loccitreset@force}}
+     \blx@loccitreset@force}
+	 \global\undef\bbx@lasthash}}% 2.1 last part added
+
+% 2.1 adding citeauthor tracking for full / partial names
+\newrobustcmd*{\cbx@nametracker@global}[1]{%
+    \xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}
+    {}
+    {\listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}}}
+
+\newrobustcmd*{\cbx@nametracker@context}[1]{%
+    \iftoggle{blx@footnote}
+    {\xifinlistcs{#1}{cbx@fseen@names@\the\c@refsection}
+        {}
+        {\listcsxadd{cbx@fseen@names@\the\c@refsection}{#1}}}
+    {\xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}
+        {}
+        {\listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}}}}
+
+\newrobustcmd*{\cbx@ifnameseen@global}[1]{%
+    \xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}}
+
+\newrobustcmd*{\cbx@ifnameseen@context}[1]{%
+    \iftoggle{blx@footnote}%
+    {\xifinlistcs{#1}{cbx@fseen@names@\the\c@refsection}}%
+    {\xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}}}
+
+\DeclareBibliographyOption[string]{nametracker}[true]{%
+    \ifcsdef{blx@opt@nametracker@#1}
+    {\csuse{blx@opt@nametracker@#1}}
+    {\blx@err@invopt{nametracker=#1}{}}}
+
+\def\blx@opt@nametracker@global{%
+    \let\cbx@ifnameseen\cbx@ifnameseen@global
+    \let\cbx@nametracker\cbx@nametracker@global}
+
+\let\blx@opt@nametracker@true\blx@opt@nametracker@global
+
+\def\blx@opt@nametracker@false{%
+    \protected\long\def\cbx@ifnameseen##1##2##3{##3}%
+    \let\cbx@nametracker\relax}
+
+\def\blx@opt@nametracker@context{%
+    \let\cbx@ifnameseen\cbx@ifnameseen@context
+    \let\cbx@nametracker\cbx@nametracker@context}
+
+\appto\blx@secinit{%
+    \ifcsundef{cbx@bseen@names@\the\c@refsection}
+    {\global\cslet{cbx@bseen@names@\the\c@refsection}\@empty}
+    {}%
+    \ifcsundef{cbx@fseen@names@\the\c@refsection}
+    {\global\cslet{cbx@fseen@names@\the\c@refsection}\@empty}
+    {}}
+
+\ExecuteBibliographyOptions{nametracker=context}
+% 2.1 adding citeauthor tracking for full / partial names
 
 \InitializeCitationStyle{%
   \usebibmacro{cite:reset}%
@@ -75,7 +129,9 @@
   \fi
   \long\def\mlasymbolfootnote#1{\begingroup\def%
     \thefootnote{\fnsymbol{footnote}}\footnote[0]{#1}\endgroup}%
-  \newcounter{mladraftnote}}
+  \newcounter{mladraftnote}%
+  \global\cslet{cbx@bseen@names@\the\c@refsection}\@empty%
+  \global\cslet{cbx@fseen@names@\the\c@refsection}\@empty}
 
 \OnManualCitation{%
   \usebibmacro{cite:reset}%
@@ -406,23 +462,86 @@
   {\ifciteindex
      {\indexnames{labelname}}
      {}%
-   \printnames[given-family]{labelname}%FUTURE add check for citeseen (to print first name on first mention)
-   }
+   \printnames[citeauthor]{labelname}}%
   {\multicitedelim}
   {\usebibmacro{postnote}\usebibmacro{cite:save}}
   
-\DeclareCiteCommand*{\citeauthor}%
+\DeclareCiteCommand*{\citeauthor}% print just the surname
   {\usebibmacro{prenote}}
   {\ifciteindex
      {\indexnames{labelname}}
      {}%
-   \printnames[family]{labelname}%
-   % \ifentryseen{labelname}%FUTURE skeleton to check for first mention - doesn't work just now
-   %   {\printnames{labelname}}% TRUE
-   %   {\printnames[given-family]{labelname}}% FALSE
-   }
+   \printnames[citeauthorstar]{labelname}}%
   {\multicitedelim}
   {\usebibmacro{postnote}\usebibmacro{cite:save}}
+
+% 2.1 tracking seen names for citeauthor
+\DeclareNameFormat{citeauthor}{%
+  \cbx@ifnameseen{\thefield{hash}}
+    {\ifcase\value{uniquename}%
+       \usebibmacro{name:family}
+        {\namepartfamily}
+        {\namepartgiven}
+        {\namepartprefix}
+        {\namepartsuffix}%
+     \or
+       \ifuseprefix
+         {\usebibmacro{name:given-family}
+            {\namepartfamily}
+            {\namepartgiveni}
+            {\namepartprefix}
+            {\namepartsuffixi}}
+         {\usebibmacro{name:given-family}
+            {\namepartfamily}
+            {\namepartgiveni}
+            {\namepartprefixi}
+            {\namepartsuffixi}}%
+     \or
+       \usebibmacro{name:given-family}
+         {\namepartfamily}
+         {\namepartgiven}
+         {\namepartprefix}
+         {\namepartsuffix}%
+     \fi}
+    {\usebibmacro{name:given-family}
+       {\namepartfamily}
+       {\namepartgiven}
+       {\namepartprefix}
+       {\namepartsuffix}%
+     \cbx@nametracker{\thefield{hash}}}%
+  \usebibmacro{name:andothers}}
+
+\DeclareNameFormat{citeauthorstar}{%
+  \ifcase\value{uniquename}%
+    \usebibmacro{name:family}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
+  \or
+    \ifuseprefix
+      {\usebibmacro{name:given-family}
+         {\namepartfamily}
+         {\namepartgiveni}
+         {\namepartprefix}
+         {\namepartsuffixi}}
+      {\usebibmacro{name:given-family}
+         {\namepartfamily}
+         {\namepartgiveni}
+         {\namepartprefixi}
+         {\namepartsuffixi}}%
+  \or
+    \usebibmacro{name:given-family}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
+  \fi
+  \cbx@ifnameseen{\thefield{hash}}
+    {}
+    {\cbx@nametracker{\thefield{hash}}}%
+  \usebibmacro{name:andothers}}
+% 2.1 tracking seen names for citeauthor
 
 \DeclareCiteCommand{\citetitle}
   {\boolfalse{citetracker}%
