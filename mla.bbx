@@ -1,5 +1,5 @@
 % These sourcemap declarations allow for .bib file oddities. Additionally, to comport with MLA expectations, they modify strings in publisher fields, drop unneeded parts of URLs, and look for patterns in a URL field to fill in missing eprint fields. If the choices here seem to do too much, use "style=mla-strict", which makes fewer accommodations and more exactly prints entries as they're defined in a given bibtex file.
-\ProvidesFile{mla.bbx}[2021/06/07 v2.0 biblatex bibliography style]
+\ProvidesFile{mla.bbx}[2021/10/31 v2.1 biblatex bibliography style]
 
 \RequireBibliographyStyle{mla-strict}
 
@@ -18,6 +18,34 @@
 			\step[fieldset=title, fieldvalue=\regexp{$1}, final]
 			\step[fieldset=booktitle, null]
 			\step[fieldset=entrysubtype, fieldvalue={book}]
+	  }
+	  \map{% Add italics to app names for videos, movies, music, audio
+	      \pertype{video}
+		    \step[fieldsource=addendum, notmatch=\regexp{mkbibemph}, final]
+		    \step[fieldsource=addendum, match=\regexp{(.+)\s+app$}, replace={\\mkbibemph\{$1\} app}]
+	  }
+	  \map{% Add italics to app names for videos, movies, music, audio
+	      \pertype{movie}
+		    \step[fieldsource=addendum, notmatch=\regexp{mkbibemph}, final]
+		    \step[fieldsource=addendum, match=\regexp{(.+)\s+app$}, replace={\\mkbibemph\{$1\} app}]
+	  }
+	  \map{% Add italics to app names for videos, movies, music, audio
+	      \pertype{music}
+		    \step[fieldsource=addendum, notmatch=\regexp{mkbibemph}, final]
+		    \step[fieldsource=addendum, match=\regexp{(.+)\s+app$}, replace={\\mkbibemph\{$1\} app}]
+	  }
+	  \map{% Add italics to app names for videos, movies, music, audio
+	      \pertype{audio}
+		    \step[fieldsource=addendum, notmatch=\regexp{mkbibemph}, final]
+		    \step[fieldsource=addendum, match=\regexp{(.+)\s+app$}, replace={\\mkbibemph\{$1\} app}]
+	  }
+	  \map{% Accommodate music albums defined simply
+	      \pertype{music}
+		    \step[notfield=title, final]
+		    \step[fieldsource=booktitle, match=\regexp{(.+)}, final]
+			\step[fieldset=title, fieldvalue=\regexp{$1}, final]
+			\step[fieldset=booktitle, null]
+			\step[fieldset=entrysubtype, fieldvalue={album}]
 	  }
 	  \map{% Fill in missing publisher for US patents
 	      \pertype{patent}
