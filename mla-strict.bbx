@@ -1,16 +1,130 @@
-% mla-strict.bbx, v2.0 2021/06/07 * compatible with biblatex 3.16
+% mla-strict.bbx, v2.1 2021/10/31 * compatible with biblatex 3.16
 % Maintained at <https://github.com/jmclawson/biblatex-mla>.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements back to the project on GitHub or to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla-strict.bbx}[2021/06/07 v2.0 biblatex bibliography style]
+\ProvidesFile{mla-strict.bbx}[2021/10/31 v2.1 biblatex bibliography style]
 
 \RequireBibliographyStyle{standard}
 \DeclareLanguageMappingSuffix{-mla}
 
+
+
+% add leading zero to page range
+\newrobustcmd*{\mkcomprangezero}{%
+  \begingroup
+  \@ifstar
+    {\blx@range@aux\blx@comprange@ii}
+    {\blx@range@aux\blx@comprange@i}}
+\def\blx@comprange@i[#1][#2]#3{%
+  \let\blx@tempa\@empty
+  \protected\def\blx@range@out@value{\appto\blx@tempa}%
+  \def\blx@range@out@item@process{#2}%
+  \let\blx@range@out@delim\blx@range@out@value
+  \let\blx@range@split\blx@genrange@split
+  \let\blx@range@process\blx@comprange@check
+  \blx@range@chunk{#3}%
+  \begingroup
+  \edef\blx@tempa{\endgroup
+    \unexpanded{#1}{\expandonce\blx@tempa}}%
+  \blx@tempa
+  \endgroup}
+\def\blx@comprange@ii[#1][#2]#3{%
+  \protected\def\blx@range@out@value{#1}%
+  \def\blx@range@out@item@process{#2}%
+  \let\blx@range@out@delim\@firstofone
+  \let\blx@range@split\blx@genrange@split
+  \let\blx@range@process\blx@comprange@check
+  \blx@range@chunk{#3}%
+  \endgroup}
+\def\blx@comprange@check#1#2{%
+  \blx@imc@ifinteger{#1}
+    {\blx@imc@ifinteger{#2}
+       {\@firstoftwo}
+       {\@secondoftwo}}
+    {\@secondoftwo}
+    {\blx@comprange@comp{#1}{#2}}
+    {\begingroup
+     \protected@edef\blx@tempc{\endgroup
+       \blx@range@out@value{%
+         \blx@range@out@item@process{\unexpanded{#1}}%
+         \noexpand\bibrangedash
+         \blx@range@out@item@process{\unexpanded{#2}}}}%
+     \blx@tempc}}
+\def\blx@comprange@comp#1#2{%
+  \def\blx@tempb{#1}%
+  \def\blx@tempc{#2}%
+  \let\blx@tempd\blx@tempc
+  \ifnum\c@maxcomprange<\abx@rangeproclimit\relax
+    \numdef\blx@tempe\abx@rangeproclimit
+  \else
+    \numdef\blx@tempe\c@maxcomprange
+  \fi
+  \blx@tempcntc=\blx@tempe\relax
+  \ifnum
+    \ifnum\c@mincompwidth<1\space1\fi
+    \ifnum\c@maxcomprange<10\space1\fi
+    \ifnum\c@mincomprange<\blx@tempb\space\else1\fi
+    \ifnum\blx@tempb<\numexpr\blx@tempcntc*10\relax\else1\fi
+  0=\z@
+    \expandafter\blx@comprange@comp@div
+  \else
+    \expandafter\blx@comprange@end
+  \fi}
+\def\blx@comprange@end{%
+  \numdef\blx@tempb\blx@tempb
+  \ifnum\blx@tempe>\c@maxcomprange\relax
+    \numdef\blx@tempc\blx@tempc
+  \else
+    \numdef\blx@tempc\blx@tempd
+  \fi
+  \begingroup
+  \protected@edef\blx@tempb{\endgroup
+    \blx@range@out@value{%
+      \blx@range@out@item@process{\blx@tempb}%
+      \noexpand\bibrangedash
+	  % mkcomprangezero changes start here
+	  \ifnum\blx@tempc<10
+	    \ifnum\blx@tempb<10
+		  \blx@range@out@item@process{\blx@tempc}
+		\else
+	      \blx@range@out@item@process{0\blx@tempc}% force leading zero
+		\fi
+	  \else
+	    \blx@range@out@item@process{\blx@tempc}
+	  \fi}}% mkcomprangezero changes end here
+  \blx@tempb}
+\def\blx@comprange@comp@div{%
+  \unless\ifnum\blx@tempb<\blx@tempcntc
+    \blx@tempcnta\blx@tempb\relax
+    \blx@tempcntb\blx@tempc\relax
+    \divide\blx@tempcnta\blx@tempcntc
+    \divide\blx@tempcntb\blx@tempcntc
+    \ifnum\blx@tempcnta=\blx@tempcntb
+      \edef\blx@tempd{\expandafter\@gobble\blx@tempd}%
+      \numdef\blx@tempe\blx@tempcntc
+    \fi
+  \fi
+  \divide\blx@tempcntc10\relax
+  \ifnum
+     \ifnum\blx@tempcntc<10 1\fi
+    \ifnum\blx@tempcntc>\c@mincompwidth\else 1\fi
+  0=\z@
+    \expandafter\blx@comprange@comp@div
+  \else
+    \expandafter\blx@comprange@end
+  \fi}
+%%%%% \end add leading zero to page range
+
 \NewBibliographyString{byserieseditor}
+\NewBibliographyString{bydirector}
+\NewBibliographyString{bycreator}% 2.1
+\NewBibliographyString{creator}% 2.1
+\NewBibliographyString{byscreenplay}% 2.1
+\NewBibliographyString{tvseason}% 2.1
+\NewBibliographyString{tvepisode}% 2.1
 \NewBibliographyString{reviewof}
 \NewBibliographyString{specissue}
 \NewBibliographyString{phd}
@@ -29,6 +143,9 @@
 \NewBibliographyString{adaptor}
 \NewBibliographyString{performer}
 \NewBibliographyString{performers}
+\NewBibliographyString{bynarrator}% 2.1
+\NewBibliographyString{narrator}% 2.1
+\NewBibliographyString{numbers}% 2.1
 \NewBibliographyString{composer}
 \NewBibliographyString{composedby}
 \NewBibliographyString{producer}
@@ -42,9 +159,18 @@
 \NewBibliographyString{print}%
 \NewBibliographyString{web}%
 \NewBibliographyString{generaleditor}%
+\NewBibliographyString{conductor}% 2.1
+\NewBibliographyString{byconductor}% 2.1
+\NewBibliographyString{recorded}% 2.1
+\NewBibliographyString{byhost}% 2.1
+\NewBibliographyString{host}% 2.1
 
 \setlength{\bibitemsep}{0pt}
 \renewcommand*{\mkbibnamesuffix}[1]{\addcomma\addlowpenspace#1}
+\renewcommand*{\bibdatetimesep}{\addcomma\addspace}
+\DeclareDelimFormat{andothersdelim}{\addspace}
+\DeclareDelimFormat[notreversed]{andothersdelim}{\addspace}
+\DeclareDelimFormat[bib]{andothersdelim}{\addcomma\addspace}
 
 \DeclareNameAlias{author}{sortname}
 \@ifpackagelater{biblatex}{2016/03/01}{%
@@ -80,7 +206,18 @@
   {\endlist}
   {\item}
 
+
+% compressing page ranges
+\setcounter{mincomprange}{100}
+% \setcounter{maxcomprange}{1000}
+\setcounter{mincompwidth}{10}
+
 \DeclareFieldFormat{title:article}{\mkbibquote{#1}}%
+\DeclareFieldFormat{title:artwork}{\mkbibemph{#1}}%
+\DeclareFieldFormat{title:music}{\mkbibquote{#1}}%
+\DeclareFieldFormat{title:audio}{\mkbibquote{#1}}%
+\DeclareFieldFormat{booktitle:music}{\mkbibemph{#1}}%
+\DeclareFieldFormat{booktitle:audio}{\mkbibemph{#1}}%
 \DeclareFieldFormat{title:online}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:inreference}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:book}{\mkbibemph{#1}}
@@ -91,19 +228,28 @@
 \DeclareFieldFormat{title:inproceedings}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:mvbook}{\mkbibemph{#1}}% mla-2.0
 \DeclareFieldFormat{title:patent}{\mkbibquote{#1}}
+\DeclareFieldFormat{title:proceedings}{\mkbibemph{#1}}% 2.1
 \DeclareFieldFormat{title:thesis}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:unpublished}{\mkbibquote{#1}}%
 \DeclareFieldFormat{title:reviewedbook}{\bibstring{reviewof}\addspace\mkbibemph{#1}}%
 \DeclareFieldFormat{title:reference}{\mkbibemph{#1}}%
 \DeclareFieldFormat{isbn}{#1}%
-\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}
+% \DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}
+\DeclareFieldFormat{pages}{\mkcomprangezero[{\mkpageprefix[pagination]}]{#1}}% 2.1
 \DeclareFieldFormat[review]{volume}{#1}%
 \DeclareFieldFormat[article]{volume}{#1}%
 \DeclareListFormat[article]{location}%
-  {\unspace\mkbibbrackets{#1}\addspace}%
+  {\mkbibbrackets{#1}}% 2.1 removed spacing controls
 \DeclareFieldFormat[article]{version}{#1\isdot}%
+\DeclareFieldFormat[review]{version}{#1\isdot}% 2.1
 \DeclareFieldFormat[incollection]{bibliography:origyear}{\openrangeformat{#1}\addperiod}%
 \DeclareFieldFormat[video]{mla:publimedium}{\MakeCapital{film}}%
+\DeclareFieldFormat[movie]{titleaddon}{\mkbibbrackets{\mkbibemph{#1}}}%
+\DeclareFieldFormat[movie]{version}{#1}%
+\DeclareFieldFormat[video]{title}{\mkbibquote{#1}}% 2.1
+\DeclareFieldFormat[video]{season}{\bibstring{tvseason}\addspace#1}% 2.1
+\DeclareFieldFormat[video]{number}{\bibstring{tvepisode}\addspace#1}% 2.1
+
 
 \DeclareFieldFormat[patent]{number}{#1}%
 
@@ -116,7 +262,8 @@
 \DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
 \DeclareFieldFormat{nameaddon}{\mkbibbrackets{#1}}%
 \DeclareFieldFormat{issuetitle}{\mkbibemph{#1}}
-\DeclareFieldFormat{mla:newspaper:section}{\bibstring{section}\addspace#1}%
+\DeclareFieldFormat{mla:news:section:name}{#1\addspace\bibstring{section}}% 2.1
+\DeclareFieldFormat{mla:news:section:number}{\bibstring{section}\addspace#1}%
 \DeclareFieldFormat{library}{#1\isdot}%
 \DeclareFieldFormat{reviewededitor}{\bibstring{byeditor}\addspace#1}%
 \DeclareFieldFormat{reviewedauthor}{\bibstring{byauthor}\addspace#1}%
@@ -147,28 +294,33 @@
   \mkbibemph{Project Muse}}}
 \DeclareFieldFormat{eprint}{\emph{#1}}%
 \DeclareFieldFormat{doi}{%
-  doi\addcolon%
+  https://doi.org/% 2.1
   \ifhyperref%
     {\href{https://doi.org/#1}{\nolinkurl{#1}}}%
     {\nolinkurl{#1}}}
 
 \DeclareFieldFormat{urldate}{#1}%
 \DeclareFieldFormat[article,periodical,review]{volume}{\bibstring{volume}\ppspace#1}% volume of a journal
-\DeclareFieldFormat[article,periodical,review]{number}{\bibstring{number}\ppspace#1}% number of a journal
+% \DeclareFieldFormat[article,periodical,review]{number}{\bibstring{number}\ppspace#1}% number of a journal
+\DeclareFieldFormat[article,periodical,review]{number}{% 2.1
+  \ifnumerals{#1}%
+    {\ifnumeral{#1}%
+      {\bibstring{number}}%
+      {\bibstring{numbers}}}%
+    {}%
+  ~\mkcomprangezero{#1}}%
 
-\DeclareBibliographyAlias{artwork}{article}%
-\DeclareBibliographyAlias{audio}{article}%
 \DeclareBibliographyAlias{booklet}{book}%
 \DeclareBibliographyAlias{bookinbook}{incollection}%
 \DeclareBibliographyAlias{collection}{book}%
 \DeclareBibliographyAlias{reference}{book}%
-\DeclareBibliographyAlias{image}{article}%
+% \DeclareBibliographyAlias{image}{article}%
 \DeclareBibliographyAlias{inbook}{incollection}%
 \DeclareBibliographyAlias{letter}{article}%
 \DeclareBibliographyAlias{manual}{book}% 2.0 ADDED √
 \DeclareBibliographyAlias{misc}{article}% 2.0 ADDED √
-\DeclareBibliographyAlias{movie}{video}% 2.0 ADDED √
-\DeclareBibliographyAlias{music}{audio}%
+\DeclareBibliographyAlias{video}{incollection}% 2.1
+\DeclareBibliographyAlias{audio}{music}%
 \DeclareBibliographyAlias{online}{article}
 \DeclareBibliographyAlias{patent}{article}% 2.0 ADDED √
 \DeclareBibliographyAlias{report}{book}% 2.0 ADDED √
@@ -180,10 +332,10 @@
 % \DeclareFieldAlias[patent]{holder}{addendum}
 
 \renewcommand*{\newunitpunct}{\addcomma\addspace}
-\renewcommand*{\multilistdelim}{/}
-\renewcommand*{\finallistdelim}{/}
+\renewcommand*{\multilistdelim}{\addspace/\addspace}
+\renewcommand*{\finallistdelim}{\addspace/\addspace}
+\renewcommand*{\revsdnamedelim}{\addcomma}
 \renewcommand*{\newblockpunct}{\addperiod\addspace}
-\renewcommand*{\andothersdelim}{\ifcitation{}{\addcomma}\addspace}
 \renewcommand*{\subtitlepunct}{\ifterm{}{\addcolon}\addspace}
 
 \newboolean{bbx@mla-incollection}
@@ -209,6 +361,17 @@
 \newboolean{bbx@uniquetranslator}%
 \DeclareEntryOption{uniquetranslator}[true]{%
   \setbool{bbx@uniquetranslator}{#1}}
+  
+% especially for a tv episode with a unique named individual
+\newboolean{bbx@uniquenamea}%
+\newboolean{bbx@uniquenameb}%
+\newboolean{bbx@uniquenamec}%
+\DeclareEntryOption{uniquenamea}[true]{%
+  \setbool{bbx@uniquenamea}{#1}}
+\DeclareEntryOption{uniquenameb}[true]{%
+  \setbool{bbx@uniquenameb}{#1}}
+\DeclareEntryOption{uniquenamec}[true]{%
+  \setbool{bbx@uniquenamec}{#1}}
 
 \newtoggle{bbx:showlocation}% 2.0 add a global/entry toggle to show location
 \settoggle{bbx:showlocation}{false}
@@ -218,6 +381,49 @@
 \newtoggle{bbx:longdash}% 2.0 change bibnamedash default and add a toggle to revert
 \settoggle{bbx:longdash}{true}
 \DeclareBibliographyOption{longdash}[true]{\settoggle{bbx:longdash}{#1}}
+
+\newtoggle{mla:image}% 2.1 new internal toggle for images
+\settoggle{mla:image}{false}
+
+\newtoggle{mla:delayed}% 2.1 new internal toggle for logic testing
+\settoggle{mla:delayed}{false}
+\newtoggle{del:p}% 2.1 delay plus, to add to containing
+\settoggle{del:p}{false}
+\newtoggle{del:m}% 2.1 delay minus, to subtract from containing
+\settoggle{del:m}{false}
+\newcounter{containing}% 2.1 new global/entry options for multivolumes
+\setcounter{containing}{0}
+\DeclareBibliographyOption[string]{containerized}[auto]{%
+  \ifthenelse{\equal{\detokenize{#1}}{\detokenize{auto}}}
+      {\settoggle{del:p}{false}\settoggle{del:m}{false}}% containerized=auto
+      {\ifthenelse{\equal{\detokenize{#1}}{\detokenize{true}}}
+  	    {\settoggle{del:p}{true}\settoggle{del:m}{false}}% ...=true
+  	    {\ifthenelse{\equal{\detokenize{#1}}{\detokenize{false}}}
+  	      {\settoggle{del:p}{false}\settoggle{del:m}{true}}% ...=false
+  		  {\PackageError{biblatex-mla}
+  		       {Option 'containerized=#1' invalid}
+  		       {The option you have supplied is invalid.\MessageBreak
+  		        Please choose among auto, true, and false.}}% ...!=auto;!=true;!=false
+  	  }% ...!=auto;!=true
+  	}% ...!=auto
+}%
+\DeclareEntryOption[string]{containerized}[true]{%
+  \ifthenelse{\equal{\detokenize{#1}}{\detokenize{auto}}}
+      {\settoggle{del:p}{false}\settoggle{del:m}{false}}% containerized=auto
+      {\ifthenelse{\equal{\detokenize{#1}}{\detokenize{true}}}
+  	    {\settoggle{del:p}{true}\settoggle{del:m}{false}}% ...=true
+  	    {\ifthenelse{\equal{\detokenize{#1}}{\detokenize{false}}}
+  	      {\settoggle{del:p}{false}\settoggle{del:m}{true}}% ...=false
+  		  {\PackageError{biblatex-mla}
+  		       {Option 'containerized=#1' invalid}
+  		       {The option you have supplied is invalid.\MessageBreak
+  		        Please choose among auto, true, and false.}}% ...!=auto;!=true;!=false
+  	  }% ...!=auto;!=true
+  	}% ...!=auto
+}%
+
+\ExecuteBibliographyOptions{containerized=auto}
+\ExecuteBibliographyOptions[inreference]{useeditor=false}
 
 \newbool{bbx:gnoreminfo}%
 \setbool{bbx:gnoreminfo}{false}
@@ -241,6 +447,7 @@
 
 \newboolean{mla@nodate}%
 \DeclareEntryOption{nodate}[true]{\setbool{mla@nodate}{#1}}
+
 
 \ExecuteBibliographyOptions{maxnames=2,datezeros=false,eprint=true}%
 
@@ -346,6 +553,33 @@
      \usebibmacro{translator+othersstrg}\clearname{translator}}%
     {\global\undef\bbx@lasthash}}
 
+\newbibmacro*{bytranslator+othersstrg}{%
+  \let\abx@tempb=\empty
+  \ifnamesequal{editor}{translator}
+      {\iffieldundef{editortype}
+        {\def\abx@tempa{byeditortr}}
+        {\edef\abx@tempa{by\thefield{editortype}tr}}
+       \appto\abx@tempb{\clearname{editor}}}
+      {\def\abx@tempa{bytranslator}}%
+  \ifnamesequal{translator}{commentator}
+    {\appto\abx@tempa{co}%
+     \clearname{commentator}}
+    {\ifnamesequal{translator}{annotator}
+       {\appto\abx@tempa{an}%
+        \clearname{annotator}}
+       {}}%
+  \ifnamesequal{translator}{introduction}
+    {\appto\abx@tempa{in}%
+     \clearname{introduction}}
+    {\ifnamesequal{translator}{foreword}
+       {\appto\abx@tempa{fo}%
+        \clearname{foreword}}
+       {\ifnamesequal{translator}{afterword}
+          {\appto\abx@tempa{af}%
+           \clearname{afterword}}
+          {}}}%
+  \bibstring{\abx@tempa}\abx@tempb}
+
 \newbibmacro*{journal+issue+year+pages}{%
   \usebibmacro{journal+ser+vol+num}%
   \setunit{\addspace}%
@@ -374,18 +608,32 @@
   \usebibmacro{bibindex}%
   \usebibmacro{author/editor+others/translator+others}% bibnamedash
   \setunit{\addperiod\space}\newblock%
-  \ifthenelse{%
-      \iffieldequalstr{entrytype}{suppbook}%
-      \OR%
-      \iffieldequalstr{entrytype}{suppcollection}}%
+  \ifthenelse{\iffieldequalstr{entrytype}{suppbook}%
+              \OR\iffieldequalstr{entrytype}{suppcollection}}%
 	  {\usebibmacro{title}%
 	    \printunit{\addperiod\space}\newblock%
 	    \printfield[mla:capital]{entrysubtype}}% 2.0 adjusted to show both title and entrysubtype
 	  {\ifentrytype{book}
 	     {\usebibmacro{booktitle}}
 		 {\usebibmacro{maintitle+booktitle}}}%
+  \newunit%
+  \usebibmacro{byauthor}%
   \printunit{\addperiod\space}\newblock%
-  }
+}
+
+\newbibmacro*{mla:imageholder:top}{% 2.1 used for works containing a cited image
+  \ifthenelse{\iffieldequalstr{entrytype}{suppbook}%
+              \OR\iffieldequalstr{entrytype}{suppcollection}}%
+	  {\usebibmacro{title}%
+	    \printunit{\addperiod\space}\newblock%
+	    \printfield[mla:capital]{entrysubtype}}%
+	  {\ifentrytype{book}
+	     {\usebibmacro{booktitle}}
+		 {\usebibmacro{maintitle+booktitle}}}%
+  \newunit%
+  \usebibmacro{byauthor}%
+  \newunit%
+}
 
 \newbibmacro*{mla:container:one}{%
   \usebibmacro{mla:article:journal+issuetitle}%
@@ -394,17 +642,20 @@
   \newunit%
   \printfield{pages}%
   \newunit%
-  \ifthenelse{\iffieldundef{eprinttype} \OR \(\iffieldundef{eprinttype} \AND \iffieldundef{eprint}\)}
+  \ifthenelse{\iffieldundef{eprinttype}\OR%
+              \(\iffieldundef{eprinttype}\AND%
+			    \iffieldundef{eprint}\)}%
     {}%\usebibmacro{url+urldate}}% mla9 - drop
     {}%
-  \printunit{\addperiod\space}\newblock%
   }
 
 \newbibmacro*{mla:container:two}{%
   \usebibmacro{mla:isbn/issn+doi+eprint}%
-  \newunit\newblock
+  \newunit
+  \printfield{note}%
+  \newunit
   \usebibmacro{url+urldate}%
-  \newunit\newblock
+  \newunit
   \printfield{addendum}%
   \printunit{\addperiod\space}\newblock%
   \usebibmacro{pageref}%
@@ -449,19 +700,19 @@
 
 \newbibmacro*{mla:containerb}{%
   \printfield{titleb}%
-  \newunit\newblock
+  \newunit
   \printfield{contributorb}%
-  \newunit\newblock
+  \newunit
   \printfield{versionb}%
-  \newunit\newblock
+  \newunit
   \printfield{numberb}%
-  \newunit\newblock
+  \newunit
   \printfield{publisherb}%
-  \newunit\newblock
+  \newunit
   \printfield{dateb}%
-  \newunit\newblock
+  \newunit
   \printfield{locationb}%
-  \newunit\newblock
+  \newunit
   \printfield{supplementalb}%
 }
 
@@ -476,26 +727,33 @@
 \DeclareBibliographyDriver{book}{%
   \usebibmacro{mla:container:top}%
   \printunit{\addperiod\space}\newblock%
+  \newunit{}%
+  \usebibmacro{test:mla:delayed}% 2.1 new test and toggle
+  \usebibmacro{byauthor}% 2.1 moved
+  \newunit{}%
   \usebibmacro{bytranslator+others}%
   \newunit%
   \usebibmacro{byeditor+others}%
   \newunit%
   \printfield{edition}\isdot%
   \newunit%
-  \iffieldundef{maintitle}{\printfield{volume}\clearfield{volume}\printfield{part}}{}%
+  \ifnumcomp{\value{containing}}{<}{2}% 2.1
+    {\printfield{volume}\clearfield{volume}\printfield{part}}%
+	{}%
   % \newunit%
   % \iffieldundef{volume}{\printfield{volumes}\clearfield{volumes}}{}%% 2.0 undefined to show later
   \newunit%
-  \usebibmacro{series+number}%
-  \newunit%
   \printfield{note}%
   \newunit%
-  \iftoggle{bbx:showlocation}{\printlist{location}}{}% new toggle IN 2.0
-  \newunit%
-  \iffieldundef{maintitle}
-    {\newunit%
-	 \printlist{publisher}\clearlist{publisher}}
-	{}%
+  \iftoggle{mla:delayed}%
+    {}%
+    {\printfield{version}\clearfield{version}%
+	 \newunit%
+	 \iftoggle{bbx:showlocation}%
+	   {\printlist{location}\clearlist{location}}%
+	   {}%
+	 \newunit%
+	 \printlist{publisher}\clearlist{publisher}}%
   \newunit%
   \printdate%
   \newunit%
@@ -503,13 +761,24 @@
   \newunit\newblock%
   \usebibmacro{mla:isbn/issn+doi+eprint}%
   \newunit%
+  \usebibmacro{url+urldate}%
+  \newunit%
   \iffieldundef{origtitle}%
     {}%
     {\usebibmacro{mla:reprint}}%
   \setunit{\addperiod\addspace}%
-  \iffieldundef{volumes}%
-    {}%
-    {\usebibmacro{mla:multivolumes}}%
+	%   \ifthenelse{\NOT\iffieldundef{volume}%
+	%               \AND\NOT\iffieldundef{maintitle}}% 2.1
+	%     {\printfield{volume}\clearfield{volume}%
+	%  \setunit{\addspace\bibstring{ofseries}\addspace}%
+	%  \usebibmacro{mla:multivolumes}}%
+	% {}%
+	%   \newunit%
+  \usebibmacro{mla:series+maintitle+combo}% 2.1
+  % \newunit%
+  % \iffieldundef{volumes}%
+  %   {}%
+  %   {\usebibmacro{mla:multivolumes}}% mla:series+maintitle+combo
   \newunit%
   \printfield[mla:sentence-case]{addendum}%
   \newunit%
@@ -520,10 +789,54 @@
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{mla:container:top}%
   \printunit{\addperiod\space}\newblock%
-  \usebibmacro{mla:container:one}%
+  \ifnameundef{translator}% 2.1 include article translator
+    {}
+    {\usebibmacro{bytranslator+othersstrg}%
+     \setunit{\addspace}%
+	 \ifnamesequal{labelname}{translator}%
+	   {\printnames[mla:last]{translator}}%
+	   {\printnames[byauthor]{translator}}%
+     \clearname{translator}}%
   \printunit{\addperiod\space}\newblock%
+  \usebibmacro{mla:container:one}%
+  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine} \or \iffieldequalstr{entrysubtype}{blog} \or \iffieldequalstr{entrysubtype}{comment} \or \iffieldequalstr{entrysubtype}{online} \or \iffieldequalstr{entrytype}{online}}%
+    {\printunit{\addcomma\space}\newblock}% 2.1
+	{\printunit{\addperiod\space}\newblock}%
   \usebibmacro{mla:container:two}%
   \usebibmacro{finentry}}
+
+\newbibmacro*{test:mla:delayed}{% 2.1
+  \setcounter{containing}{0}
+  \ifthenelse{\iffieldequalstr{editortype}{generaleditor}\OR%
+              \iffieldequalstr{editoratype}{generaleditor}\OR%
+              \iffieldequalstr{editorbtype}{generaleditor}\OR%
+              \iffieldequalstr{editorctype}{generaleditor}}%
+    {\addtocounter{containing}{1}}%
+    {}%
+  \ifthenelse{\NOT\iffieldundef{maintitle}\AND%
+              \(\NOT\iffieldundef{booktitle}\OR
+			    \NOT\iffieldundef{title}\)}%
+    {\addtocounter{containing}{1}}%
+    {}%
+  \ifthenelse{\NOT\iffieldundef{eventdate}}%
+    {\addtocounter{containing}{1}}%
+    {}%
+  \ifthenelse{\NOT\iffieldundef{volumes}}%
+    {\addtocounter{containing}{1}}%
+    {}%
+  \ifthenelse{\NOT\iffieldundef{volume}}%
+    {\addtocounter{containing}{1}}%
+    {}%
+  \iftoggle{del:p}% if delay plus
+    {\addtocounter{containing}{10}}
+	{}
+  \iftoggle{del:m}% if delay minus
+    {\addtocounter{containing}{-10}}
+	{}
+  \ifnumcomp{\value{containing}}{>}{2}%
+    {\settoggle{mla:delayed}{true}}%
+    {\settoggle{mla:delayed}{false}}%
+}
 
 \DeclareBibliographyDriver{periodical}{%
   \usebibmacro{bibindex}%
@@ -551,15 +864,33 @@
     {\iflistundef{origlanguage}
       {\setunit{\newunitpunct\bibstring{reprintof}\addspace}}%
       {\setunit{\newunitpunct\bibstring{transof}\addspace}}%
-}%
+    }%
   \printfield[title:\strfield{entrytype}]{origtitle}%
   \newunit\newblock%
-  \printlist{origlocation}\clearlist{origlocation}%
-  \setunit*{\addcolon\addspace}%
-  \printlist{origpublisher}\clearlist{origpublisher}%
-  \newunit%
+  \iffieldequalstr{entrysubtype}{artwork}%
+    {}%
+    {\printlist{origlocation}\clearlist{origlocation}%
+     \newunit%
+     \printlist{origpublisher}\clearlist{origpublisher}%
+     \newunit}%
   \ifbool{bbx@mla-incollection}%
-    {\printfield[bibliography:origyear]{origyear}\clearfield{origyear}}%
+    {\ifthenelse{\iffieldequalstr{entrytype}{music}\OR%
+                 \iffieldequalstr{entrytype}{audio}}%
+      {\iffieldundef{origyear}%
+        {}%
+        {\bibstring{recorded}% platypus - localize this
+         \addspace%
+         \printorigdate\clearfield{origyear}}}%
+      {%\printfield[bibliography:origyear]{origyear}
+	   \printorigdate\clearfield{origyear}%
+       \newunit%
+       \iffieldequalstr{entrysubtype}{artwork}%
+        {\printlist{institution}\clearlist{institution}%
+         \newunit%
+         \printlist{origlocation}\clearlist{location}}%
+        {}
+	  }%
+    }%
     {\ifthenelse{\iffieldundef{volume}\OR\iffieldundef{volumes}}%
       {\printorigdate\clearfield{origyear}}%
       {}%
@@ -572,6 +903,12 @@
   \usebibmacro{mla:generaleditor}%
   \newunit%  
   \printfield{volume}%
+  \newunit%
+  \printfield{version}\clearfield{version}%
+  \newunit%
+  \iftoggle{bbx:showlocation}%
+    {\printlist{location}\clearlist{location}}%
+    {}%
   \newunit%
   \printlist{publisher}\clearlist{publisher}%
   \newunit%
@@ -609,7 +946,7 @@
 
 \newbibmacro*{mla:generaleditor:internal}[1]{%
   \iffieldequalstr{editor#1type}{generaleditor}%
-    {\printnames{editor#1}%
+    {\printnames{editor#1}\clearname{editor#1}%
 	 \setunit{\addcomma\addspace}
 	 \bibstring{generaleditor}
 	 \newunit}%
@@ -617,6 +954,10 @@
 }
 
 \newbibmacro*{mla:isbn/issn+doi+eprint}{%
+  \iftoggle{bbx:eprint}
+    {\setunit{\addperiod\space}\newblock\usebibmacro{eprint+extra}}
+	{}%
+  \newunit\newblock
   \iftoggle{bbx:isan}{\printfield{isan}\clearfield{isan}}{}%
      \newunit\newblock%
   \iftoggle{bbx:isbn}{\printfield{isbn}\clearfield{isbn}}{}%
@@ -629,13 +970,12 @@
      \newunit\newblock%
   \iftoggle{bbx:doi}{\printfield{doi}\clearfield{doi}}{}%
      \newunit\newblock%
-  \iftoggle{bbx:eprint}{\setunit{\addperiod\space}\newblock\usebibmacro{eprint+extra}}{}%
-     \newunit\newblock}
+}
 
 \newbibmacro*{eprint+extra}{%
   \iffieldundef{eprinttype}
     {\printfield{eprint}}
-    {\iffieldundef{eprint}
+    {\printunit{\addperiod\space}\iffieldundef{eprint}
       {\printfield{eprinttype}}
       {\printfield[eprint:\strfield{eprinttype}]{eprint}}}}
 
@@ -671,12 +1011,11 @@
   \usebibmacro{bibindex}%
   \usebibmacro{author/editor+others/translator+others}%
   \setunit{\addperiod\space}\newblock%
-  \ifthenelse{%
-    \iffieldequalstr{entrysubtype}{book}%
-    \OR%
-    \iffieldequalstr{entrysubtype}{play}%
-	\OR%
-	\iffieldequalstr{entrytype}{bookinbook}}%
+  \ifthenelse{\iffieldequalstr{entrysubtype}{book}%
+              \OR\iffieldequalstr{entrysubtype}{play}%
+              \OR\iffieldequalstr{entrysubtype}{album}%
+              \OR\iffieldequalstr{entrysubtype}{artwork}%
+	          \OR\iffieldequalstr{entrytype}{bookinbook}}%
       {\usebibmacro{title:incollection:italics}}%
       {\setbool{bbx@mla-incollection}{true}%
        \usebibmacro{title}%
@@ -700,28 +1039,124 @@
     \newunit}%
   \newunit%
   \usebibmacro{finentry}}
+  
+\DeclareBibliographyDriver{music}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\addperiod\space}\newblock%
+  \ifthenelse{\iffieldequalstr{entrysubtype}{album}}%
+      {\usebibmacro{title:incollection:italics}\clearfield{title}}%
+      {\setbool{bbx@mla-incollection}{true}%
+       \usebibmacro{title}%
+       \setbool{bbx@mla-incollection}{false}\clearfield{title}}%
+  \newunit\newblock%
+  \ifbool{bbx@uniquenamea}%
+    {\newunit%
+	\usebibmacro{mla:special:localized:first-last}{namea}
+	\clearname{namea}}%
+    {}%
+  \ifbool{bbx@uniquenameb}%
+    {\newunit%
+	\usebibmacro{mla:special:localized:first-last}{nameb}
+	\clearname{nameb}}%
+    {}%
+  \ifbool{bbx@uniquenamec}%
+    {\newunit%
+	\usebibmacro{mla:special:localized:first-last}{namec}
+	\clearname{namec}}%
+    {}%
+  \setunit{\addperiod\addspace}%
+  \iffieldundef{crossref}%
+    {\iffieldundef{xref}%
+      {\usebibmacro{mla:incollection:internal}}%
+      {\bbx@crossref{\thefield{xref}}%
+      \setunit{\addspace}%
+      \printfield{pages}}}%
+    {\bbx@crossref{\thefield{crossref}}%
+    \setunit{\addcomma\addspace}%
+	\printfield{volume}%
+	\setunit{\addcomma\addspace}%
+    \printfield{pages}%
+    \newunit}%
+  \newunit%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{artwork}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\addperiod\space}\newblock%
+  \usebibmacro{title}
+  \setunit{\addperiod\space}\newblock%
+  \printdate%
+  \newunit%
+  \printlist{institution}%
+  \newunit%
+  \printlist{location}%
+  \newunit%
+  \usebibmacro{mla:isbn/issn+doi+eprint}
+  \newunit
+  \usebibmacro{url+urldate}%
+  \setunit{\addperiod\space}\newblock%
+  \printfield{addendum}%
+  \newunit%
+  \usebibmacro{finentry}}
+  
+\DeclareBibliographyDriver{image}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\addperiod\space}\newblock%
+  \usebibmacro{title}
+  \setunit{\addperiod\space}\newblock%
+  \iffieldundef{related}%
+    {}%
+    {\entrydata{\thefield{related}}
+      {\usedriver
+	    {\togglefalse{blx@useauthor}%
+		 \settoggle{mla:image}{true}}%
+	    {\thefield{entrytype}}%
+	   % \usebibmacro{mla:imageholder:top}
+	   % \printunit{\addperiod\space}\newblock%
+	   % \usebibmacro{mla:container:one}%
+	   % \setunit{\addperiod\space}\newblock%
+	   % \usebibmacro{mla:container:two}%
+	   % \usebibmacro{finentry}
+	   }
+    }%
+  % \printdate%
+  % \newunit%
+  % \printlist{institution}%
+  % \newunit%
+  % \printlist{location}%
+  % \newunit%
+  % \usebibmacro{mla:isbn/issn+doi+eprint}
+  % \newunit
+  % \usebibmacro{url+urldate}%
+  % \setunit{\addperiod\space}\newblock%
+  % \printfield{addendum}%
+  \newunit%
+  \usebibmacro{finentry}}
 
 \newbibmacro*{mla:incollection:internal}{%
   \setbool{bbx@mla-incollection}{true}%
   \usebibmacro{maintitle+booktitle}%
   \ifthenelse{%
-      \iffieldequalstr{entrytype}{suppbook}%
-      \OR%
-      \iffieldequalstr{entrytype}{suppcollection}%
-      \OR%
-      \iffieldequalstr{entrysubtype}{interview}%
-      \OR%
+      \iffieldequalstr{entrytype}{suppbook}\OR%
+      \iffieldequalstr{entrytype}{suppcollection}\OR%
+      \iffieldequalstr{entrysubtype}{interview}\OR%
+      \iffieldequalstr{entrysubtype}{artwork}\OR%
       \iffieldequalstr{entrysubtype}{untitled}}%
     {\setunit{\newunitpunct\bibstring{byauthor}\addspace}%
      \ifnamesequal{labelname}{bookauthor}%
        {\printnames[mla:last]{bookauthor}}%
        {\printnames[byauthor]{bookauthor}}}%
     {}%
-  \newunit\newblock%
+  \newunit%
   \usebibmacro{byauthor}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
+  \newunit
+  \usebibmacro{mla:generaleditor}%
+  \newunit
+  \usebibmacro{byeditor+others}% platypus-return
+  \newunit
   \printfield{edition}\isdot%
   \newunit
   \iffieldundef{maintitle}%
@@ -753,6 +1188,54 @@
   \usebibmacro{pageref}%
   \setbool{bbx@mla-incollection}{false}}
 
+\renewbibmacro*{byeditor+others}{% 2.1 redefined
+  \delimcontext{notreversed}
+  \ifnameundef{editor}
+    {}
+    {\usebibmacro{byeditor+othersstrg}%
+     \setunit{\addspace}%
+	 \ifnamesequal{labelname}{editor}%
+	   {\printnames[mla:last]{editor}}% 2.1 print only last with repeat
+	   {\printnames[byauthor]{editor}}%
+     \clearname{editor}%
+     \newunit}%
+  \usebibmacro{byeditorx}%
+  \usebibmacro{bytranslator+others}}
+
+\renewbibmacro*{bytranslator+others}{% 2.1 renewed
+  \ifnameundef{translator}
+    {}
+    {\usebibmacro{bytranslator+othersstrg}%
+     \setunit{\addspace}%
+	 \ifnamesequal{labelname}{translator}%
+	   {\printnames[mla:last]{translator}}% 2.1 print only last with repeat
+	   {\printnames[byauthor]{translator}}%
+     \clearname{translator}%
+     \newunit}%
+  \usebibmacro{withothers}}
+
+\renewbibmacro*{withothers}{% 2.1 nameb
+  \usebibmacro{withcommentator}%
+  \clearname{commentator}%
+  \newunit
+  \usebibmacro{withannotator}%
+  \clearname{annotator}%
+  \newunit
+  \usebibmacro{withintroduction}%
+  \clearname{introduction}%
+  \newunit
+  \usebibmacro{withforeword}%
+  \clearname{foreword}%
+  \newunit
+  \usebibmacro{withafterword}%
+  \clearname{afterword}%
+  \newunit%
+  \usebibmacro{mla:special:localized:first-last}{namea}
+  \newunit%
+  \usebibmacro{mla:special:localized:first-last}{nameb}
+  \newunit%
+  \usebibmacro{mla:special:localized:first-last}{namec}}
+
 \DeclareBibliographyDriver{inproceedings}{%
   \usebibmacro{bibindex}%
   \usebibmacro{author/editor+others/translator+others}%
@@ -771,10 +1254,7 @@
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit\newblock
-  \printfield{addendum}%
-  \newunit\newblock
-  \usebibmacro{pageref}%
-  \newunit%
+  \usebibmacro{mla:container:two}% 2.1
   \usebibmacro{finentry}}
 
 \DeclareBibliographyDriver{proceedings}{%
@@ -856,9 +1336,11 @@
   \printfield[title:reviewedbook]{booktitle}%
   \newunit%
   \ifnameundef{bookauthor}%
-    {\printtext[reviewededitor]{\printnames[default]{editor}}}%
+    {\ifnameundef{editor}%
+      {}%
+      {\printtext[reviewededitor]{\printnames[default]{editor}}}}%
     {\printtext[reviewedauthor]{\printnames[default]{bookauthor}}}%
-  \setunit{\addperiod\space}\newblock%
+  \printunit{\addperiod\space}\newblock%
   \usebibmacro{mla:container:one}%
   \setunit{\addperiod\space}\newblock%
   \usebibmacro{mla:container:two}%
@@ -936,19 +1418,26 @@
   \clearname{#1}%
 }
 
-\newbibmacro{mla:video:localized:first-last}[1]{%
+\newbibmacro{mla:special:localized:first-last}[1]{%
   \ifnameundef{#1}%
     {}%
     {\ifthenelse{\iffieldbibstring{#1type} \and \not %
-    \iffieldundef{#1type} \and \not %
-    \iffieldequalstr{#1type}{composer}}%
-      {\bibstring{\thefield{#1type}}}%
+                 \iffieldundef{#1type} \and \not %
+                 \iffieldequalstr{#1type}{composer}}%
+      {\ifbibxstring{by\thefield{#1type}}
+        {\bibstring{by\thefield{#1type}}}
+        {\bibstring{\thefield{#1type}}}}%
       {\iffieldundef{#1type}%
         {\bibstring{with}}%
         {\iffieldequalstr{#1type}{composer}%
           {\bibstring{composedby}}%
           {\printfield[mla:capital]{#1type}}}}%
-    \addspace\printnames[byeditor][-\value{listtotal}]{#1}}%
+    \addspace%
+    % Check to see if the name matches the labelname
+    \ifnamesequal{labelname}{#1}%
+      {\printnames[mla:last]{#1}\clearname{#1}}%
+      {\printnames[byeditor][-\value{listtotal}]{#1}\clearname{#1}}%
+    }%
 \newunit}%
 
 \newbibmacro{mla:video:name:second:footnote}[1]{%
@@ -966,32 +1455,97 @@
      \addspace\printnames[byeditor][-\value{listtotal}]{#1}%
     }}%
 
-\DeclareBibliographyDriver{video}{%
+\DeclareBibliographyDriver{movie}{%
   \ifnamesequal{labelname}{author}%
     {\usebibmacro{mla:video:localized:last-first}{author}}{}%
   \ifnamesequal{labelname}{editor}%
     {\usebibmacro{mla:video:localized:last-first}{editor}}{}%
   \printfield{title}%
-  \setunit{\newunitpunct\bibstring{byauthor}\addspace}%
-  \printnames[byeditor]{bookauthor}%
-  \newunit%
+  \setunit{\addspace}%
+  \printfield{titleaddon}%
+  \setunit{\addperiod\addspace}%
+  \printfield{origyear}\clearfield{origyear}%
+  \printunit{\addperiod\addspace}%
+  \iffieldundef{bookauthor}%
+    {}%
+	{\bibstring{byauthor}\addspace\printnames[byeditor]{bookauthor}%
+	 \newunit}%
   \ifthenelse{\NOT\ifnamesequal{author}{labelname}%
-  \AND\NOT\ifnameundef{author}}%
-    {\usebibmacro{mla:video:localized:first-last}{author}}%
+              \AND\NOT\ifnameundef{author}}%
+    {\usebibmacro{mla:special:localized:first-last}{author}}%
     {}%
   \ifthenelse{\NOT\ifnamesequal{editor}{labelname}%
-  \AND\NOT\ifnameundef{editor}}%
-    {\usebibmacro{mla:video:localized:first-last}{editor}}%
+              \AND\NOT\ifnameundef{editor}}%
+    {\usebibmacro{mla:special:localized:first-last}{editor}}%
     {}%
-  \usebibmacro{mla:video:localized:first-last}{namea}%
-  \usebibmacro{mla:video:localized:first-last}{nameb}%
-  \usebibmacro{mla:video:localized:first-last}{namec}%
-  \printfield{origyear}\clearfield{origyear}%
-  \newunit\newblock%
+  \usebibmacro{mla:special:localized:first-last}{namea}%
+  \usebibmacro{mla:special:localized:first-last}{nameb}%
+  \usebibmacro{mla:special:localized:first-last}{namec}%
+  \newunit%
+  \printfield{version}%
+  \newunit%
   \printlist{publisher}%
   \newunit%
   \printfield{year}%
   \newunit\newblock%
+  \usebibmacro{mla:container:two}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{video}{%
+  \ifnamesequal{labelname}{author}%
+    {\usebibmacro{mla:video:localized:last-first}{author}}{}%
+  \ifnamesequal{labelname}{editor}%
+    {\usebibmacro{mla:video:localized:last-first}{editor}}{}%
+  \iffieldundef{maintitle}
+    {\printfield[maintitle]{title}}%
+	{\printfield{title}}%
+  \printunit{\addperiod\addspace}%
+  \printfield{origyear}
+  \ifbool{bbx@uniquenamea}%
+    {\newunit%
+	\usebibmacro{mla:special:localized:first-last}{namea}
+	\clearname{namea}}%
+    {}%
+  \ifbool{bbx@uniquenameb}%
+    {\newunit%
+	\usebibmacro{mla:special:localized:first-last}{nameb}
+	\clearname{nameb}}%
+    {}%
+  \ifbool{bbx@uniquenamec}%
+    {\newunit%
+	\usebibmacro{mla:special:localized:first-last}{namec}
+	\clearname{namec}}%
+    {}%
+  \printunit{\addperiod\addspace}%
+  \printfield{maintitle}
+  \newunit%
+  \iffieldundef{bookauthor}%
+    {}%
+	{\bibstring{byauthor}\addspace\printnames[byeditor]{bookauthor}%
+	 \newunit}%
+  \ifthenelse{\NOT\ifnamesequal{author}{labelname}%
+              \AND\NOT\ifnameundef{author}}%
+    {\usebibmacro{mla:special:localized:first-last}{author}}%
+    {}%
+  \ifthenelse{\NOT\ifnamesequal{editor}{labelname}%
+              \AND\NOT\ifnameundef{editor}}%
+    {\usebibmacro{mla:special:localized:first-last}{editor}}%
+    {}%
+  \usebibmacro{mla:special:localized:first-last}{namea}%
+  \usebibmacro{mla:special:localized:first-last}{nameb}%
+  \usebibmacro{mla:special:localized:first-last}{namec}%
+  \newunit%
+  \printfield{version}%
+  \newunit%
+  \printfield{season}\clearfield{season}
+  \newunit%
+  \printfield{number}\clearfield{number}
+  \newunit%
+  \printlist{publisher}%
+  \newunit%
+  \printdate%
+  \newunit\newblock%
+  \usebibmacro{mla:container:two}%
   \usebibmacro{finentry}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1011,7 +1565,7 @@
     {}%
     {\printtext[maintitle]{%
        \printfield[noformat]{maintitle}%
-       \newunit
+       \setunit{subtitlepunct}
        \printfield[noformat]{mainsubtitle}}%
      \setunit{\addspace}% 2.0 include titleaddon inside unit punctuation
 	 \printfield{maintitleaddon}%
@@ -1029,10 +1583,22 @@
     {\printfield{series}\clearfield{series}\setunit*{\addspace}\printfield{number}}%
 }
 
+\newbibmacro*{mla:series+maintitle+combo}{% 2.1
+  \usebibmacro{series+number}%
+  \setunit{\addperiod\addspace}%
+  \iftoggle{mla:delayed}%
+    {}%
+    {\printfield{volume}\clearfield{volume}%
+     \setunit{\addspace\bibstring{ofseries}\addspace}}%
+  \usebibmacro{mla:multivolumes}%
+}
+
 \renewbibmacro*{title}{%
   \iffieldequalstr{entrytype}{thesis}%
     {\usebibmacro{mla:title:thesis}}%
-    {\ifthenelse{\iffieldequalstr{entrytype}{unpublished}\OR\iffieldequalstr{entrytype}{misc}} %
+    {\ifthenelse{\iffieldequalstr{entrytype}{unpublished}\OR%
+                 \iffieldequalstr{entrysubtype}{untitled}\OR%
+                 \iffieldequalstr{entrytype}{misc}} %
       {\usebibmacro{mla:title:unpublished}}%
       {\usebibmacro{title+stitle}}}}%
 
@@ -1124,18 +1690,21 @@
   \newunit}
 
 \renewbibmacro*{maintitle+booktitle}{%
-  \usebibmacro{booktitle}%
-  \printunit*{\addperiod\space}%
+  \usebibmacro{booktitle}\clearfield{booktitle}% 2.1
+  \newunit%
   \iffieldundef{maintitle}%
      {}%
-     {\usebibmacro{maintitle}%
+     {\usebibmacro{maintitle}\clearfield{maintitle}% 2.1
       \newunit%
       \iffieldundef{volume}%
         {}%
         {\printfield{volume}%
          \printfield{part}%
          \setunit{\addcolon\space}}}%
-  \printunit*{\addperiod\space}}
+  \iftoggle{mla:image}
+    {\printunit{\addcomma\space}}
+	{\setunit*{\addperiod\space}}
+  }
 
 \renewbibmacro*{booktitle}{%
   \ifboolexpr{
@@ -1154,14 +1723,17 @@
   }
 
 \newbibmacro*{mla:proceedings:booktitle}{%
-  \usebibmacro{booktitle}%
-  \newunit%
-  \iffieldundef{eventtitle}%
-    {}%
-    {\printtext[default]{%
-      \bibstring{proceedings}\addspace\bibstring{ofseries}\addspace%
-      \printfield[default]{eventtitle}\isdot}}%
-  \setunit*{\isdot\addcomma\addspace}%
+  \iffieldundef{booktitle}% 2.1 for unpublished
+    {\printfield[default]{eventtitle}
+     \setunit*{\isdot\addcomma\addspace}}
+    {\usebibmacro{booktitle}%
+     \printunit{\addperiod\addspace}%
+     \iffieldundef{eventtitle}%
+       {}%
+       {\printtext[default]{%
+         \bibstring{proceedings}\addspace\bibstring{ofseries}\addspace%
+         \printfield[default]{eventtitle}\isdot}}
+         \setunit*{\isdot\addcomma\addspace}}%
   \printlist{organization}%
   \newunit%
   \printeventdate%
@@ -1184,18 +1756,26 @@
          \printfield[noformat]{booktitle}%
          \setunit*{\subtitlepunct}%
          \printfield[noformat]{booksubtitle}}}}}%
-  {\iffieldequalstr{entrysubtype}{untitled}% 2.0 added check to allow for works with unformatted titles
+  {\ifthenelse{\iffieldequalstr{entrysubtype}{untitled}\OR%
+               \iffieldequalstr{entrysubtype}{comment}}% 2.1
     {\printfield[noformat]{title}%
        \setunit*{\subtitlepunct}%
        \printfield[noformat]{subtitle}}%
-	{\printtext[title:\strfield{entrytype}]{%
+	{\ifthenelse{\iffieldequalstr{entrysubtype}{project}\AND
+               \iffieldequalstr{entrytype}{online}}
+      {\printtext[title:book]{%
        \printfield[noformat]{title}%
        \setunit*{\subtitlepunct}%
-       \printfield[noformat]{subtitle}}}}%
+       \printfield[noformat]{subtitle}}%
+	   \clearfield{title}\clearfield{subtitle}}%
+	  {\printtext[title:\strfield{entrytype}]{%
+       \printfield[noformat]{title}%
+       \setunit*{\subtitlepunct}%
+       \printfield[noformat]{subtitle}}}}}%
   \setunit{\addspace}% 2.0 include titleaddon inside unit punctuation
   \printfield[noformat]{titleaddon}%
   \printunit{\addperiod\space}% 2.0 include titleaddon inside unit punctuation
-  \usebibmacro{byauthor}%
+  % \usebibmacro{byauthor}% 2.1 commented out and moved
   \iffieldundef{origtitle}%
     {\usebibmacro{mla:reprint}}%
     {}%
@@ -1207,7 +1787,8 @@
     {\printtext[title:book]{%
        \printfield[noformat]{title}%
        \setunit*{\subtitlepunct}%
-       \printfield[noformat]{subtitle}}%
+       \printfield[noformat]{subtitle}%
+	   \clearfield{title}\clearfield{subtitle}}%
      \setunit{\addspace}% 2.0 include titleaddon inside unit punctuation
 	 \printfield[noformat]{titleaddon}%
      % \newunit\newblock% platyp
@@ -1220,42 +1801,66 @@
   \newunit\newblock%
   \iffieldundef{issuetitle}%
     {}%
-    {\usebibmacro{byeditor+others}%
-      \newunit\newblock%
-      \bibstring{specissue}\setunit*{\addspace}}%
+    {\ifthenelse{\NOT\iffieldundef{entrysubtype}%
+	  \AND\iffieldequalstr{entrysubtype}{specissue}}%
+	  {\bibstring{specissue}
+	   \setunit*{\addspace}}%
+	  {\setunit{\addperiod\addspace}}}% 2.1? added star
+	  % (above) 2.1 added support for named issues that aren't specissues
   \ifthenelse{\iffieldequalstr{entrytype}{periodical} \AND \iffieldundef{journaltitle}}%
     {\usebibmacro{periodical}}%
     {\usebibmacro{journal}}%
-  \ifthenelse{\iffieldequalstr{entrytype}{online}}{\usebibmacro{mla:online}}{\setunit*{\addspace}}%
-  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine} \or \iffieldequalstr{entrytype}{online}}%
-    {\printlist[brackets]{location}%
+  \newunit
+  \usebibmacro{byeditor+others}
+  \newunit% 2.1?
+  \ifthenelse{\iffieldequalstr{entrytype}{online}}%
+    {\usebibmacro{mla:online}}%
+	{\setunit{\addspace}}% 2.1? removed asterisk
+  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine} \or \iffieldequalstr{entrysubtype}{blog} \or \iffieldequalstr{entrysubtype}{comment} \or \iffieldequalstr{entrytype}{online}}%
+    {\setunit{\addspace}%
+     \printlist[brackets]{location}%
      \newunit%
-	 \printtext{\printdate}%
-     \newunit%
-     \printfield{version}%
-     \newunit%
-     \printfield[mla:newspaper:section]{chapter}%
+     \iffieldequalstr{entrysubtype}{magazine}% 2.1
+       {\printfield{volume}%
+        \newunit%
+        \printfield{number}\clearfield{number}%
+        \newunit%
+        \usebibmacro{issue+date}}%
+       {\printfield{version}%
+        \newunit%
+        \printtext{\printdate}%
+        \newunit
+        \iffieldnum{chapter}% 2.1
+          {\printfield[mla:news:section:number]{chapter}}% 2.1
+          {\printfield[mla:news:section:name]{chapter}}% 2.1
+        }%
     }%
-    {\printfield{series}\clearfield{series}%
+    {\newunit% 2.1
+     \printfield{series}\clearfield{series}%
      \newunit%
      \printfield{volume}%
      \newunit%
-	 \ifthenelse{\iffieldequalstr{entrytype}{patent}}%
-	 	{\printfield{type}%
-	     \setunit*{\addspace}%
-		 \printfield{number}\clearfield{number}%
-		 \newunit}%
-		{\printfield{number}\clearfield{number}
-		\newunit}%     
+     \ifthenelse{\iffieldequalstr{entrytype}{patent}}%
+        {\printfield{type}%
+         \setunit*{\addspace}%
+         \printfield{number}\clearfield{number}%
+         \newunit}%
+        {\printfield{number}\clearfield{number}%
+         \newunit}%     
      \printnames{holder}% mla9- NEW IN 2.0 - preliminary support for patents
      \newunit%
-	 \ifthenelse{\iffieldequalstr{entrytype}{patent}}%
-	 	{\iffieldbibstring{type}%
-			{\biblstring{\strfield{type}}%
-			\newunit}%
-			{}%
-		}%
-		{}%
+     \ifthenelse{\iffieldequalstr{entrytype}{patent}}%
+       {\iffieldbibstring{type}%
+         {\biblstring{\strfield{type}}%
+          \newunit}%
+         {}%
+       }%
+       {}%
+	 \ifthenelse{\NOT\iffieldundef{issuetitle}\AND
+	             \NOT\iffieldequalstr{entrysubtype}{specissue}}
+       {\printlist{publisher}%
+	    \newunit}%
+	   {}%
      \usebibmacro{issue+date}%
      \newunit\newblock
      \newunit}%
@@ -1263,12 +1868,17 @@
 
 \newbibmacro*{mla:online}{%
   \iffieldundef{maintitle}%
-    {}%
+    {\ifthenelse{\iffieldequalstr{entrysubtype}{project}}
+	  {}
+	  {\printunit{\addcomma\addspace}}}%\printunit{\addcomma\addspace}}%
     {\printtext[maintitle]{%
        \printfield[titlecase]{maintitle}%
        \setunit{\subtitlepunct}%
-       \printfield[titlecase]{mainsubtitle}}}%
-  \newunit\newblock%
+       \printfield[titlecase]{mainsubtitle}}
+     \iffieldequalstr{entrysubtype}{project}
+       {\printunit{\addperiod\addspace}}%
+       {\printunit{\addcomma\addspace}}%
+    }%
   \printlist{publisher}%
   \newunit%
 }
@@ -1276,7 +1886,7 @@
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
   \setunit*{\addspace}%
-  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine}}%
+  \ifthenelse{\iffieldequalstr{entrysubtype}{newspaper} \or \iffieldequalstr{entrysubtype}{magazine} \or \iffieldequalstr{entrysubtype}{blog} \or \iffieldequalstr{entrysubtype}{comment}}%
     {\printlist[brackets]{location}%
      \printtext{\printdate}%
      \newunit%
