@@ -9,7 +9,9 @@
 \usepackage[style=mla,dateusetime=true,time=12h]{biblatex}
 \usepackage{bibtex_documentation}
 \usepackage{shortvrb}
+\usepackage[toc]{multitoc}
 \usepackage{hyperref}
+\usepackage[margin=1.25in]{geometry}
 % \usepackage{bidi}
 \hypersetup{colorlinks,% 
 citecolor=black,% 
@@ -20,6 +22,22 @@ urlcolor=black
 
 \MakeShortVerb{\|}
 
+\newcommand*{\biblatexmla}{\sty{biblatex-mla}\xspace}
+\newcommand*{\Biblatexmla}{\sty{Biblatex-mla}\xspace}
+\newcommand*{\biblatexcms}{\sty{biblatex-chicago}\xspace}
+\newcommand*{\biblatexmlahome}{https://github.com/jmclawson/biblatex-mla/}
+\newcommand*{\biblatexmlaonctan}{http://www.ctan.org/tex-archive/help/Catalogue/entries/biblatex-mla.html}
+
+\title{Biblatex-mla Examples: \protect\\ Database Entries and Output}
+\author{James Clawson}
+\date{31 October 2021}
+
+\hypersetup{%
+  pdftitle={Biblatex-mla Examples},
+  pdfsubject={Bibtex Entries and Output},
+  pdfauthor={James Clawson},
+  pdfkeywords={mla, biblatex, bibtex, database, bibliography}}
+
 \addbibresource{handbook9_clean.bib}
 
 \newfontfamily\arabicfont[Script=Arabic]{Geeza Pro}
@@ -29,12 +47,16 @@ urlcolor=black
 % \newcommand{\bibcitem}[1]{\lstinputlisting[linerange=#1-end,includerangemarker=false,breaklines=true,postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space} ]{\thebibfile}\nocite{#1}}
 % \renewcommand{\bibcitem}[1]{\nocite{#1}}
 
+\pagestyle{headings}
+
 \begin{document}
-	
-\section*{A Note on Bibtex and this document}
-The examples below show one way to achieve the output of the \emph{MLA Handbook}'s appendix, but \texttt{.bib} files do allow for some flexibility. For instance, some entries record a name in \{\texttt{Last, First}\} format, while others use \{\texttt{First Last}\}. Except in certain cases of names having additional parts, either option should work well. 
+\maketitle
+
+\noindent{}The examples below demonstrate one way to achieve the output of the appendix found in the 9th edition of the \emph{MLA Handbook}, but \texttt{.bib} files do allow for some flexibility. For instance, some entries record a name in \{\texttt{Last, First}\} format, while others use \{\texttt{First Last}\}. Except in certain cases of names having additional parts, either option should work well. 
 
 For presentation purposes, line breaks have been introduced and marked with an arrow (\textcolor{gray}{$\hookrightarrow$}). These line breaks and arrows should not be recreated in the \texttt{.bib} file.
+
+\tableofcontents
 
 \section{Books} % (fold)
 \label{sec:books}
@@ -111,7 +133,7 @@ For presentation purposes, line breaks have been introduced and marked with an a
 \subsection{In a Language Other Than English} % (fold)
 \label{ssub:in_a_language_other_than_english}
 \begin{refsection}
-Consult the {\tt .bib} file for the full entry with Arabic.
+Consult the {\tt .bib} file for the full entry by Alexandra Chreiteh. The fixed-width font used here is unable to display Arabic.
 	\bibcitem{Chreiteh:2009aa}
 	\bibcitem{Fallani:1971vv}
 	\printbibliography[heading=none]
@@ -584,6 +606,7 @@ Consult the {\tt .bib} file for the full entry with Arabic.
 \label{sub:jointly_published_site}
 \begin{refsection}
 	\bibcitem{Manifold:aa}
+	Here's the citation to it \autocite{Manifold:aa}.
 	\printbibliography[heading=none]
 \end{refsection}
 % subsection jointly_published_site (end)
