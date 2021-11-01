@@ -617,7 +617,7 @@
 	     {\usebibmacro{booktitle}}
 		 {\usebibmacro{maintitle+booktitle}}}%
   \newunit%
-  \usebibmacro{byauthor}%
+  % \usebibmacro{byauthor}%
   \printunit{\addperiod\space}\newblock%
 }
 
@@ -1761,7 +1761,7 @@
     {\printfield[noformat]{title}%
        \setunit*{\subtitlepunct}%
        \printfield[noformat]{subtitle}}%
-	{\ifthenelse{\iffieldequalstr{entrysubtype}{project}\AND
+	{\ifthenelse{\iffieldequalstr{entrysubtype}{website}\AND
                \iffieldequalstr{entrytype}{online}}
       {\printtext[title:book]{%
        \printfield[noformat]{title}%
@@ -1868,14 +1868,14 @@
 
 \newbibmacro*{mla:online}{%
   \iffieldundef{maintitle}%
-    {\ifthenelse{\iffieldequalstr{entrysubtype}{project}}
+    {\ifthenelse{\iffieldequalstr{entrysubtype}{website}}
 	  {}
 	  {\printunit{\addcomma\addspace}}}%\printunit{\addcomma\addspace}}%
     {\printtext[maintitle]{%
        \printfield[titlecase]{maintitle}%
        \setunit{\subtitlepunct}%
        \printfield[titlecase]{mainsubtitle}}
-     \iffieldequalstr{entrysubtype}{project}
+     \iffieldequalstr{entrysubtype}{website}
        {\printunit{\addperiod\addspace}}%
        {\printunit{\addcomma\addspace}}%
     }%
