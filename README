@@ -10,7 +10,7 @@ http://www.ctan.org/pkg/biblatex
 
 
 Managed Installation (recommended):
-1. Use whatever provided installer is packaged with your installation of Latex.
+1. Use whatever provided installer is packaged with your installation of LaTeX.
 	- For instance, use the TeX Live Utility program or tlmgr from the command line.
 
 
