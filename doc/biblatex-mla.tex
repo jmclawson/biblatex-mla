@@ -1,35 +1,76 @@
-% biblatex-mla.tex v2.1 2021/10/31
+% !TEX TS-program = xelatex
+% biblatex-mla.tex v2.1a 2022/02/22
 % Maintained at <https://github.com/jmclawson/biblatex-mla/> by James Clawson.
 %
 % This material is subject to the LaTeX Project Public License. Feel free to improve, redistribute, and adapt to your own ends, as allowed by that license. (See https://ctan.org/license/lppl1.3 for license details.) For inclusion in future versions, please share improvements in formatting and MLA standards compliance back to James Clawson: <biblatex-mla@konx.net>.
 
 \documentclass{ltxdockit}
-\usepackage{xcolor}
-% \usepackage{btxdockit}
-% \usepackage[latin9]{inputenc}
+\usepackage[document]{ragged2e}
+\setlength\parindent{0.5in}
+\setlength{\RaggedRightParindent}{\parindent}
+\usepackage{fontspec}
+\setmainfont{Times}
+% \usepackage[utf8]{inputenc}
 \usepackage[american]{babel}
-\usepackage[strict]{csquotes}
-\usepackage[style=mla,mancitepar=false]{biblatex}
+\usepackage{csquotes}
+% \setlength{\parindent}{0.5in}
+\usepackage[style=mla,dateusetime=true]{biblatex}
+\usepackage{bibtex_documentation}
+\usepackage{shortvrb}
+% \usepackage[toc]{multitoc}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage[tight]{shorttoc}
+\usepackage[margin=1.25in]{geometry}
+% \usepackage{bidi}
+% \hypersetup{colorlinks,%
+% citecolor=black,%
+% % filecolor=black,%
+% % linkcolor=black,%
+% urlcolor=black
+% }
+%
+%
+% \documentclass{ltxdockit}
+% \usepackage[usenames,dvipsnames]{xcolor}
+% % \usepackage{btxdockit}
+% % \usepackage[latin9]{inputenc}
+% \usepackage[american]{babel}
+% \usepackage[strict]{csquotes}
+% \usepackage[style=mla,mancitepar=false]{biblatex}
 \usepackage{tabularx}
 \usepackage{booktabs}
-\usepackage{shortvrb}
-\usepackage{libertine}
-\usepackage[scaled=0.8]{beramono}
-\usepackage{microtype}
+% \usepackage{shortvrb}
+% \usepackage{libertine}
+% \usepackage[scaled=0.8]{beramono}
+% \usepackage{microtype}
 \usepackage{graphicx}
-\usepackage{hyperref}
-\hypersetup{colorlinks,% 
-citecolor=black,% 
-% filecolor=black,% 
-% linkcolor=black,% 
-% urlcolor=black}
-}
+% \usepackage{hyperref}
+% \hypersetup{%colorlinks,%
+% citecolor=black,%
+% % filecolor=black,%
+% % linkcolor=black,%
+% % urlcolor=black}
+% }
 
-\addbibresource{handbooksamples.bib}
+% \addbibresource{handbooksamples.bib}
+\addbibresource{handbook9_messy.bib}
 
 \MakeAutoQuote{<}{>}
 \MakeShortVerb{\|}
 
+\usepackage{fancyhdr}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\itshape\nouppercase{\rightmark}}
+\fancyhead[RE]{\itshape\nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{1pt}
+
+% \newcommand*{\biblatexmla}{\textcolor{RedOrange}{\sty{biblatex-mla}}\xspace}
+% \newcommand*{\Biblatexmla}{\textcolor{RedOrange}{\sty{Biblatex-mla}}\xspace}
 \newcommand*{\biblatexmla}{\sty{biblatex-mla}\xspace}
 \newcommand*{\Biblatexmla}{\sty{Biblatex-mla}\xspace}
 \newcommand*{\biblatexcms}{\sty{biblatex-chicago}\xspace}
@@ -42,13 +83,23 @@ citecolor=black,%
 \newcommand*{\mycommand}[1]{\mycode{\textbackslash{}#1}}
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{\tiny{#1}}}}}
 
+\newcommand*{\mlatype}[1]{\textcolor{BurntOrange}{\sty{#1}}\xspace}
+\newcommand*{\mlafield}[1]{\textcolor{teal}{\sty{#1}}\xspace}
+
 \newcommand*{\biber}{\sty{biber}\xspace}
 \newcommand*{\biblatex}{\sty{Biblatex}\xspace}
 \newcommand*{\biblatexhome}{http://sourceforge.net/projects/biblatex/}
 \newcommand*{\biblatexctan}{http://www.ctan.org/tex-archive/macros/latex/contrib/biblatex/}
 
+\newcommand*{\bibref}[1]{the entry for \sty{\{#1\}} %on page~\pageref{#1}}% 
+in \secref{#1}}
+\newcommand*{\parentref}[2]{For an example \mlatype{@#1} entry and its output, see \sty{\{#2\}} in \secref{#2}.}
+\newcommand*{\longerref}[2]{For an example \mlatype{@#1} source, see \citeauthor*{#2}'s \citetitle{#2} in \secref{#2}.}
+\newcommand*{\titleref}[2]{For an example using \mlatype{@#1}, see \citetitle{#2} in \secref{#2}.}
+\newcommand*{\authorref}[2]{For an example using \mlatype{@#1}, see \citeauthor{#2}'s entry in \secref{#2}.}
+
 \makeatletter
-\def\subsubsection{\@startsection{subsubsection}{3}{-2.2em}{-5.25ex plus -1ex minus -.2ex}{0.5ex plus .2ex}{\large\textbf}}
+% \def\subsubsection{\@startsection{subsubsection}{3}{-2.2em}{-5.25ex plus -1ex minus -.2ex}{0.5ex plus .2ex}{\large\textbf}}
 \newenvironment*{commandlist}
   {\list{}{%
      \setlength{\labelwidth}{\marglistwidth}%
@@ -82,26 +133,56 @@ citecolor=black,%
 
 
 \titlepage{%
-  title={\biblatexmla},
+  title={\textcolor{orange}{\biblatexmla}},
   subtitle={\mla{} Style Using \biblatex},
   url={\biblatexmlahome},
-  author={James Clawson},
+  author={James Clawson \\ \mbox{}},
   email={},%},
-  revision={2.0},
-  date={\today}}
+  revision={2.1a (2021-02-22)},
+  date={}}
 
 \hypersetup{%
-  pdftitle={biblatex-mla},
+  pdftitle={biblatex-mla (version 2.1a)},
   pdfsubject={MLA Style Using biblatex},
-  pdfauthor={James Clawson},
-  pdfkeywords={mla, biblatex, bibtex, bibliography, citation}}
+  pdfauthor={James M. Clawson},
+  pdfkeywords={mla, biblatex, bibtex, bibliography, citation},
+  colorlinks,% 
+  citecolor=black,% 
+  urlcolor=black}
 
 % colors
 
-\definecolor{spot}{rgb}{1,0.5,0}
+% \definecolor{spot}{rgb}{1,0.5,0}
+% \definecolor{spot}{rgb}{0.2,0.1,0}
+% \definecolor{spot}{HTML}{184C52}
 \definecolor{new}{rgb}{0,0.5,1}
 
-\newcommand*{\newthis}{\textbf{\textcolor{new}{|(new in 2.0)|}} }
+% \definecolor{spot}{RGB}{170,85,0}
+\definecolor{spot}{RGB}{255,127,0}
+% \definecolor{lightorange}{RGB}{255,191,127}
+\definecolor{lightorange}{RGB}{255,195,131}
+% \definecolor{lightlightorange}{RGB}{255,212,148}
+% \definecolor{orange}{RGB}{255,127,0}
+\definecolor{darkorange}{RGB}{127,63,0}
+
+% \newcommand*{\newthis}{\textbf{\textcolor{new}{|(new in 2.0)|}} }
+% \newcommand*{\newnov}{\textbf{\textcolor{new}{|(new in 2.1)|}} }
+
+\newcommand*{\newthis}{\leavevmode\marginpar{\textbf{\colorbox{lightorange}{\textcolor{white}{|2.0|}}}}}
+\newcommand*{\newnov}{\leavevmode\marginpar{\textbf{\colorbox{orange}{\textcolor{white}{|2.1|}}}}}
+
+
+% Added \emph{} because there's no italic in Arabic fonts
+\newfontfamily\arabicfont[Script=Arabic]{Geeza Pro}
+\newcommand{\textarabic}[1]     % Arabic inside LTR
+    {\emph{\foreignlanguage{arabic}{{\arabicfont #1}}}}
+
+% \newcommand{\bibcitem}[1]{\lstinputlisting[linerange=#1-end,includerangemarker=false,breaklines=true,postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space} ]{\thebibfile}\nocite{#1}}
+% \renewcommand{\bibcitem}[1]{\nocite{#1}}
+
+% \pagestyle{headings}
+\pagestyle{fancy}
+
 
 % tables
 
@@ -141,166 +222,37 @@ citecolor=black,%
   bib-latex
 }
 
-\newcommand*{\mlabibbox}[2]{\begin{center}\colorbox{#1!30}{\parbox{.9\linewidth}{#2}}\end{center}}
-\newcommand*{\mlaprintbox}[2]{\begin{center}\colorbox{#1!30}{\parbox{.9\linewidth}{\begin{center}\textbf{Works Cited}\end{center}#2}}\end{center}}
-
-\DeclareFieldFormat{braces}{\{#1\}}%
-\DeclareNameAlias{default}{first-last}%
-\DeclareNameAlias{author}{first-last}%
-\DeclareNameAlias{editor}{first-last}%
-\DeclareNameAlias{translator}{first-last}%
-\DeclareNameAlias{namea}{first-last}%
-\DeclareNameAlias{nameb}{first-last}%
-\DeclareNameAlias{namec}{first-last}%
-\DeclareListFormat{location}{%
-  #1%
-  \ifthenelse{\value{listcount}<\value{liststop}}
-    {\addcomma\space}
-    {}}%
-\DeclareListFormat[article]{location}{%
-  #1%
-  \ifthenelse{\value{listcount}<\value{liststop}}
-    {\addcomma\space}
-    {}}%
-\DefineBibliographyExtras{british}{%
-  \protected\def\bibdatedash{$/$}
-  \def\finalandcomma{}%
-  \protected\def\mkbibdatelong#1#2#3{%
-    \iffieldundef{#1}
-      {}
-      {\thefield{#1}\iffieldundef{#2}{}{-}}%
-    \iffieldundef{#2}
-      {}
-      {\thefield{#2}\iffieldundef{#3}{}{-}}%
-    \thefield{#3}}}
-
-\renewcommand*{\multinamedelim}{\addspace\bibstring{and}\space}
-
-\newcommand{\mlafullexample}[2]{%\newline%
-\mlabibbox{orange}{\begin{description}\item\mlaexample{#1}\end{description}}%
-\normalfont{#2}\selectlanguage{american}%
-\mlaprintbox{white}{\begin{description}\item\normalfont\fullcite{#1}\end{description}}}
-
-\DeclareCiteCommand{\mlaexample}[\texttt]
-  {\selectlanguage{british}\printtext{$@$}\printfield{entrytype}}%
-  {\{\printfield{entrykey}\usebibmacro{cite:mlaexample}}%
-  {}%
-  {\selectlanguage{american}}
-\newbibmacro*{cite:mlaexample}{%
-  \setunit{\addcomma\printtext{\newline}}
-  \usebibmacro{cite:mlaexample:internal}{author}%
-  \usebibmacro{cite:mlaexample:internal}{authortype}%
-  \usebibmacro{cite:mlaexample:internal}{bookauthor}%
-  \usebibmacro{cite:mlaexample:internal}{booktitle}%
-  \usebibmacro{cite:mlaexample:internal}{booksubtitle}%
-  \usebibmacro{cite:mlaexample:internal}{date}%
-  \usebibmacro{cite:mlaexample:internal}{edition}%
-  \usebibmacro{cite:mlaexample:internal}{editor}%
-  \usebibmacro{cite:mlaexample:internal}{editortype}%
-  \usebibmacro{cite:mlaexample:internal}{entrysubtype}%
-  \usebibmacro{cite:mlaexample:internal}{eprint}%
-  \usebibmacro{cite:mlaexample:internal}{eprinttype}%
-  \usebibmacro{cite:mlaexample:internal}{howpublished}%
-  \usebibmacro{cite:mlaexample:internal}{institution}%
-  \usebibmacro{cite:mlaexample:internal}{introduction}%
-  \usebibmacro{cite:mlaexample:internal}{journaltitle}%
-  \usebibmacro{cite:mlaexample:internal}{location}%
-  \usebibmacro{cite:mlaexample:internal}{maintitle}%
-  \usebibmacro{cite:mlaexample:internal}{mainsubtitle}%
-  \usebibmacro{cite:mlaexample:internal}{nameaddon}%
-  \usebibmacro{cite:mlaexample:internal}{namea}%
-  \usebibmacro{cite:mlaexample:internal}{nameatype}%
-  \usebibmacro{cite:mlaexample:internal}{nameb}%
-  \usebibmacro{cite:mlaexample:internal}{namebtype}%
-  \usebibmacro{cite:mlaexample:internal}{namec}%
-  \usebibmacro{cite:mlaexample:internal}{namectype}%
-  \usebibmacro{cite:mlaexample:internal}{number}%
-  \usebibmacro{cite:mlaexample:internal}{options}%
-  \usebibmacro{cite:mlaexample:internal}{origdate}%
-  \usebibmacro{cite:mlaexample:internal}{pages}%
-  \usebibmacro{cite:mlaexample:internal}{publisher}%
-  \usebibmacro{cite:mlaexample:internal}{series}%
-  \usebibmacro{cite:mlaexample:internal}{subtitle}%
-  \usebibmacro{cite:mlaexample:internal}{title}%
-  \usebibmacro{cite:mlaexample:internal}{titleaddon}%
-  \usebibmacro{cite:mlaexample:internal}{translator}%
-  \usebibmacro{cite:mlaexample:internal}{type}%
-  \usebibmacro{cite:mlaexample:internal}{url}%
-  \usebibmacro{cite:mlaexample:internal}{urldate}%
-  \usebibmacro{cite:mlaexample:internal}{version}%
-  \usebibmacro{cite:mlaexample:internal}{volume}%
-  \setunit{\printtext{}}\printtext{\}\selectlanguage{american}%
-  }%
-}
-\newbibmacro{cite:mlaexample:internal}[1]{%
-  \ifthenelse{\equal{#1}{date}}{%
-    \iffieldundef{year}{}{%
-      \printtext{\indent date}%
-   	  \printtext{$=$ \addspace}%
-	  \printtext[braces]{\printdate}%
-	}%
-  }{}%
-  \ifthenelse{\equal{#1}{origdate}}{%
-    \iffieldundef{origyear}{}{
-	  \printtext{\indent origdate}%
-	  \printtext{$=$ \addspace}%
-	  \printtext[braces]{\printorigdate}%
-	}%
-  }{}%
-  \ifthenelse{\equal{#1}{urldate}}{%
-    \iffieldundef{urlyear}{}{
-	  \printtext{\indent urldate}%
-	  \printtext{$=$ \addspace}%
-	  \printtext[braces]{\printurldate}%
-	}%
-  }{}%
-  \iffieldundef{#1}{}{%
-    \printtext{\indent#1}%
-	\printtext{$=$ \addspace}%
-	\printfield[braces]{#1}%
-  }%
-  \ifnameundef{#1}{}{%
-    \printtext{\indent#1}%
-	\printtext{$=$ \addspace}%
-	\printtext[braces]{\printnames{#1}}%
-  }%
-  \iflistundef{#1}{}{%
-    \printtext{\indent#1}%
-	\printtext{$=$ \addspace}%
-	\printtext[braces]{\printlist{#1}}%
-  }%
-  \setunit{\addcomma\printtext{\newline}}}
 
 
-
-
+\setcounter{tocdepth}{1}
 \begin{document}
 
-\printtitlepage
+\printtitlepage\thispagestyle{empty}
+
 \tableofcontents
 
-
-% \subsection{Examples} % (fold)
-% \label{ssub:examples}
-% \autocite{sendak63aa}
-
-% subsection examples (end)
-
-\section{Version Note}
-This update is to improve compatibility with the 9\superscript{th} edition of the \emph{MLA Handbook}, published April 2021. See \secref{mla:sec:use} for more on switching between editions.
-
-\section{Introduction}
+\section{About these style files}
 \label{int}
 
-\Biblatexmla provides support to \biblatex, \bibtex, and \latex for citations and Works Cited lists in the style established by the Modern Language Association (\mla). For commands and options to change package defaults, see \secref{mla:subsec:commands} and \secref{mla:subsec:options}, respectively, below.
+\Biblatexmla provides support to \biblatex, \bibtex, and \latex for citations and Works Cited lists in the style of the Modern Language Association (\mla). For commands and options to change package defaults, see \secref{mla:subsec:commands} and \secref{mla:subsec:options}, respectively, below.
 
 \mla style, a common standard for writers in the humanities, is outlined in the \emph{MLA Style Manual}, in its 3\superscript{rd} edition, and the \emph{MLA Handbook for Writers of Research Papers}, now in its 9\superscript{th} edition. \Biblatexmla follows the style outlined in the latter of these. It also follows the logic of the \mla{} when citing similar material repeatedly, trimming unnecessary information from citations where necessary. \Biblatexmla is compatible with \biblatex's support for \sty{hyperref} and \sty{tex4ht}, and the main word in each citation (either the author's name, the title, or the page number) serves as a link to the particular entry in the Works Cited. For anything not covered by this manual, please also see the \biblatex documentation or reach out via GitHub.
 
-\newpage
-\section{Use}
+Version 2.1 improves documentation and compatibility with the 9\superscript{th} edition of the \emph{MLA Handbook}, published April 2021. Changes for this release and the previous release of \biblatexmla are called out in the right-hand margin with \colorbox{orange}{\textcolor{white}{|2.1|}} and \colorbox{lightorange}{\textcolor{white}{|2.0|}}, with color fading to show age. See the |CHANGES| file for more details of releases.
+
+\subsection{License}
+
+\Biblatexmla is copyrighted \textcopyright\ 2007--2022, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{https://ctan.org/license/lppl1.3}.
+
+\subsection[Feedback]{Feedback}
+\label{int:feb}
+
+If you end up improving the code to be more accurate to the \mla{} standard, please be kind to the rest of us and share; improvements are strongly encouraged. Direct any feedback to the package's GitHub page: \mylink{https://github.com/jmclawson/biblatex-mla/}. 
+
+\section{Setup and Use}
 \label{mla:sec:use}
 
-To ensure American-style quotation marks (if that's your thing),%
+For American-style quotation marks,%
 %%
 \footnote{Other localization files, \sty{mla-spanish.lbx}, \sty{mla-portuguese.lbx}, and \sty{mla-italian.lbx}, are also available to use \biblatexmla in languages other than English. These and other localization files are included in \biblatexmla releases, but they have fallen out of sync with the English versions. The latest version of these files will be kept on GitHub (\mylink{\biblatexmlahome}); new translations are welcome. There is also support for proper punctuation in non-American dialects of English. Try \mycode{british}, \mycode{canadian}, or other Babel identifiers, such as \mycode{spanish}.} %
 %%
@@ -315,7 +267,7 @@ of your \latex document:
 	\end{verbatim}	
 \end{quote}
 
-By default, \biblatexmla will transform some data in ways preferred by \mla style: for example, URLs will omit protocol prefixes like |http://|, some URLs will be converted to eprint entries, and publisher names will be simplified to abbreviate ``University Press'' to ``UP.'' To skip these transformations, change the style referenced in the third line to \textbf{|mla-strict|}:
+By default, \biblatexmla will transform some data in ways preferred by \mla style: for example, URLs will omit protocol prefixes like |http://|, some URLs will be converted to eprint entries, and publisher names will be simplified to abbreviate ``University Press'' to ``UP.'' To avoid these automatic transformations, change the style referenced in the third line to \textbf{|mla-strict|}:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[american]{babel}
@@ -412,60 +364,6 @@ Insert a citation in a footnote. The |\footcite| command should be reserved for 
 
 \end{commandlist}
 
-\begin{table}
-\tablesetup
-\noindent\begin{tabular}{@{}V{0.33\textwidth}@{}V{0.33\textwidth}@{}p{0.3\textwidth}@{}}
-\toprule
-\multicolumn{1}{@{}H}{Input} &
-\multicolumn{1}{@{}H}{Output} &
-\multicolumn{1}{@{}H}{Comment} \\
-\cmidrule(r){1-1}\cmidrule(r){2-2}\cmidrule{3-3}
-\verb!\autocite[12]{morrison02aa}! & \autocite[12]{morrison02aa} & A typical citation includes everything necessary.\\
-% \hline
-\\
-\verb!\autocite[34]{morrison02aa}! & \autocite*[34]{morrison02aa} & Immediately subsequent citations to the same source shorten the citation by dropping redundant information.\\% I had to star it here to show the true output that happens in a paragraph. Something about the table seems to be resetting the tracker.
-% \hline
-\\
-\verb!\autocite{morrison02aa}! & \autocite{morrison02aa} & Immediately subsequent citations lacking page reference add back information to show a citation.\\
-% \hline
-\\
-\verb!\autocite[12]{frye57ab}! & \autocite[12]{frye57ab} & A citation to a text by an author with multiple works cited also includes a short title.\\
-% \hline
-\\
-\verb!\autocite[34]{frye57ab}! & (34) %\autocite[34]{frye57ab} % I have to do weird things here, as the table seems to reset the tracker.
-& Subsequent immediate citations to the same source shorten the citation as much as possible.\\
-% \hline
-\\
-\verb!\autocite[56]{frye91aa}! & \autocite*[56]{frye91aa} & Citations to a new source by the same author omit the repetition of the author's name.\\
-% \hline
-\\
-\verb!\autocite[101]{morrison02aa}! & \autocite[101]{morrison02aa} & A citation interrupting those by Frye will reset the trackers. \\
-% \hline
-\\
-\verb!\autocite[78]{frye91aa}! & \autocite[78]{frye91aa} & With a reset author tracker, the citation includes all necessary information.\\
-% \hline
-\\
-\verb!\autocite*[102]{morrison02aa}! & \autocite*[102]{morrison02aa} & The asterisked version suppresses the author's name---useful when the author is named in the sentence.\\
-% \hline
-\\
-\verb!\autocite*[91]{frye57ab}! & \autocite*[91]{frye57ab} & Suppressing the name of a prolific author will still print the short title to avoid ambiguity.\\
-% \hline
-\\
-\verb!\autocite*{morrison02aa}! & \autocite*{morrison02aa} & Suppressing the author's name without page numbers given will print the title of the work.\\
-% \hline
-\\
-% \small& & \\
-\verb!\mancite! \verb!   \autocite[34]{morrison02aa}! & \mancite\autocite[34]{morrison02aa} & Resetting the author tracker makes sure that the author's name is always printed---useful to avoid ambiguity.\\
-% \hline
-\bottomrule
-\end{tabular}
-\caption[Typical citations]
-{Syntax and output showing effects of citation trackers, starred variants, and manual resets with typical citations using \biblatexmla}
-\label{use:cit:all}
-\end{table}
-
-\clearpage
-
 \subsubsection{In-Text Commands}
 \label{mla:subsubsec:intext}
 
@@ -477,11 +375,11 @@ Insert a citation without parentheses or footnote styling. These kinds of citati
 	
 \commanditem{citeauthor}
 
-Print the names of the author(s) or editor(s) associated with a source. In its current form, the unstarred command will always print given and family names, while the starred variant (\cmd{citeauthor*\{x\}}) will omit given names.
+Print the names of the author(s) or editor(s) associated with a source. In its current form, the unstarred command will always print given and family names, while it is possible to omit given names by using the starred variant: \cmd{citeauthor*\{x\}}
 
 \commanditem{citetitle}
 
-Print the title of a source. The unstarred version will print the |shorttitle| if it is available; the starred version (\cmd{citetitle*\{x\}}) will always print the full title.
+Print the title of a source. The unstarred version will print the |shorttitle| if it is available; the starred version (\cmd{citetitle*\{x\}}) will always print the full title field.
 
 \commanditem{citeyear}
 
@@ -538,7 +436,7 @@ An alias to |\cite|, above.
 % \end{quote}
 
 \optionitem{annotation}
-It is possible to print annotations to entries in the Works Cited if the \mycode{annotation} field is defined in an entry. To turn on this option, add \mycode{annotation=true} to your
+It is possible to print annotations to entries in the Works Cited if the \mlafield{annotation} field is defined in an entry. To turn on this option, add \mycode{annotation=true} to your
 preamble:
 \begin{quote}
 	\begin{verbatim}
@@ -546,8 +444,70 @@ preamble:
 	\end{verbatim}	
 \end{quote}
 
+\end{optionslist}
+
+\newpage
+\thispagestyle{empty}
+\begin{table}
+\tablesetup
+\noindent\caption[Typical citations]
+{Syntax and output showing cumulative effects of citation trackers, starred variants, and manual resets with typical citations using \biblatexmla}
+\label{use:cit:all}
+\noindent\begin{tabular}{@{}V{0.33\textwidth}@{}V{0.33\textwidth}@{}p{0.3\textwidth}@{}}
+\toprule
+\multicolumn{1}{@{}H}{Input} &
+\multicolumn{1}{@{}H}{Output} &
+\multicolumn{1}{@{}H}{Explanation} \\
+\cmidrule(r){1-1}\cmidrule(r){2-2}\cmidrule{3-3}
+\verb!\autocite[12]{morrison02aa}! & \autocite[12]{morrison02aa} & \noindent{}A typical citation includes everything necessary.\\
+% \hline
+\\
+\verb!\autocite[34]{morrison02aa}! & \autocite*[34]{morrison02aa} & \noindent{}Immediately subsequent citations to the same source shorten the citation by dropping redundant information.\\% I had to star it here to show the true output that happens in a paragraph. Something about the table seems to be resetting the tracker.
+% \hline
+\\
+\verb!\autocite{morrison02aa}! & \autocite{morrison02aa} & \noindent{}Immediately subsequent citations lacking page reference add back information to show a citation.\\
+% \hline
+\\
+\verb!\autocite[12]{frye57ab}! & \autocite[12]{frye57ab} & \noindent{}A citation to a text by an author with multiple works cited also includes a short title.\\
+% \hline
+\\
+\verb!\autocite[34]{frye57ab}! & (34) %\autocite[34]{frye57ab} % I have to do weird things here, as the table seems to reset the tracker.
+& \noindent{}Subsequent immediate citations to the same source shorten the citation as much as possible.\\
+% \hline
+\\
+\verb!\autocite[56]{frye91aa}! & \autocite*[56]{frye91aa} & \noindent{}Citations to a new source by the same author omit the repetition of the author's name.\\
+% \hline
+\\
+\verb!\autocite[101]{morrison02aa}! & \autocite[101]{morrison02aa} & \noindent{}A citation interrupting those by Frye will reset the trackers. \\
+% \hline
+\\
+\verb!\autocite[78]{frye91aa}! & \autocite[78]{frye91aa} & \noindent{}With a reset author tracker, the citation includes all necessary information.\\
+% \hline
+\\
+\verb!\autocite*[102]{morrison02aa}! & \autocite*[102]{morrison02aa} & \noindent{}The asterisked version suppresses the author's name---useful when the author is named in the sentence.\\
+% \hline
+\\
+\verb!\autocite*[91]{frye57ab}! & \autocite*[91]{frye57ab} & \noindent{}Suppressing the name of a prolific author will still print the short title to avoid ambiguity.\\
+% \hline
+\\
+\verb!\autocite*{morrison02aa}! & \autocite*{morrison02aa} & \noindent{}Suppressing the author's name without page numbers given will print the title of the work.\\
+% \hline
+\\
+% \small& & \\
+\verb!\mancite! \verb!\autocite[34]{morrison02aa}! & \mancite\autocite[34]{morrison02aa} & \noindent{}Resetting the author tracker ensures that the author's name is printed in the next citation---useful to avoid ambiguity.\\
+% \hline
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+%%%%%%%%%%%%%%
+
+\begin{optionslist}
+
 \optionitem{firstlonghand}\label{mla:internal:firstlonghand}
-The first citation of a source with a shorthand defined will always print a citation with author's name and, potentially, the \sty{shorttitle} field. (For more on this field, see section \secref{mla:subsec:unnusualfields}, below.) Add \mycode{firstlonghand=false} to your preamble to disable this option and print only the shorthand even on the first citation:
+The first citation of a source with a shorthand defined will always print a citation with author's name and, potentially, the \mlafield{shorttitle} field. (For more on this field, see section \secref{mla:subsec:unnusualfields}, below.) Add \mycode{firstlonghand=false} to your preamble to disable this option and print only the shorthand even on the first citation:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,firstlonghand=false]{biblatex} 
@@ -557,7 +517,7 @@ The first citation of a source with a shorthand defined will always print a cita
 % \end{minipage}
 
 \optionitem{guessmedium}
-When using the |style=mla7| option, an entry with no defined \sty{howpublished} field will default either to a <Web> publication (if there's a defined \sty{url} field or \sty{eprint} field) or a <Print> publication (if there's not). To avoid \biblatexmla guessing the publication medium, thereby printing nothing when the field is undefined, deactivate the \mycode{guessmedium} option:
+When using the |style=mla7| option, an entry with no defined \mlafield{howpublished} field will default either to a <Web> publication (if there's a defined \mlafield{url} field or \mlafield{eprint} field) or a <Print> publication (if there's not). To avoid \biblatexmla guessing the publication medium, thereby printing nothing when the field is undefined, deactivate the \mycode{guessmedium} option:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla7,guessmedium=false]{biblatex}
@@ -565,7 +525,7 @@ When using the |style=mla7| option, an entry with no defined \sty{howpublished} 
 \end{quote}
 
 \optionitem{longdash}\label{mla:internal:longdash}
-\newthis The 9\superscript{th} edition of the \emph{\mla Handbook} clarifies that dashes indicating multiple entries by one author can either be styled wih three em-dashes or three hyphens. From version 2.0, \biblatexmla defaults to em-dashes, but setting |longdash| to false in the document header reverts to using hyphens:
+\newthis The 9\superscript{th} edition of the \emph{\mla Handbook} clarifies that dashes indicating multiple entries by one author can either be styled wih three em-dashes or three hyphens. From version 2.0, output defaults to em-dashes, but setting |longdash| to false reverts back to hyphens:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,longdash=false]{biblatex}
@@ -589,7 +549,7 @@ When using \mla{} parenthetical citations, it is best practice to cite only when
 \end{quote}
 
 \optionitem{nofullfootnote}\label{mla:internal:nofullfootnote}
-When using \biblatexmla for footnotes, the style file will provide full bibliographic detail for the first citation of every source. To turn off this option, add to your preamble \mycode{nofullfootnote}:
+When using \biblatexmla for footnotes, the style file will provide full bibliographic detail for the first citation of every source. To turn off this option, add \mycode{nofullfootnote} among the package options:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,autocite=footnote,nofullfootnote]{biblatex} 
@@ -597,7 +557,7 @@ When using \biblatexmla for footnotes, the style file will provide full bibliogr
 \end{quote}
 
 \optionitem{noremoteinfo}\label{mla:internal:noremoteinfo}
-Modeled after the implementation in |biblatex-apa| to suppress remote information in the \sty{.bib} file from being printed in the bibliography, this option affects \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint} fields.
+Modeled after the implementation in |biblatex-apa| to suppress remote information in the \sty{.bib} file from being printed in the bibliography, this option affects \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \mlafield{eprint} fields.
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla,noremoteinfo=true]{biblatex}
@@ -623,7 +583,7 @@ Alternatively, selectively show the location for individual entries by defining 
 \end{quote}
 
 \optionitem{showmedium}
-When using the |style=mla7| option, \biblatexmla will print the publication medium at the end of each entry in the list of Works Cited. Turn off this option---and some other new changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
+When using the |style=mla7| option, \biblatexmla will print the publication medium at the end of each entry in the list of Works Cited. Turn off this option---and some other changes from the 3\superscript{rd} edition---by setting the \mycode{showmedium} option to false:
 \begin{quote}
 	\begin{verbatim}
 		\usepackage[style=mla7,showmedium=false]{biblatex}
@@ -632,28 +592,12 @@ When using the |style=mla7| option, \biblatexmla will print the publication medi
 
 \end{optionslist}
 
-\section{Database Guide}
+\section{\bibtex Entry Types and Fields}
 \label{bib}
 
-% I lost my original documentation files, including original style files I created to maintain them, so I'm transitioning everything to Philipp Lehman's \sty{ltxdockit}. This part of the user guide, explaining how to create \sty{bibtex} entries for use with \biblatexmla, will be updated shortly. Until then, please see \S{} 4 (pages 7--20) of the previous version: \mylink{http://konx.net/biblatex-mla/biblatex-mla.pdf}.
+\biblatex uses \bibtex-style databases to define the bibliographic information of sources. With few notable distinctions, \biblatexmla tries to follow typical \biblatex conventions for \textcolor{orange}{entry types} and \textcolor{teal}{fields}, explained in this section. Keep in mind that some of the \textcolor{teal}{fields} listed in the \mlatype{@book} and \mlatype{@article} types (for example, \mlafield{nameaddon}, \mlafield{origyear}, and others) are also available in other entry types and are not repeated only for brevity. 
 
-\biblatex uses \bibtex-style databases to manage the citations and list of works cited. With some notable distinctions, \biblatexmla tries to follow typical \biblatex conventions for fields and entry types. % The guide below explains some  are the different \sty{@types} and the \mycode{fields} available to them. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (e.g., \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
-% 
-% \subsection{Typical fields} % (fold)
-% \label{sub:typical_fields}
-%
-% The best way to acquaint oneself with \biblatexmla is to explore the included \sty{.bib} file, \sty{.tex} files, and the resulting \sty{.pdf} output. Much of the the bibfile database is pretty obvious. Take a look at \tabref{fig:example-book}, for example.
-% \begin{table}[tbp]
-% 	\centering
-% 		\includegraphics[width=4.8in]{example-book.pdf}
-% 	\caption{A standard \sty{.bib} file \mycode{@book} entry and its corresponding output in the list of Works Cited, beneath.}
-% 	\label{fig:example-book}
-% \end{table}
-% In addition to many of the standard fields one might expect to find, \biblatexmla is also capable of handling unusual fields, described below. For a fuller consideration of the fields supported by \biblatexmla, see the example files and consult the Biblatex manual.
-% 
-% 
-% \mlafullexample{douglas93aa}{The above entry, found in the \sty{.bib} file, outputs to the below entry in the list of works cited:} %
-Much of the the bibfile database is pretty obvious, so the best way to get acquainted with \biblatexmla is to explore the included \sty{.bib}, \sty{.tex}, and \sty{.pdf} files. Additionally, some of the different \sty{@types} and fields are explained below. Keep in mind that some of the fields in the \sty{@book} and \sty{@article} types (for example, \sty{nameaddon}, \sty{origyear}, and others) are also available in others where it makes sense; I don't repeat them here to save room.
+Following the explanations in this section, section \secref{mla:sec:samples} offers specific examples modeled after the 9th edition of the \emph{MLA Handbook}.
 
 % subsection typical_fields (end)
 
@@ -662,25 +606,30 @@ Much of the the bibfile database is pretty obvious, so the best way to get acqua
 
 \begin{optionslistNOT}
 	
-	\optionitem{crossref}
-	the \sty{key} of a parent source in which a shorter source is found. The \sty{crossref} field is handy to avoid spending time re-inputting similar data, but it is also useful for including \mla{}-style cross-references in the list of Works Cited. Keep in mind the problems of the \sty{crossref} field, explained in section 2.4.1 of the \biblatex manual.% In the future, \biblatexmla may provide further support for the \biblatex \sty{xref} field, making \sty{crossref} secondary in importance.
+	\optionitem{\mlafield{crossref}}
+	the \sty{key} of a parent source in which a shorter source is found. The \mlafield{crossref} field is handy to avoid spending time re-inputting similar data, but it is also useful for including \mla{}-style cross-references in the list of Works Cited. Keep in mind the problems of the \mlafield{crossref} field, explained in section 2.4.1 of the \biblatex manual.% In the future, \biblatexmla may provide further support for the \biblatex \sty{xref} field, making \mlafield{crossref} secondary in importance.
 	
-	\optionitem{shorttitle}
-	the shortened title to be printed in citations to disambiguate among multiple titles by one author. \Biblatexmla will only print this field in citations when necessary; when this field is not defined, \biblatexmla will use the whole of the \sty{title} field.
+	\optionitem{\mlafield{shorttitle}}
+	the shortened title to be printed in citations to disambiguate among multiple titles by one author. \Biblatexmla will only print this field in citations when necessary; when this field is not defined, \biblatexmla will use the whole of the \mlafield{title} field.
 	
-	\optionitem{shorthand}
-	when defined, a unique label to be printed in citations instead of the author and shorttitle. By default, \biblatexmla will only use the \sty{shorthand} label after a first citation with author (and title, if necessary). See the \mycode{firstlonghand} option on page~\pageref{mla:internal:firstlonghand} to disable this feature.
+	\optionitem{\mlafield{shorthand}}
+	when defined, a unique label to be printed in citations instead of the author and shorttitle. By default, \biblatexmla will only use the \mlafield{shorthand} label after a first citation with author (and title, if necessary). See the \mycode{firstlonghand} option on page~\pageref{mla:internal:firstlonghand} to disable this feature.
 	
-	\optionitem{options}
+	\optionitem{\mlafield{options}}
 	separate the following options with a comma:
 	\begin{description}
-		\item[noremoteinfo=false] indicates that the ``remote'' information of an entry is to be printed, including the fields \sty{isbn}, \sty{issn}, \sty{isrn}, \sty{doi}, and \sty{eprint}. These fields are usually omitted. See also the global option also called \mycode{noremoteinfo}, on page~\pageref{mla:internal:noremoteinfo}, above, for defining this option on a per-document basis. The \mycode{noremoteinfo} option defaults to true.
-		\item[showlocation=true] \newthis indicates that the publisher's city of operations for an entry is to be printed. These fields are usually omitted. See also the global option also called \mycode{showlocation}, on page~\pageref{mla:internal:showlocation}, above, for defining this option on a per-document basis. The \mycode{showlocation} option defaults to false.
-		\item[totalnames=true] allows the label to include all the names in its list, rather than maxing out at three. The \mycode{totalnames} option defaults to false.
-		\item[uniquetranslator=true] indicates that a translator of a particular \sty{@incollection} entry is unique to that work, rather than the collection at large. The \mycode{uniquetranslator} option defaults to false.
-		\item[useauthor=false] allows the label of the entry to default to something other than the author, when the author field is defined. If the editor is defined, the label will default to that. The \mycode{useauthor} option defaults to true.
-		\item[useeditor=false] allows the label of the entry default to something other than the editor in the case of the author field being undefined or the \mycode{useauthor} option set to false. The \mycode{useeditor} option defaults to true.
-		\item[usetranslator=true] allows the label of the entry to inherit the name of the translator when the author and editor fields are undefined or the \mycode{useauthor} and \mycode{useeditor} options are set to false. The \mycode{usetranslator} option defaults to false.
+		\item[|containerized=auto|] \newnov allows \biblatexmla to determine whether a multivolume set should be displayed as a container. The \mycode{containerized} option defaults to \mycode{auto}. To force behavior, set the option to \mycode{true} or \mycode{false}. See \bibref{Howells:1968wo}, which has \mycode{containerized} set to \mycode{true}.
+		\item[|datebrackets=true|] \newnov styles the date of a source in square brackets to indicate that the date was not indicated on the original source. To see the option in use, check \bibref{Bauer:1971ui}. This option currently only works with the \mlatype{@book} entry type, but it seems reasonable to expand the option to other entry types in future releases. The \mycode{datebrackets} option defaults to \mycode{false}.
+		\item[|showlocation=true|] \newthis indicates that the publisher's city of operations for an entry is to be printed. These fields are usually omitted. See also the global option also called \mycode{showlocation}, on page~\pageref{mla:internal:showlocation}, above, for defining this option on a per-document basis. The \mycode{showlocation} option defaults to false.
+		\item[|uniquenamea=false|] \newnov indicates that the \mlafield{namea} field is related to a broader container, rather than to the particular source being cited within that container. This is useful, e.g., to indicate someone who directed an entire television series, rather than just a particular episode. The \mycode{uniquenamea} option defaults to \mycode{true}, indicating association with the particular source.
+		\item[|uniquenameb=false|] as above, for the \mlafield{nameb} field. This option defaults to \mycode{true}.
+		\item[|uniquenamec=false|] as above, for the \mlafield{namec} field. This option defaults to \mycode{true}.
+		\item[|noremoteinfo=false|] indicates that the ``remote'' information of an entry is to be printed, including the fields \mlafield{isbn}, \mlafield{issn}, \mlafield{isrn}, \mlafield{doi}, and \mlafield{eprint}. These fields may otherwise be omitted. See also the global option which shares the name \mycode{noremoteinfo}, on page~\pageref{mla:internal:noremoteinfo}, above, for defining this option on a per-document basis. The \mycode{noremoteinfo} option defaults to true.
+		\item[|totalnames=true|] allows the label to include all the names in its list, rather than maxing out at three. The \mycode{totalnames} option defaults to false.
+		\item[|uniquetranslator=true|] indicates that a translator of a particular entry with the \mlatype{@incollection} entrytype is unique to that work, rather than the collection at large. The \mycode{uniquetranslator} option defaults to false.
+		\item[|useauthor=false|] allows the label of the entry to default to something other than the author, when the author field is defined. If the editor is defined, the label will default to that. The \mycode{useauthor} option defaults to true.
+		\item[|useeditor=false|] allows the label of the entry default to something other than the editor in the case of the author field being undefined or the \mycode{useauthor} option set to false. The \mycode{useeditor} option defaults to true.
+		\item[|usetranslator=true|] allows the label of the entry to inherit the name of the translator when the author and editor fields are undefined or the \mycode{useauthor} and \mycode{useeditor} options are set to false. The \mycode{usetranslator} option defaults to false.
 	\end{description}	
 \end{optionslistNOT}
 
@@ -688,86 +637,92 @@ Much of the the bibfile database is pretty obvious, so the best way to get acqua
 \subsection{Standalone Sources}
 The following entrytypes are for long sources not part of any other publication except, potentially, multivolume sets or publishers' series.
 
-\subsubsection*{@book}
-A book, usually with one author. \mla{}-style book entries are straightforward, and the \biblatexmla files style all the potential fields for a typical book
+\subsubsection*{\mlatype{@book}}
+A book, usually with one author. \mla{}-style book entries are straightforward, and \biblatex will style all the potential fields for a typical book. \longerref{book}{Davis:1998we}
 
 \begin{optionslistNOT}
-	\optionitem{author}
+	\optionitem{\mlafield{author}}
 	the author of the book
 
-	\optionitem{title}
-	book title; when using \sty{crossref}, also define \sty{booktitle} and be sure to define \sty{title} of the child entry
+	\optionitem{\mlafield{title}}
+	book title; when using \mlafield{crossref}, also define \mlafield{booktitle} and be sure to define \mlafield{title} of the child entry
 
-	\optionitem{subtitle}
-	book subtitle; when using \sty{crossref}, also define \sty{booksubtitle} and be sure to define \sty{subtitle} of the child
+	\optionitem{\mlafield{subtitle}}
+	book subtitle; when using \mlafield{crossref}, also define \mlafield{booksubtitle} and be sure to define \mlafield{subtitle} of the child
 
-	\optionitem{location}
+	\optionitem{\mlafield{location}}
 	place of publication; ignored unless |showlocation| is |true|
 
-	\optionitem{publisher}
-	publishing house
+	\optionitem{\mlafield{publisher}}
+	publishing house. When using \mycode{style=mla}, a number of corrections will be made automatically:
+	\begin{itemize}
+		\item the phrases ``and Company'' and ``and Co.'' will be dropped
+		\item ``University Press'' will be converted to ``UP'', ``University'' will become ``U'', and ``Press'' will become ``P''; see \bibref{Charon:2017tw}
+		\item the strings ``Corporation'', ``Corp.'', ``Incorporated'', ``Inc.'', ``Limited'', and ``Ltd.'' will all be stripped
+	\end{itemize}
+	These MLA-style substitions can be skipped document-wide by changing the style setting to \mycode{style=mla-strict} in the package options. Alternatively, curly brackets can be used on a per-entry basis to interrupt the string matching, as shown in \bibref{Milkis:1994vv}.
 
-	\optionitem{date}
-	date of publication; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range. Use a tilde to indicate uncertainty: \sty{{\raisebox{0.5ex}{\texttildelow}}1400} will print as ``circa 1400'' in the list of Works Cited.
+	\optionitem{\mlafield{date}}
+	date of publication; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range. For any date fields, use a tilde to indicate uncertainty: \sty{1618$\sim$} will print as ``circa 1618'' in the list of Works Cited, as shown for the \mlafield{origdate} detail in \bibref{Velazquez:2016ud}.
 \end{optionslistNOT}
 
 Other fields might come in handy for further granularity:
 
 \begin{optionslistNOT}
-	\optionitem{origdate}
+	\optionitem{\mlafield{origdate}}
 	original publication date, for reprints; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
 
-	\optionitem{edition}
-	edition number, preferably an integer
+	\optionitem{\mlafield{edition}}
+	edition number, preferably an integer. When using \mycode{style=mla}, the word ``edition'' will be automatically abbreviated to ``ed.'', unless curly brackets are used to interrupt string matching.
 
-	\optionitem{volume}
+	\optionitem{\mlafield{volume}}
 	volume number of book
 
-	\optionitem{volumes}
+	\optionitem{\mlafield{volumes}}
 	total number of volumes
 
-	\optionitem{maintitle}
+	\optionitem{\mlafield{maintitle}}
 	title of multi-volume collection of which this book is one volume
 
-	\optionitem{mainsubtitle}
-	subtitle of the above \sty{maintitle}
+	\optionitem{\mlafield{mainsubtitle}}
+	subtitle of the above \mlafield{maintitle}
 
-	\optionitem{series}
+	\optionitem{\mlafield{series}}
 	name of a publication series
 
-	\optionitem{number}
-	number of the above \sty{series} represented by this book
+	\optionitem{\mlafield{number}}
+	number of the above \mlafield{series} represented by this book
 
 \end{optionslistNOT}
 
 Additionally, the style files support more name types for situations needing them:
 
 \begin{optionslistNOT}
-	\optionitem{editor}
+	\optionitem{\mlafield{editor}}
 	editor of a book
 
-	\optionitem{editortype}
-	to indicate if the named \sty{editor} is actually an \sty{editor} (``ed.''), a \sty{compiler} (``comp.'') or a \sty{compilerandeditor} (``comp. and ed.''). Default value is \sty{editor}.
+	\optionitem{\mlafield{editortype}}
+	optional, used to indicate that a named \mlafield{editor} is actually another of the many kinds of contributors defined in section 2.3.6 of the \biblatex documentation
 
-	\optionitem{translator}
+	\optionitem{\mlafield{translator}}
 	translator of a work
 
-	\optionitem{introduction}
+	\optionitem{\mlafield{introduction}}
 	author of a book's introduction
 
-	\optionitem{foreword}
+	\optionitem{\mlafield{foreword}}
 	author of a book's foreword
 
-	\optionitem{afterword}
+	\optionitem{\mlafield{afterword}}
 	author of a book's afterword
 
-	\optionitem{redactor}
+	\optionitem{\mlafield{redactor}}
 	name of redactor
 
-	\optionitem{commentator}
+	\optionitem{\mlafield{commentator}}
 	name of commentator
 
-	\optionitem{annotator}
+	\optionitem{\mlafield{annotator}}
 	name of annotator
 
 \end{optionslistNOT}
@@ -775,19 +730,19 @@ Additionally, the style files support more name types for situations needing the
 Finally, the style files also define the following note fields for further clarification:
 
 \begin{optionslistNOT}
-	\optionitem{nameaddon}
-	pseudonym, misattribution, or other note (printed in brackets after \sty{author})
+	\optionitem{\mlafield{nameaddon}}
+	pseudonym, misattribution, or other note (printed in brackets after \mlafield{author})
 
-	\optionitem{booktitleaddon}
-	note after the \sty{booktitle}
+	\optionitem{\mlafield{booktitleaddon}}
+	note after the \mlafield{booktitle}
 
-	\optionitem{maintitleaddon}
-	note after the \sty{maintitle}
+	\optionitem{\mlafield{maintitleaddon}}
+	note after the \mlafield{maintitle}
 
-	\optionitem{note}
-	miscellaneous data printed before \sty{publisher}
+	\optionitem{\mlafield{note}}
+	miscellaneous data printed before \mlafield{publisher}
 
-	\optionitem{addendum}
+	\optionitem{\mlafield{addendum}}
 	miscellaneous data printed at the end of the entry
 
 \end{optionslistNOT}
@@ -812,168 +767,168 @@ Finally, the style files also define the following note fields for further clari
 %
 % \end{optionslistNOT}
 
-\subsubsection*{@booklet}
-Small pamphlet, often without an author listed. In \biblatexmla, \mycode{@booklet} is an alias for \mycode{@book} (see above), and is styled similarly.
+\subsubsection*{\mlatype{@booklet}}
+Small pamphlet, often without an author listed. In \biblatexmla, \mlatype{@booklet} is an alias for \mlatype{@book} (see above), and is styled similarly. \titleref{booklet}{Language:vu}
 
-\subsubsection*{@collection}
-A book that is a collection of self-contained essays, stories, or poems, usually with multiple unique authors and collectively edited by a single editorial body. In \biblatexmla, \mycode{@collection} is an an alias for \mycode{@book} (see above), and is styled similarly. To accurately support \mycode{@incollection} entries using \mycode{crossref}, be sure to define the following fields instead of \mycode{title} and \mycode{subtitle} in the parent \mycode{@collection} entry:
+\subsubsection*{\mlatype{@collection}}
+A book that is a collection of self-contained essays, stories, or poems, usually with multiple unique authors and collectively edited by a single editorial body. In \biblatexmla, the entry type \mlatype{@collection} is an an alias for \mlatype{@book} (see above), and is styled similarly. To accurately support \mlatype{@incollection} entries using \mlafield{crossref}, be sure to define the following fields instead of \mlafield{title} and \mlafield{subtitle} in the parent \mlatype{@collection} entry:
 
 \begin{optionslistNOT}
-	\optionitem{booktitle}
+	\optionitem{\mlafield{booktitle}}
 	the title of a book or collection
 
-	\optionitem{booksubtitle}
+	\optionitem{\mlafield{booksubtitle}}
 	the subtitle of a book or collection
 
 \end{optionslistNOT}
 
-Additionally, remember to define the \mycode{editor} field if needed.
+Additionally, remember to define the \mlafield{editor} field if needed.
 
-\subsubsection*{@periodical}
-An entire issue of a journal, usually cited by editor. \biblatexmla accepts the following fields:
+\subsubsection*{\mlatype{@periodical}}
+An entire issue of a journal, usually cited by editor. The \mlatype{@periodical} type is especially good for citing a titled issue of a numbered comic book, as in \bibref{Clowes:1998wp}. \Biblatexmla accepts the following fields:
 
 \begin{optionslistNOT}
-	\optionitem{editor}
+	\optionitem{\mlafield{editor}}
 	the editor or editors of an issue
 
-	\optionitem{issuetitle}
+	\optionitem{\mlafield{issuetitle}}
 	title of a special issue
 
-	\optionitem{issuesubtitle}
+	\optionitem{\mlafield{issuesubtitle}}
 	subtitle of a special issue
 
-	\optionitem{title}
+	\optionitem{\mlafield{title}}
 	title of the journal
 
-	\optionitem{subtitle}
+	\optionitem{\mlafield{subtitle}}
 	subtitle of the journal
 
-	\optionitem{volume}
+	\optionitem{\mlafield{volume}}
 	volume number
 
-	\optionitem{number}
+	\optionitem{\mlafield{number}}
 	issue number
 
-	\optionitem{issue}
+	\optionitem{\mlafield{issue}}
 	season, when used in place of month (as in the ``spring'' issue of a journal)
 
-	\optionitem{date}
+	\optionitem{\mlafield{date}}
 	date of publication, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range.
 	
-	\optionitem{pages}
+	\optionitem{\mlafield{pages}}
 	complete pagination of the issue
 
 \end{optionslistNOT}
 
-\subsubsection*{@proceedings}
-The published proceedings of a conference. \Biblatexmla styles \sty{@proceedings} entries like \sty{@book} or \sty{@collection} entries, but it also provides support for the following unique fields:
+\subsubsection*{\mlatype{@proceedings}}
+The published proceedings of a conference. \Biblatexmla styles \mlatype{@proceedings} entries like \mlatype{@book} or \mlatype{@collection} entries, but \newnov the \mlafield{title} field is not italicized. To italicize the title of published proceedings, define the \mlafield{booktitle} field. \authorref{proceedings}{Chang:2000uv} The \mlatype{@proceedings} entry type also provides support for the following unique fields:
 
 \begin{optionslistNOT}
 
-	\optionitem{eventtitle}
+	\optionitem{\mlafield{eventtitle}}
 	
-	title of the conference represented by the proceedings (if not included in the \sty{title} of the published proceedings)
+	title of the conference represented by the proceedings (if not included in the \mlafield{title} of the published proceedings)
 	
-	\optionitem{organization}
+	\optionitem{\mlafield{organization}}
 	
 	body sponsoring the conference
 	
-	\optionitem{urldate}
+	\optionitem{\mlafield{urldate}}
 	
-	original date of the conference; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range. Please note that this is an unusual and temporary use of the \sty{urldate} field; in a future version of \biblatexmla, it will change to \sty{eventdate}.
+	original date of the conference; defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range. Please note that this is an unusual and temporary use of the \mlafield{urldate} field; in a future version of \biblatexmla, it will change to \mlafield{eventdate}.
 	
-	\optionitem{institution}
+	\optionitem{\mlafield{institution}}
 	
-	university or institution hosting the conference
+	university or institution hosting the conference. When using \mycode{style=mla}, the word ``University'' will be automatically abbreviated to ``U'' unless curly brackets are used to interrupt string matching.
 	
-	\optionitem{venue}
+	\optionitem{\mlafield{venue}}
 	
 	location of the conference
 
 \end{optionslistNOT}
 
-\subsubsection*{@reference}
-A reference book such as a dictionary or encyclopedia, often supporting \sty{@inreference} entries through \sty{crossref} fields. \Biblatexmla styles a \sty{@reference} entry as it would a \sty{@book} entry.
+\subsubsection*{\mlatype{@reference}}
+A reference book such as a dictionary or encyclopedia, often supporting \mlatype{@inreference} entries through \mlafield{crossref} fields. \Biblatexmla styles a \mlatype{@reference} entry as it would a \mlatype{@book} entry.
 
-\subsubsection*{@thesis}
-The thesis or dissertation resulting from a doctorate or a master's degree, whether published or unpublished. Supports the following fields typical for defining such an entry:
+\subsubsection*{\mlatype{@thesis}}
+The thesis or dissertation resulting from a doctorate or a master's degree, whether published or unpublished. \parentref{thesis}{Njus:2010vc} The \mlatype{@thesis} entry type supports the following fields typical for defining such an entry:
 
 \begin{optionslistNOT}
 
-	\optionitem{author}
+	\optionitem{\mlafield{author}}
 	
 	the author of the thesis/dissertation
 	
-	\optionitem{title}
+	\optionitem{\mlafield{title}}
 	
 	title
 	
-	\optionitem{subtitle}
+	\optionitem{\mlafield{subtitle}}
 	
 	subtitle
 	
-	\optionitem{type}
+	\optionitem{\mlafield{type}}
 	
-	degree type. \Biblatexmla defines some MLA-style \sty{@thesis} types pre-localized; choose from the following strings to get accurate styling:
+	degree type. \Biblatexmla defines some MLA-style \mlatype{@thesis} types pre-localized; choose from the following strings to get accurate styling:
 	\begin{description}
-		\item[phd] for doctorate; prints as ``Diss.'' in English
-		\item[dphil] for doctorate; prints as ``Diss.'' in English
-		\item[lic] for licentiate; prints as ``Licentiate thesis''
-		\item[ma] for master's; prints as ``MA thesis''
-		\item[ms] for master's; prints as ``MS thesis''
-		\item[msc] for master's; prints as ``MSc thesis''
-		\item[mphil] for master's; prints as ``MPhil thesis''
-		\item[mlitt] for master's; prints as ``MLitt thesis''
+		\item[|phd|] for doctorate; prints as ``PhD dissertation'' in English
+		\item[|dphil|] for doctorate; prints as ``DPhil dissertation'' in English
+		\item[|lic|] for licentiate; prints as ``Licentiate thesis''
+		\item[|ma|] for master's; prints as ``MA thesis''
+		\item[|ms|] for master's; prints as ``MS thesis''
+		\item[|msc|] for master's; prints as ``MSc thesis''
+		\item[|mphil|] for master's; prints as ``MPhil thesis''
+		\item[|mlitt|] for master's; prints as ``MLitt thesis''
 	\end{description}
 	
-	For all other types not matching the above codes, biblatex- mla will print the type field exactly as entered, respecting all existing capitalization
+	For all other types not matching the above codes, \biblatexmla will print the \mlafield{type} field as entered, respecting capitalization.
 	
-	\optionitem{institution}
+	\optionitem{\mlafield{institution}}
 	
-	name of degree-granting university
+	name of degree-granting university. When using \mycode{style=mla}, the word ``University'' will be automatically abbreviated to ``U'' unless curly brackets are used to interrupt string matching. See \bibref{Njus:2010aa}.
 	
-	\optionitem{date}
+	\optionitem{\mlafield{date}}
 	
 	date degree awarded, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD}
 
 \end{optionslistNOT}
 
-The entry for a @thesis that has been published needs a few additional fields:
+A published \mlatype{@thesis} has some additional fields:
 
 \begin{optionslistNOT}
 	
-	\optionitem{entrysubtype}
+	\optionitem{\mlafield{entrysubtype}}
 	
-	When using the 7\superscript{th} edition style, which differentiates between published and unpublished dissertation titles, \biblatexmla recognizes two keys in the \sty{entrysubtype} field for the \sty{@thesis}:
+	When documenting a \mlatype{@thesis} using the 7\superscript{th} edition style, which differentiates between published and unpublished dissertation titles, \biblatexmla recognizes two keys in the \mlafield{entrysubtype} field:
 	
 	\begin{description}
-		\item[published] for published theses
-		\item[unpublished] for unpublished theses
+		\item[|published|] for published theses
+		\item[|unpublished|] for unpublished theses
 	\end{description}
 	
-	Any key other than \sty{published} or \sty{unpublished} will be treated as if it were \sty{unpublished}.
+	Any other key will be treated as \sty{unpublished}.
 	
-	\optionitem{location}
+	\optionitem{\mlafield{location}}
 	
 	place of publication
 	
-	\optionitem{publisher}
+	\optionitem{\mlafield{publisher}}
 	
 	publisher
 	
-	\optionitem{origdate}
+	\optionitem{\mlafield{origdate}}
 	
-	date degree was awarded, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD}; please note this difference from an unpublished thesis
+	date degree was awarded, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, and adding \sty{YYYY-MM-DD} for the day; please note this difference from an unpublished thesis
 	
-	\optionitem{date}
+	\optionitem{\mlafield{date}}
 	
 	date of publication, defined as \sty{YYYY} for a year; please note this difference from an unpublished thesis
 	
-	\optionitem{series}
+	\optionitem{\mlafield{series}}
 	
 	name of a publication series
 	
-	\optionitem{number}
+	\optionitem{\mlafield{number}}
 	
 	number of the above \sty{series} represented by this book
 	
@@ -982,32 +937,32 @@ The entry for a @thesis that has been published needs a few additional fields:
 
 %%%%%%
 \subsection{Sources within other works}
-The following entrytypes are for shorter works (essays, poems, and other things) that are part of another publication. Many have corresponding standalone sources representing the larger work of which they are a part (i.e., \sty{@incollection} and \sty{@collection}). Entries of shorter works can inherit fields of parent entries by using the \sty{crossref} field.
+The following entrytypes are for shorter works (essays, poems, and other things) that are part of another publication. Many have corresponding standalone sources representing the larger work of which they are a part (i.e., \mlatype{@incollection} and \mlatype{@collection}). Entries of shorter works can inherit fields of parent entries by using the \mlafield{crossref} field.
 
-\subsubsection*{@article}
-Articles appearing in periodicals in many media, including academic journals, newspapers, and online sources. \Biblatexmla supports the following fields typical of an article in an academic journal:
+\subsubsection*{\mlatype{@article}}
+Articles appearing in periodicals in many media, including academic journals, newspapers, and online sources. \longerref{article}{Boggs:2016tp} \Biblatexmla supports the following fields typical of an article in an academic journal:
 
 \begin{optionslistNOT}
 
-	\optionitem{author} author of the article
+	\optionitem{\mlafield{author}} author of the article
 	
-	\optionitem{title} title of the article
+	\optionitem{\mlafield{title}} title of the article
 	
-	\optionitem{subtitle} subtitle of the article
+	\optionitem{\mlafield{subtitle}} subtitle of the article
 	
-	\optionitem{journaltitle} title of journal
+	\optionitem{\mlafield{journaltitle}} title of journal
 	
-	\optionitem{journalsubtitle} subtitle of journal
+	\optionitem{\mlafield{journalsubtitle}} subtitle of journal
 	
-	\optionitem{volume} journal volume number
+	\optionitem{\mlafield{volume}} journal volume number
 	
-	\optionitem{number} journal issue number
+	\optionitem{\mlafield{number}} journal issue number
 	
-	\optionitem{issue} season, when used in place of month (as in the ``spring'' issue of a journal)
+	\optionitem{\mlafield{issue}} season, when used in place of month (as in the ``spring'' issue of a journal)
 	
-	\optionitem{date} date, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
+	\optionitem{\mlafield{date}} date, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
 	
-	\optionitem{pages} page numbers of the article
+	\optionitem{\mlafield{pages}} page numbers of the article
 
 \end{optionslistNOT}
 
@@ -1015,26 +970,41 @@ For online and newspaper articles, the style provides additional support for the
 
 \begin{optionslistNOT}
 	
-	\optionitem{entrysubtype} defines an article's medium, allowing finer control over styling. \Biblatexmla responds to the following keys in the \sty{entrysubtype} field:
+	\optionitem{\mlafield{entrysubtype}} defines an article's medium, allowing finer control over styling. \Biblatexmla responds to the following keys in the \mlafield{entrysubtype} field:
 	
 	\begin{description}
-		\item[newspaper] used for newspaper articles
-		\item[magazine] used for magazine articles
+		\item[|magazine|] used for magazine articles. See \bibref{Deresiewicz:un}.
+		\item[|newspaper|] used for newspaper articles. See \bibref{Evacuation:wj}.
+		\item[|comment|] \newnov used for reader's comment posted to an article online. See \bibref{Max:the:Pen:ve}.
 	\end{description}
 	
-	online articles are styled by the presence or absence of a \sty{url} field
+	online articles are further styled by the presence or absence of a \mlafield{url} field
+
+	\optionitem{\mlafield{eprint}} the electronic identifier of a source held by some specific database, repository, or archive service defined by \mlafield{eprinttype}.
 	
-	\optionitem{url} the url address of an online article
+	\optionitem{\mlafield{eprinttype}} the specific database, repository, or archive service that holds an item. See the definition of \mlafield{eprinttype}| = {jstor}| in \bibref{Fisher:vu}. \Biblatexmla tries to be forgiving in the use of fields such as \mlafield{eprint} and \mlafield{eprinttype}, when one might easily be omitted. If \mlafield{eprinttype} is undefined, \mlafield{eprint} is treated as the name of the database, repository, or archive service. When using \mycode{style=mla}, an empty \mlafield{eprint} field may automatically be filled from a value found in the \mlafield{url} field. (See further explanation below).
 	
-	\optionitem{urldate} date of access of an online article, defined as \sty{YYYY-MM-DD}
+	\optionitem{\mlafield{url}} the url address of an online article. When using \mycode{style=mla}, the \mlafield{url} field will be cleaned up, dropping the protocols |http://| and |https://| for everything but DOIs. Additionally, this field will be parsed to fill empty \mlafield{eprint} and \mlafield{doi} information for URLs containing a limited set of strings:
+	\begin{itemize}
+		\item |jstor.org| --- \mlafield{eprint} is set to ``JSTOR''; see \bibref{Goldman:2010wd}.
+		\item |muse.jhu.edu|--- \mlafield{eprint} is set to ``Project Muse''
+		\item |books.google| --- \mlafield{eprint} is set to ``Google Books''
+		\item |db=a9h| --- \mlafield{eprint} is set to ``Academic Search Complete''
+		\item |db=fdcaae48| --- \mlafield{eprint} is set to ``LexisNexis Academic''
+		\item |db=mzh| --- \mlafield{eprint} is set to ``MLA International Bibliography''
+		\item |patft.uspto.gov| --- \mlafield{eprint} is set to ``USPTO Patent Full-Text and Image Database''
+		\item |dx.doi.org| --- \mlafield{doi} is set to the identifier defined in the URL
+	\end{itemize}
 	
-	\optionitem{date} date a newspaper article is published, defined as \sty{YYYY-MM-DD} for a day
+	\optionitem{\mlafield{urldate}} date an online article was accessed, defined as \sty{YYYY-MM-DD}
 	
-	\optionitem{location} for newspapers lacking a place-name in their title, the city of publication
+	\optionitem{\mlafield{date}} date a newspaper article is published, defined as \sty{YYYY-MM-DD} for a day
 	
-	\optionitem{version} the printing edition of a newspaper (ie, early edition, national edition, etc.)
+	\optionitem{\mlafield{location}} for newspapers lacking a place-name in their title, the city of publication
 	
-	\optionitem{chapter} the section of a newspaper article if it uses numbers instead of letters; if the newspaper uses letters, combine the letter with the page number (ie, page ``B12'') in the \sty{page} field
+	\optionitem{\mlafield{version}} the printing edition of a newspaper (ie, early edition, national edition, etc.)
+	
+	\optionitem{\mlafield{chapter}} the section of a newspaper article if it uses numbers instead of letters; if the newspaper uses letters, combine the letter with the page number (ie, page ``B12'') in the \mlafield{page} field
 	
 \end{optionslistNOT}
 
@@ -1042,404 +1012,522 @@ In addition, the style provides support for the following fields, used in edge c
 
 \begin{optionslistNOT}
 
-	\optionitem{nameaddon} pseudonym, misattribution, or other note (printed in brackets after author)
+	\optionitem{\mlafield{nameaddon}} pseudonym, misattribution, or other note (printed in brackets after author)
 	
-	\optionitem{titleaddon} note after the title
+	\optionitem{\mlafield{titleaddon}} note after the title
 	
-	\optionitem{origdate} year of original publication for a reprinted article
+	\optionitem{\mlafield{origdate}} year of original publication for a reprinted article
 	
-	\optionitem{issuetitle} title of the special issue in which it appeared
+	\optionitem{\mlafield{issuetitle}} title of the special issue in which it appeared
 	
-	\optionitem{issuesubtitle} subtitle of the special issue
+	\optionitem{\mlafield{issuesubtitle}} subtitle of the special issue
 	
-	\optionitem{editor} editor of the special issue
+	\optionitem{\mlafield{editor}} editor of the special issue
 	
-	\optionitem{translator} translator of the article
+	\optionitem{\mlafield{translator}} translator of the article
 	
-	\optionitem{redactor} name of redactor
+	\optionitem{\mlafield{redactor}} name of redactor
 	
-	\optionitem{commentator} name of commentator
+	\optionitem{\mlafield{commentator}} name of commentator
 	
-	\optionitem{annotator} name of annotator
+	\optionitem{\mlafield{annotator}} name of annotator
 	
-	\optionitem{introduction} author of introduction to special issue
+	\optionitem{\mlafield{introduction}} author of introduction to special issue
 	
-	\optionitem{foreword} author of foreword to special issue
+	\optionitem{\mlafield{foreword}} author of foreword to special issue
 	
-	\optionitem{afterword} author of afterword to special issue
+	\optionitem{\mlafield{afterword}} author of afterword to special issue
 	
-	\optionitem{series} name of journal series; define the series name or define as \sty{newseries} or \sty{oldseries} to let \biblatexmla style the series name correctly
+	\optionitem{\mlafield{series}} name of journal series; define the series name manually, or choose one of the predefined strings \sty{\textbf{newseries}} or \sty{\textbf{oldseries}} to let \biblatexmla style the series name correctly
 	
-	\optionitem{note} miscellaneous data to print before the page numbers
+	\optionitem{\mlafield{note}} miscellaneous data to print before the page numbers
 	
-	\optionitem{addendum} further miscellaneous note at the end of an entry
+	\optionitem{\mlafield{addendum}} further miscellaneous note at the end of an entry
 
 \end{optionslistNOT}
 
 
-\subsubsection*{@bookinbook}
-A particular kind of \sty{@incollection}. (See below.)
+\subsubsection*{\mlatype{@bookinbook}}
+A particular kind of \mlatype{@incollection}. (See below.)
 
-\subsubsection*{@incollection}
-A self-contained unit in a \sty{@collection}. Supports the following fields typical of an essay, short story, or poem found in an anthology:
+\subsubsection*{\mlatype{@incollection}}
+A self-contained unit in a \mlatype{@collection}. Supports the following fields typical of an essay, short story, or poem found in an anthology:
 
 \begin{optionslistNOT}
 
-	\optionitem{author} the author of the work
+	\optionitem{\mlafield{author}} the author of the work
 	
-	\optionitem{title} title of the work
+	\optionitem{\mlafield{title}} title of the work
 	
-	\optionitem{subtitle} subtitle of the work
+	\optionitem{\mlafield{subtitle}} subtitle of the work
 	
-	\optionitem{entrysubtype} defines a work's medium, allowing finer control over styling. By default, \sty{@incollection} entries are printed inside quotation marks, like essays, poems, stories, and other shorter works. \Biblatexmla responds to \mycode{book} and \mycode{play} in the \sty{entrysubtype} field, each of which will cause the title to be printed italicized rather than inside quotation marks. Alternatively, set the entry to a \sty{@bookinbook} type for the same effect.
+	\optionitem{\mlafield{entrysubtype}} defines a work's medium, allowing finer control over styling. By default, entries labeled \mlatype{@incollection} are printed inside quotation marks, like essays, poems, stories, and other shorter works. \Biblatexmla responds to \mycode{book} and \mycode{play} in the \mlafield{entrysubtype} field, each of which will cause the title to be printed italicized rather than inside quotation marks. Compare \bibref{Euripides:1998tx} to \bibref{Marvell:1979tp}, along with their respective outputs. Setting the entry to a \mlatype{@bookinbook} type will also yield an italicized title.
 	
-	\optionitem{origdate} original publication date of the work, defined as \sty{YYYY}, \sty{YYYY-MM}, or \sty{YYYY-MM-DD}
+	\optionitem{\mlafield{origdate}} original publication date of the work, defined as \sty{YYYY}, \sty{YYYY-MM}, or \sty{YYYY-MM-DD}
 	
-	\optionitem{booktitle} title of the anthology
+	\optionitem{\mlafield{booktitle}} title of the anthology
 	
-	\optionitem{booksubtitle} subtitle of the anthology
+	\optionitem{\mlafield{booksubtitle}} subtitle of the anthology
 	
-	\optionitem{editor} anthology's editor
+	\optionitem{\mlafield{editor}} anthology's editor
 	
-	\optionitem{location} anthology's city of publication
+	\optionitem{\mlafield{location}} anthology's city of publication
 	
-	\optionitem{publisher} anthology's publisher
+	\optionitem{\mlafield{publisher}} anthology's publisher
 	
-	\optionitem{date} date anthology is published, defined as \sty{YYYY}
+	\optionitem{\mlafield{date}} date anthology is published, defined as \sty{YYYY}
 	
-	\optionitem{pages} page numbers of the work
+	\optionitem{\mlafield{pages}} page numbers of the work
 
 \end{optionslistNOT}
 
-Further fields supported include all of those supported by the @book type.
+Further fields supported include all of those supported by the \mlatype{@book} type.
 
-\subsubsection*{@inproceedings}
+\subsubsection*{\mlatype{@inproceedings}}
 
-A work published in the proceedings of a conference. Supports all the fields of the \sty{@incollection} and \sty{@proceedings} types.
+A work published in the proceedings of a conference. Supports all the \textcolor{teal}{fields} found above in \mlatype{@incollection} and \mlatype{@proceedings} types. \longerref{inproceedings}{Werner:vh}
 
-\subsubsection*{@inreference}
+\subsubsection*{\mlatype{@inreference}}
 
-A particular type of \sty{@incollection}, potentially without an author. In addition to those fields defined by \sty{@incollection}, \sty{@inreference} adds or refines the following:
+A particular type of \mlatype{@incollection}, potentially without an author, used for dictionaries and other reference books. See \bibref{Patanjali:1996wu}. In addition to those fields defined by \mlatype{@incollection}, \mlatype{@inreference} adds or refines the following:
 
 \begin{optionslistNOT}
 
-	\optionitem{title} name of entry in reference book
+	\optionitem{\mlafield{title}} name of entry in reference book
 	
-	\optionitem{titleaddon} particular definition of the word
+	\optionitem{\mlafield{titleaddon}} particular definition of the word
 	
-	\optionitem{booktitle} the title of the reference book
+	\optionitem{\mlafield{booktitle}} the title of the reference book
 
 \end{optionslistNOT}
 
-Note that \sty{@inreference} entries do not need to cite page numbers, though they should specify the edition used. If the year and edition fields match, \biblatexmla styles the entry accordingly.
+Note that \mlatype{@inreference} entries should specify the edition used. If the \mlafield{year} and \mlafield{edition} fields match, \biblatexmla styles the entry accordingly.
 
-\subsubsection*{@letter}
+\subsubsection*{\mlatype{@letter}}
 
-The \sty{@letter} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
+The \mlatype{@letter} entry type is defined similarly to the \mlatype{@article} type, so it will accept additional fields used in those entries. For an example \bibtex{} entry and output related to a letter that has been published, see \citeauthor{Schlesinger:wm}'s letter in \secref{Schlesinger:wm}. For an unpublished letter, see \citeauthor{Apfelbaum:un}'s entry in \secref{Apfelbaum:un}. The following fields are especially important:
 
 \begin{optionslistNOT}
 
-	\optionitem{author} main author of the letter
+	\optionitem{\mlafield{author}} main author of the letter
 	
-	\optionitem{title} indication of sender and addressee
+	\optionitem{\mlafield{title}} indication of sender and addressee
 	
-	\optionitem{titleaddon} additional information
+	\optionitem{\mlafield{titleaddon}} additional information
 	
-	\optionitem{pages} pages
+	\optionitem{\mlafield{pages}} pages
 	
-	\optionitem{origdate} original date letter was sent
+	\optionitem{\mlafield{origdate}} original date letter was sent
 
 \end{optionslistNOT}
 
-\subsubsection*{@review}
+\subsubsection*{\mlatype{@review}}
 
-A particular type of \sty{@article}, potentially without a title. In addition to those fields defined by \sty{@article}, \sty{@review} adds or refines the following:
+A particular type of \mlatype{@article}, potentially without a title. See the entry for \citeauthor{Rohrbaugh:aa}'s review in \secref{Rohrbaugh:aa}. In addition to those fields defined by an \mlatype{@article} entry, \mlatype{@review} adds or refines the following:
 
 \begin{optionslistNOT}
 
-	\optionitem{booktitle} the title of the book being reviewed
+	\optionitem{\mlafield{booktitle}} the title of the book being reviewed
 	
-	\optionitem{bookauthor} the author of the book being reviewed
+	\optionitem{\mlafield{bookauthor}} the author of the book being reviewed
 	
-	\optionitem{editor} the editor of the book being reviewed
+	\optionitem{\mlafield{editor}} the editor of the book being reviewed
 
 \end{optionslistNOT}
 
-Note that reviews found in special issues of journals (using the \sty{issuetitle} and \sty{issuesubtitle} fields) are not fully supported yet.
+% Note that reviews found in special issues of journals using the \mlafield{issuetitle} field are not fully supported yet.
+% platypus - Check the above: is it true?
 
-\subsubsection*{@suppbook}
+\subsubsection*{\mlatype{@suppbook}}
 
-A foreword, introduction, preface, or other supplementary (and often untitled) material to a \sty{@book}. Supports the following fields typical of such a piece:
+A foreword, introduction, preface, or other supplementary (and often untitled) material to a \mlatype{@book}. See \bibref{Felstiner:2001aa}. Supports the following fields typical of such a piece:
 
 \begin{optionslistNOT}
 
-	\optionitem{author} author of the piece
+	\optionitem{\mlafield{author}} author of the piece
 	
-	\optionitem{title} title of the piece
+	\optionitem{\mlafield{title}} title of the piece
 	
-	\optionitem{subtitle} subtitle of the piece
+	\optionitem{\mlafield{subtitle}} subtitle of the piece
 	
-	\optionitem{entrysubtype} the type of supplemental material, including subtypes like ``introduction,'' ``foreword,'' and ``Editor's note.''
+	\optionitem{\mlafield{entrysubtype}} the type of supplemental material, including subtypes like \textbf{|introduction|}, \textbf{|foreword|}, and ``Editor's note.''
 	
-	\optionitem{booktitle} title of the book the piece appears in
+	\optionitem{\mlafield{booktitle}} title of the book in which the piece appears
 	
-	\optionitem{booksubtitle} subtitle of the book the piece appears in 
+	\optionitem{\mlafield{booksubtitle}} subtitle of the book in which the piece appears 
 	
-	\optionitem{location} city of publication of the book the piece appears in
+	\optionitem{\mlafield{location}} city of publication of the book in which the piece appears
 	
-	\optionitem{publisher} publisher of the book the piece appears in
+	\optionitem{\mlafield{publisher}} publisher of the book in which the piece appears
 	
-	\optionitem{date} date of publication of the book the piece appears in, defined as \sty{YYYY}
+	\optionitem{\mlafield{date}} date of publication of the book the piece appears in, defined as \sty{YYYY}
 	
-	\optionitem{pages} page numbers of the piece
+	\optionitem{\mlafield{pages}} page numbers of the piece
 
 \end{optionslistNOT}
 
-Further fields supported include all of those supported by the \sty{@book} type.
+Further fields supported include all of those supported by the \mlatype{@book} type.
 
-\subsubsection*{@suppcollection}
+\subsubsection*{\mlatype{@suppcollection}}
 
-A foreword, introduction, preface, or other supplementary (and often untitled) material to a \sty{@collection}. Supports all the same fields as \sty{@suppbook}.
+A foreword, introduction, preface, or other supplementary (and often untitled) material to a \mlatype{@collection}. Supports all the same fields as \mlatype{@suppbook}.
 
 
 %%%%%%
 \subsection{Other media}
 
-\subsubsection*{@artwork}
-The \sty{@artwork} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
+\subsubsection*{\mlatype{@artwork}}
+A painting, sculpture, or some other work of art. For an example entry using the \mlatype{@artwork} entrytype, see the definition for \citeauthor{Cave:wf}'s exhibition in \secref{Cave:wf}. %The \mlatype{@artwork} entry type is defined similarly to the \mlatype{@article} type, so it will accept some additional fields used in those entries.
 
 \begin{optionslistNOT}
 
-	\optionitem{author} artist responsible for the work
+	\optionitem{\mlafield{author}} artist responsible for the work
 	
-	\optionitem{title} title of the piece
+	\optionitem{\mlafield{title}} title of the piece
 	
-	\optionitem{type} description of the medium. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added to support bibliographies made for \biblatexcms.)
+	% \optionitem{\mlafield{type}} description of the medium. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added to support bibliographies made for \biblatexcms.)
 	
-	\optionitem{note} additional note on the work
+	% \optionitem{\mlafield{note}} additional note on the work
 	
-	\optionitem{date} date of creation, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
+	\optionitem{\mlafield{date}} date of creation or exhibition, defined as \sty{YYYY} for a year, \sty{YYYY-MM} for a month, \sty{YYYY-MM-DD} for a day, or \sty{YYYY-MM-DD/YYYY-MM-DD} for a range
 	
-	\optionitem{institution} institution holding the artwork. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added to support bibliographies made for \biblatexcms.)
+	\optionitem{\mlafield{institution}} institution holding the artwork
 	
-	\optionitem{location} city of the institution. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added to support bibliographies made for \biblatexcms.)
+	\optionitem{\mlafield{location}} city of the institution
 
 \end{optionslistNOT}
 
-\subsubsection*{@audio}
-The \sty{@audio} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
+\subsubsection*{\mlatype{@audio}}
+Optimized for audio recordings, podcasts, audiobooks, etc. See \bibref{Li:ty}. %the \mlatype{@audio} entry type is defined similarly to the \mlatype{@article} type, so it will accept additional fields used in those entries.
 
 \begin{optionslistNOT}
 
-	\optionitem{author} author or composer of a work
+	\optionitem{\mlafield{author}} author, performer, or composer of a work
 	
-	\optionitem{title} title of the speech, song, or other short piece. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
+	\optionitem{\mlafield{title}} title of the speech, song, or other short piece.
 	
-	\optionitem{booktitle} title of the opera, cycle, or other larger collection
+	\optionitem{\mlafield{booktitle}} title of the opera, cycle, or other larger collection
 	
-	\optionitem{origdate} date work was originally written. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
+	\optionitem{\mlafield{origdate}} date work was originally written.
 	
-	\optionitem{maintitle} title of a book containing the work
+	\optionitem{\mlafield{maintitle}} title of a book or collection containing the work
 	
-	\optionitem{date} date of publication of work being referenced
+	\optionitem{\mlafield{date}} date of publication of work being referenced
 	
-	\optionitem{publisher} publisher of work being referenced. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
+	\optionitem{\mlafield{publisher}} publisher of work being referenced.
 	
-	\optionitem{location} city of publisher. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
+	\optionitem{\mlafield{location}} city of publisher.
+	
+	\optionitem{\mlafield{addendum}} When listening to audio via an app, name the app in the \mlafield{addendum} field. The app's name ought to be italicized in MLA style, but this should not be a concern: when using \mycode{style=mla} and following the app's unstyled name with the word ``app,'' as with \emph{iTunes} in \bibref{YiyunLiReads:ub}, italics will automatically be applied.
 
 \end{optionslistNOT}
 
-\subsubsection*{@image}
-The \sty{@image} entry type is defined similarly to the \sty{@article} type, so it will accept additional fields used in those entries.
+Additionally, \biblatexmla supports the \mlafield{author}, \mlafield{editor}, \mlafield{namea}, \mlafield{nameb}, and \mlafield{namec} fields, modified with the \mlafield{authortype}, \mlafield{editortype}, \mlafield{nameatype}, \mlafield{namebtype}, and \mlafield{namectype} fields, attuned to the following localization keys:
 
 \begin{optionslistNOT}
-
-	\optionitem{author} creator of the image
 	
-	\optionitem{title} title of the work
-	
-	\optionitem{type} description of the medium. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added to support bibliographies made for \biblatexcms.)
-	
-	\optionitem{note} additional description of the work
-	
-	\optionitem{date} date of creation
-	
-	\optionitem{institution} institution holding the work. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
-	
-	\optionitem{location} city of the institution holding the work. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
-
-\end{optionslistNOT}
-
-\subsubsection*{@manual}
-\newthis This entry type is an alias for \sty{@book}.
-
-\subsubsection*{@misc}
-\newthis This entry type behaves like \sty{@article} entries, but titles aren't printed inside quotation marks.
-
-\subsubsection*{@movie}
-\newthis This entry type is an alias for \sty{@video}.
-
-\subsubsection*{@music}
-This entry type is an alias for \sty{@audio}.
-
-\subsubsection*{@online}
-This entry type is an alias for \sty{@article}.
-
-\subsubsection*{@patent}
-\newthis This entry type is currently built onto the same backend as \sty{@article} entries, so it accepts additional fields used in that entry type. Additionally, it adds some additional operations to the type field:
-
-\begin{optionslistNOT}
-
-	\optionitem{type} the type of patent, with relation to the country in which it was issued. For instance, \sty{patenteu} or \sty{patentus} will automatically establish some standard expectations for the Works Cited entry of a patent from the European Union or one from the United States. See section 4.9.2.20 of the \biblatex manual for more of these expected strings.
-
-\end{optionslistNOT}
-
-\subsubsection*{@report}
-\newthis This entry type is an alias for \sty{@book}.
-
-\subsubsection*{@unpublished}
-An unpublished manuscript or typescript. \Biblatexmla supports the following fields typical to an unpublished entry:
-
-\begin{optionslistNOT}
-
-	\optionitem{author} author of the work
-	
-	\optionitem{title} title of a short work (i.e., an essay or poem)
-	
-	\optionitem{subtitle} subtitle of a short work
-	
-	\optionitem{booktitle} title of a longer work (i.e., a book or play)
-	
-	\optionitem{booksubtitle} subtitle of a longer work
-	
-	\optionitem{titleaddon} description of untitled work
-	
-	\optionitem{note} further information used to classify the collection; typeset before the \sty{type} field
-	
-	\optionitem{type} form of the material. For example, some of the following strings are recognized:
-	
+	\optionitem{\mlafield{$<$x$>$type}}
 	\begin{description}
-		\item[manuscript] printed as ``Manuscript'' or ``ms'' in English
-		\item[transcript] printed as ``Typescript'' or ``ts'' in English
+		\item[|composer|] composer of a soundtrack
+		\item[|director|] director of a work
+		\item[|narrator|] narrator of a spoken track
+		\item[|performer|] list of crucial performers
+		\item[|producer|] producer of a work
+		\item[|screenplay|] author of the screenplay
 	\end{description}
 	
-	For all other types not matching the above codes, \biblatexmla will print the \sty{type} field exactly as entered, respecting all existing capitalization
-	
-	\optionitem{entrysubtype} \newthis special consideration for styling the title of the work or for indicating that a given title is just a description of the material consulted. The following strings are recognized:
-	
-	\begin{description}
-		\item[untitled] for unstyled titles
-		\item[book] for titles that should be styled like a book
-		\item[article] for titles that should be styled like an article
-	\end{description}
-	
-	\Biblatexmla will further try to style the title to match any type listed in the \sty{entrysubtype} field.
-	
-	\optionitem{number} identifying number (such as a call number, box, or folio reference) in a library or archive
-	
-	\optionitem{library} library, archive, or other research institution holding the unpublished work
-	
-	\optionitem{location} location of the \sty{library}
-	
-	\optionitem{addendum} extra material printed at the end of an entry
+Note that \biblatexmla will print the \mlafield{author} field before the \mlafield{title} (styled using the appropriate \mlafield{authortype} key) unless the field is empty or the \mycode{useauthor} option is false---at which point it will cascade to the \mlafield{editor} field, unless \emph{it} is undefined or the \mycode{useeditor} option is false. No other name fields will be printed before the title. Except for any printed before the title, these fields will be printed after the title in the following order: \mlafield{author}, \mlafield{editor}, \mlafield{namea}, \mlafield{nameb}, \mlafield{namec}.
 
 \end{optionslistNOT}
 
-\subsubsection*{@video}
-A recording of a movie, television program, etc. \Biblatexmla supports the following fields necessary for a video:
+\subsubsection*{\mlatype{@dataset}}
+\newnov Data, files, or similar material, useful for referencing raw supplementary data. \parentref{dataset}{Moskowitz:2021uw}
+
+\subsubsection*{\mlatype{@image}}
+Photographs and electronic images. See, for example, \citeauthor{Sheldon:tr}'s entry in \secref{Sheldon:tr}. The \mlatype{@image} entry type is defined similarly to the \mlatype{@article} type, so it will accept additional fields used in those entries.
 
 \begin{optionslistNOT}
 
-	\optionitem{title}
+	\optionitem{\mlafield{author}} creator of the image
 	
-	title of the work
+	\optionitem{\mlafield{title}} title of the work
 	
-	\optionitem{subtitle}
+	\optionitem{\mlafield{type}} description of the medium. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added to support bibliographies made for \biblatexcms.)
 	
-	subtitle of the work
+	\optionitem{\mlafield{note}} additional description of the work
 	
-	\optionitem{bookauthor}
+	\optionitem{\mlafield{date}} date of creation
 	
-	author of the book on which the video is based
+	\optionitem{\mlafield{institution}} institution holding the work. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
 	
-	\optionitem{publisher}
-	
-	distributor
-	
-	\optionitem{origdate}
-	
-	original date of release
-	
-	\optionitem{howpublished}
-	
-	publishing medium (ie, DVD, videocassette, etc.)
+	\optionitem{\mlafield{location}} city of the institution holding the work. (Please note that this field doesn't yet work with the current version of \biblatexmla, though support will be added.)
 
 \end{optionslistNOT}
 
-Additionally, \biblatexmla supports the \sty{author}, \sty{editor}, \sty{namea}, \sty{nameb}, and \sty{namec} fields, modified with the \sty{authortype}, \sty{editortype}, \sty{nameatype}, \sty{namebtype}, and \sty{namectype} fields, attuned to the following localization keys:
+\subsubsection*{\mlatype{@manual}}
+\newthis This entry type is an alias for \mlatype{@book}, but it may be well suited for particular uses.
+
+\subsubsection*{\mlatype{@misc}}
+\newthis Sources including interviews, personal communications, billboards, and classroom material are ideal for the \mlatype{@misc} entry type. For an example \mlatype{@misc} source, see \citeauthor{Salter:uc}'s interview in \secref{Salter:uc}. This entry type behaves like \mlatype{@article} entries, but titles are printed unstyled, without quotation marks.
+
+\subsubsection*{\mlatype{@movie}}
+\newnov A movie or some similar video that stands alone. \parentref{movie}{OpeningNight:tf} \Biblatexmla supports the following fields necessary for a movie:
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{title}} title of the movie
+	
+	\optionitem{\mlafield{subtitle}} subtitle of the movie
+	
+	\optionitem{\mlafield{namea}} person(s) associated with a movie in some role
+
+	\optionitem{\mlafield{nameb, namec}} (as above)
+	
+	\optionitem{\mlafield{nameatype}} the kind of association for the \mlafield{namea} field
+	
+	\optionitem{\mlafield{namebtype, namectype}} (as above)
+	
+	\optionitem{\mlafield{bookauthor}} author of the book on which a movie is based
+	
+	\optionitem{\mlafield{version}} the version of a movie
+		
+	\optionitem{\mlafield{publisher}} distributor
+	
+	\optionitem{\mlafield{origdate}} original date of movie
+	
+	\optionitem{\mlafield{date}} date of source
+	
+	\optionitem{\mlafield{url}} the url address of an online source
+	
+	\optionitem{\mlafield{addendum}} When viewing a movie via an app, name the app in the \mlafield{addendum} field. The app's name ought to be italicized in MLA style, but this should not be a concern: when using \mycode{style=mla} and following the app's unstyled name with the word ``app,'' as with \emph{Netflix} in \bibref{ET:1982:vj}, italics will automatically be added.
+
+\end{optionslistNOT}
+
+\subsubsection*{\mlatype{@music}}
+Similar to the \mlatype{@audio} entry type, ideal for songs and albums. For the former, see \bibref{Beyonce:ta}; for the latter, \bibref{Beatles:aa}.
+
+\subsubsection*{\mlatype{@online}}
+Online resources such as webpages or entire websites. This entry type is an alias for \sty{\mlatype{@article}} with many of the same fields.
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{entrysubtype}} \newnov Setting \mlafield{entrysubtype} to \sty{website} toggles the title of the entry to be set in italics. \emph{The William Blake Archive} is a good example of a project that would be cited this way; see \bibref{BlakeArchive:uh}.
+
+\end{optionslistNOT}
+
+
+\subsubsection*{\mlatype{@patent}}
+\newthis Legal patent filed with a country's patent office. This entry type is currently built onto the same backend as \mlatype{@article} entries, so it accepts additional fields used in that entry type, with some variation. See \secref{kowalik:1995qw} for examples of these entries and output.
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{author}} inventor or creator of patented work
+	\optionitem{\mlafield{title}} title of work
+	\optionitem{\mlafield{date}} date of patent
+	\optionitem{\mlafield{holder}} the holder of the patent, if different from the \mlafield{author} field
+	\optionitem{\mlafield{number}} patent number
+	\optionitem{\mlafield{type}} the type of patent, with relation to the country in which it was issued. For instance, \sty{patenteu} or \sty{patentus} will automatically establish some standard expectations for the Works Cited entry of a patent from the European Union or one from the United States.
+
+\end{optionslistNOT}
+
+\subsubsection*{\mlatype{@performance}}
+\newnov A play, dance performance, concert, or something similar. \longerref{performance}{Shaw:2006vz}
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{author}} playwright, composer, or principal performer
+	
+	\optionitem{\mlafield{title}} title of performance
+
+	\optionitem{\mlafield{eventdate}} date associated with the performance, entered in \sty{YYYY-MM-DD} format for a single date and \sty{YYYY-MM-DD/YYYY-MM-DD} for a single performance that spans multiple days
+	
+	\optionitem{\mlafield{location}} city of performance
+
+	\optionitem{\mlafield{organization}} organization or group sponsoring or organizing the event
+
+	\optionitem{\mlafield{venue}} name of theater or performance space
+
+	\optionitem{\mlafield{entrysubtype}} set to \sty{untitled} to omit title decoration with italics and quotation marks in case of an untitled event, as in \bibref{Lynn:2016wu}.
+	
+\end{optionslistNOT}
+	
+	Additionally, \biblatexmla supports the \mlafield{author}, \mlafield{editor}, \mlafield{namea}, \mlafield{nameb}, and \mlafield{namec} fields, modified with the \mlafield{authortype}, \mlafield{editortype}, \mlafield{nameatype}, \mlafield{namebtype}, and \mlafield{namectype} fields, attuned to localization keys such as the following:
+
+	\begin{optionslistNOT}
+	
+		\optionitem{\mlafield{$<$x$>$type}}
+		\begin{description}
+			\item[|composer|] composer of a soundtrack
+			\item[|director|] director of a work
+			\item[|performer|] significant performers of a work
+			\item[|producer|] producer of a work
+		\end{description}
+
+	\end{optionslistNOT}
+
+\subsubsection*{\mlatype{@report}}
+\newthis Report issued by an agency or organization. This entry type is an alias for \mlatype{@book}. See \bibref{ReadingRisk:vu}.
+
+\subsubsection*{\mlatype{@software}}
+\newnov Software, app, videogame, or similar digital experience. \parentref{software}{AngryBirds:2016vs}
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{author}} company producing the software
+
+	\optionitem{\mlafield{title}} title of the work
+	
+	\optionitem{\mlafield{version}} release version 
+	
+	\optionitem{\mlafield{maintitle}} enclosing app, as used in \bibref{VidaSystems:2020ua}.
+	
+	\optionitem{\mlafield{date}} release date of the version used
+	
+	\optionitem{\mlafield{eventdate}} date of access, if relevant
+
+\end{optionslistNOT}
+
+\subsubsection*{\mlatype{@unpublished}}
+An unpublished paper, book, or similar material. See \bibref{Auden:wg}. \Biblatexmla supports the following fields typical to an unpublished entry:
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{author}} author of the work
+	
+	\optionitem{\mlafield{title}} title of a short work (i.e., an essay or poem)
+	
+	\optionitem{\mlafield{subtitle}} subtitle of a short work
+	
+	\optionitem{\mlafield{booktitle}} title of a longer work (i.e., a book or play)
+	
+	\optionitem{\mlafield{booksubtitle}} subtitle of a longer work
+	
+	\optionitem{\mlafield{titleaddon}} description of untitled work
+	
+	\optionitem{\mlafield{note}} further information used to classify the collection; typeset before the \mlafield{type} field
+	
+	\optionitem{\mlafield{type}} form of the material. For example, some of the following strings are recognized:
+	
+	\begin{description}
+		\item[\sty{manuscript}] printed as ``Manuscript'' or ``ms'' in English
+		\item[\sty{transcript}] printed as ``Typescript'' or ``ts'' in English
+	\end{description}
+	
+	For all other types not matching the above codes, \biblatexmla will print the \mlafield{type} field exactly as entered, respecting all existing capitalization
+	
+	\optionitem{\mlafield{entrysubtype}} \newthis special consideration for styling the title of the work or for indicating that a given title is just a description of the material consulted. The following strings are recognized:
+	
+	\begin{description}
+		\item[\sty{untitled}] for untitled sources---e.g., a course lecture, as with \citeauthor{Ford:2016vm}'s entry in \secref{Ford:2016vm}.
+		\item[\sty{book}] for titles that should be styled like a book's title, in italics
+		\item[\sty{article}] for titles that should be styled like an article's title, in quotation marks
+	\end{description}
+	
+	\Biblatexmla will further try to style the title to match any type listed in the \mlafield{entrysubtype} field.
+	
+	\optionitem{\mlafield{number}} identifying number (such as a call number, box, or folio reference) in a library or archive
+	
+	\optionitem{\mlafield{library}} library, archive, or other research institution holding the unpublished work
+	
+	\optionitem{\mlafield{location}} location of the \mlafield{library}
+	
+	\optionitem{\mlafield{addendum}} extra material printed at the end of an entry
+
+\end{optionslistNOT}
+
+\subsubsection*{\mlatype{@video}}
+\newnov An online video, a recording of a television program, or some similar video that is part of some larger project or channel. See for instance \bibref{WhatIsMLA:2016:wq}. \Biblatexmla supports the following fields necessary for a video:
+
+\begin{optionslistNOT}
+
+	\optionitem{\mlafield{title}} title of the work
+	
+	\optionitem{\mlafield{subtitle}} subtitle of the work
+	
+	\optionitem{\mlafield{maintitle}} title of the enclosing work of which this video is part
+	
+	\optionitem{\mlafield{bookauthor}} author of the book on which the video is based
+	
+	\optionitem{\mlafield{version}} the version of a video
+	
+	\optionitem{\mlafield{season}} used especially to indicate the season of a television show
+	
+	\optionitem{\mlafield{number}} used especially to indicate the episode number of a television show
+	
+	\optionitem{\mlafield{publisher}} distributor
+	
+	\optionitem{\mlafield{origdate}} original date of release
+	
+	\optionitem{\mlafield{url}} the url address of an online video
+	
+	\optionitem{\mlafield{addendum}} When viewing a video via an app, name the app in the \mlafield{addendum} field. The app's name ought to be italicized in MLA style, but this should not be a concern: when using \mycode{style=mla} and following the app's unstyled name with the word ``app,'' as with \emph{Amazon Prime Video} in \bibref{NewNormal:2016:vi}, italics will automatically be applied.
+
+\end{optionslistNOT}
+
+Additionally, \biblatexmla supports the \mlafield{author}, \mlafield{editor}, \mlafield{namea}, \mlafield{nameb}, and \mlafield{namec} fields, modified with the \mlafield{authortype}, \mlafield{editortype}, \mlafield{nameatype}, \mlafield{namebtype}, and \mlafield{namectype} fields, attuned to the following localization keys:
 
 \begin{optionslistNOT}
 	
-	\optionitem{$<$x$>$type}
+	\optionitem{\mlafield{$<$x$>$type}}
 	\begin{description}
-		\item[director] director of a work
-		\item[screenplay] author of the screenplay
-		\item[performer] list of crucial performers
-		\item[composer] composer of a soundtrack
-		\item[producer] producer of a work
+		\item[\sty{director}] director of a work
+		\item[\sty{screenplay}] author of the screenplay
+		\item[\sty{performer}] list of crucial performers
+		\item[\sty{composer}] composer of a soundtrack
+		\item[\sty{producer}] producer of a work
 	\end{description}
 	
-Note that \biblatexmla will print the \sty{author} field before the \sty{title} (styled using the appropriate \sty{authortype} key) unless the field is empty or the \mycode{useauthor} option is false---at which point it will cascade to the \sty{editor} field, unless \emph{it} is undefined or the \mycode{useeditor} option is false. No other name fields will be printed before the title. Except for any printed before the title, these fields will be printed after the title in the following order: \sty{author}, \sty{editor}, \sty{namea}, \sty{nameb}, \sty{namec}.
+Note that \biblatexmla will print the \mlafield{author} field before the \mlafield{title} (styled using the appropriate \mlafield{authortype} key) unless the field is empty or the \mycode{useauthor} option is false---at which point it will cascade to the \mlafield{editor} field, unless \emph{it} is undefined or the \mycode{useeditor} option is false. No other name fields will be printed before the title. Except for any printed before the title, these fields will be printed after the title in the following order: \mlafield{author}, \mlafield{editor}, \mlafield{namea}, \mlafield{nameb}, \mlafield{namec}.
 	
 \end{optionslistNOT}
 
 %%%%%%%
 \subsection{MLA-Style Containers}
 
-\subsubsection*{@mlasource}
-\newthis In addition to these typical \biblatex-supported entry types, \biblatexmla 2.0 introduces support for defining entries using the containerized explanations of sources first described in the 8\superscript{th} edition of the \emph{MLA Handbook}. Because the non-author fields are defined to handle information literally, this kind of entry is in many ways inferior to the above semantically-defined entry types, which should handle punctuation in lists of editor names, strings like ``vol.'' and ``by,'', subtitle punctuation, and other matters. The user will need to keep output in mind as they define the metadata of an \sty{@mlasource} entry. All of these fields are optional, and they should only include information set out in the \emph{MLA Handbook}.
+\subsubsection*{\mlatype{@mlasource}}
+\newthis In addition to these typical \biblatex-supported entry types, \biblatexmla 2.0 introduces support for defining entries using the containerized explanations of sources first described in the 8\superscript{th} edition of the \emph{MLA Handbook}. Because the non-author fields are defined to handle information literally, this kind of entry is in many ways inferior to the above semantically-defined entry types, which should handle punctuation in lists of editor names, strings like ``vol.'' and ``by,'', subtitle punctuation, and other matters. The user will need to keep output in mind as they define the metadata in the \bibtex file. \longerref{mlasource}{Benton:wd} All of these fields are optional, and they should only include information set out in the \emph{MLA Handbook}.
 
 \begin{optionslistNOT}
 
-	\optionitem{author} the name of the person(s) who should be used as the label for a work.
+	\optionitem{\mlafield{author}} the name of the person(s) who should be used as the label for a work.
 	
-	\optionitem{title} title of the piece; subtitles and any necessary colons should be included within the |title| field.
+	\optionitem{\mlafield{title}} title of the piece; subtitles and any necessary colons should be included within the \mlafield{title} field.
 	
-	\optionitem{titletype} a string like \textbf{|complete|}, \textbf{|part|}, or \textbf{|unstyled|} determining how the source's |title| gets printed. This field is typically unnecessary: \biblatexmla assumes |complete| if the source lacks a |titlea| field, and it assumes |part| if the |titlea| field is defined, styling the title in italics or in quotation marks, respectively. Setting this field overrides \biblatexmla{}'s logic.
+	\optionitem{\mlafield{titletype}} a string like \textbf{|complete|}, \textbf{|part|}, or \textbf{|unstyled|} determining how the source's \mlafield{title} gets printed. This field is typically unnecessary: \biblatexmla assumes |complete| if the source lacks a \mlafield{titlea} field, and it assumes |part| if the \mlafield{titlea} field is defined, styling the title in italics or in quotation marks, respectively. Setting this field overrides \biblatexmla{}'s logic.
 	
-	\optionitem{supplemental} any supplemental information for the source.
+	\optionitem{\mlafield{supplemental}} any supplemental information for the source.
 	
-	\optionitem{titlea} the title of the first container; \biblatexmla will style |titlea| in italics, but subtitles and any necessary colons should be included within the this field.
+	\optionitem{\mlafield{titlea}} the title of the first container; \biblatexmla will style \mlafield{titlea} in italics, but subtitles and any necessary colons should be included within the this field.
 	
-	\optionitem{contributora} any necessary contributors to the first container.
+	\optionitem{\mlafield{contributora}} any necessary contributors to the first container.
 	
-	\optionitem{versiona} the version or edition of the first container.
+	\optionitem{\mlafield{versiona}} the version or edition of the first container.
 	
-	\optionitem{numbera} the number of the first container.
+	\optionitem{\mlafield{numbera}} the number of the first container.
 	
-	\optionitem{publishera} the publisher of the first container.
+	\optionitem{\mlafield{publishera}} the publisher of the first container.
 	
-	\optionitem{datea} the date associated with the first container.
+	\optionitem{\mlafield{datea}} the date associated with the first container.
 	
-	\optionitem{locationa} the location of the first container.
+	\optionitem{\mlafield{locationa}} the location of the first container.
 	
-	\optionitem{supplementala} any supplemental information for the first container.
+	\optionitem{\mlafield{supplementala}} any supplemental information for the first container.
 	
-	\optionitem{titleb} the title of the second container; \biblatexmla will style |titleb| in italics, but subtitles and any necessary colons should be included within the this field.
+	\optionitem{\mlafield{titleb}} the title of the second container; \biblatexmla will style \mlafield{titleb} in italics, but subtitles and any necessary colons should be included within the this field.
 	
-	\optionitem{contributorb} any necessary contributors to the second container.
+	\optionitem{\mlafield{contributorb}} any necessary contributors to the second container.
 	
-	\optionitem{versionb} the version or edition of the second container.
+	\optionitem{\mlafield{versionb}} the version or edition of the second container.
 	
-	\optionitem{numberb} the number of the second container.
+	\optionitem{\mlafield{numberb}} the number of the second container.
 	
-	\optionitem{publisherb} the publisher of the second container.
+	\optionitem{\mlafield{publisherb}} the publisher of the second container.
 	
-	\optionitem{dateb} the date associated with the second container.
+	\optionitem{\mlafield{dateb}} the date associated with the second container.
 	
-	\optionitem{locationb} the location of the second container.
+	\optionitem{\mlafield{locationb}} the location of the second container.
 	
-	\optionitem{supplementalb} any supplemental information for the second container.
+	\optionitem{\mlafield{supplementalb}} any supplemental information for the second container.
 	
 	
 
@@ -1447,14 +1535,1536 @@ Note that \biblatexmla will print the \sty{author} field before the \sty{title} 
 
 %%%%%%%
 
-\section{Meta}
-\subsection{License}
+\section{Sample \bibtex Entries and Works-Cited-List Output} % (fold)
+\label{sec:sample_bibtex_entries_and_output}\label{mla:sec:samples}
+\noindent{}The examples below demonstrate one way to achieve the output of Appendix 2, ``Works-Cited-List Entries by Publication Format,'' found in the 9th edition of the \emph{MLA Handbook}, but there is room for flexibility. One example of such flexibility can be seen below in the ordering of names in the \mlafield{author} and \mlafield{editor} fields, which may reasonably be entered as \{\texttt{Last, First}\} or \{\texttt{First Last}\}.
 
-\biblatexmla is copyrighted \textcopyright\ 2007--2021, by James Clawson. Permission is granted to copy, distribute, and modify this software under the terms of the \lppl, version 1.3: \mylink{https://ctan.org/license/lppl1.3}.
+For presentation purposes, line breaks have been added and marked with an arrow (\textcolor{gray}{$\hookrightarrow$}). These line breaks and arrows should not be recreated in the \sty{.bib} file.
+\subsection{Books} % (fold)
+\label{sec:books}
+\index{books|(}
+\subsubsection{By One Author} % (fold)
+\label{ssub:by_one_author}
+\begin{refsection}
+	\bibcitem{Davis:1998we}
+	\bibcitem{Shen:Fu:2011vw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_one_author (end)
+\subsubsection{By Two Authors} % (fold)
+\label{ssub:by_two_authors}
+\index{books!multiple authors}
+\begin{refsection}
+	\bibcitem{Dorris:1999wo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_two_authors (end)
+\subsubsection{By More Than Two Authors} % (fold)
+\label{ssub:by_more_than_two_authors}
+\index{books!multiple authors}
+\begin{refsection}
+	\bibcitem{Charon:2017tw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_more_than_two_authors (end)
+\subsubsection{By an Unknown Author (Anonymous)} % (fold)
+\label{ssub:by_an_unknown_author_anonymous}
+\index{books!by an unknown author}
+\begin{refsection}
+	\bibcitem{Beowulf:2004th}
+	\bibcitem{LazarillodeTormes:1554vl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_unknown_author_anonymous (end)
+\subsubsection{By an Organization (Corporate Author), Published by a Different Entity} % (fold)
+\label{ssub:by_an_organization_corporate_author_published_by_a_different_entity}
+\index{books!by an organization}
+\begin{refsection}
+	\bibcitem{United:Nations:1991vc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_organization_corporate_author_published_by_a_different_entity (end)
+\subsubsection{By an Organization That Wrote and Published the Work} % (fold)
+\label{ssub:by_an_organization_that_wrote_and_published_the_work}
+\index{books!by an organization}
+\begin{refsection}
+	\bibcitem{Adirondacks:1990tb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_organization_that_wrote_and_published_the_work (end)
+\subsubsection{Edited} % (fold)
+\label{ssub:edited}
+\index{books!edited}
+\begin{refsection}
+	\bibcitem{Baron:etal:2007tj}
+	\bibcitem{Dunbar:2004tv}
+	\bibcitem{Milton:1998ty}
+	\bibcitem{Prado:2018vb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection edited (end)
+\subsubsection{Translated} % (fold)
+\label{ssub:translated}
+\index{books!translated}\index{translation}
+\begin{refsection}
+	\bibcitem{Dostoevsky:1993wh}
+	\bibcitem{Stendhal:2002ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection translated (end)
+\subsubsection{Edited and Translated by the Same Person} % (fold)
+\label{ssub:edited_and_translated_by_the_same_person}
+\index{books!edited}\index{books!translated}\index{translation}
+\begin{refsection}
+	\bibcitem{Freud:2005wb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection edited_and_translated_by_the_same_person (end)
+\subsubsection{In a Language Other Than English} % (fold)
+\label{ssub:in_a_language_other_than_english}
+\begin{refsection}
+This example's implementation of bidirectional text not ideal, and it may not be the recommended approach. Moreover, the fixed-width font used here is unable to display Arabic. Please see the \sty{.tex} file for definition of the \sty{textarabic} command, and consult the \sty{.bib} file for the full entry by Alexandra Chreiteh.
+	\bibcitem{Chreiteh:2009aa}
+	\bibcitem{Fallani:1971vv}
+	\printbibliography[heading=none]
+	% Full support for multiscript entries depends on \href{https://github.com/plk/biblatex/issues/416}{Biblatex issue 416}.
+\end{refsection}
+% subsection in_a_language_other_than_english (end)
+\subsubsection{With Illustrations} % (fold)
+\label{ssub:with_illustrations}
+\begin{refsection}
+	\bibcitem{Carroll:2006tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_illustrations (end)
+\subsubsection{Published in a Numbered or Named Edition} % (fold)
+\label{ssub:published_in_a_numbered_or_named_edition}
+\begin{refsection}
+	\bibcitem{Milkis:1994vv}
+	\bibcitem{Wollstonecraft:2009uf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_a_numbered_or_named_edition (end)
+\subsubsection{In a Named Series} % (fold)
+\label{ssub:in_a_named_series}
+\begin{refsection}
+	\bibcitem{Neruda:1991wq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_named_series (end)
+\subsubsection{With More Than One Publisher} % (fold)
+\label{ssub:with_more_than_one_publisher}
+\begin{refsection}
+	\bibcitem{Tomlinson:2002tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_more_than_one_publisher (end)
+\subsubsection{Self-Published} % (fold)
+\label{ssub:self_published}
+\begin{refsection}
+	\bibcitem{Hocking:2010tz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection self_published (end)
+\subsubsection{Published before 1900} % (fold)
+\label{ssub:published_before_1900}
+\begin{refsection}
+	\bibcitem{Goethe:1875vw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_before_1900 (end)
+\subsubsection{Republished, with Original Publication Date Given in Middle Supplemental Element} % (fold)
+\label{ssub:republished_with_original_publication_date_given_in_middle_supplemental_element}
+\begin{refsection}
+	\bibcitem{London:1990tn}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection republished_with_original_publication_date_given_in_middle_supplemental_element (end)
+\subsubsection{Comic Book or Graphic Narrative} % (fold)
+\label{ssub:comic_book_or_graphic_narrative}
+\begin{refsection}
+	\bibcitem{Clowes:1998wp}
+	\bibcitem{Waid:2005up}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection comic_book_or_graphic_narrative (end)
+\subsubsection{In a Multivolume Set} % (fold)
+\label{sub:in_a_multivolume_set}
+\myparagraph{Individually titled volume in an ongoing series} % (fold)
+\label{ssub:individually_titled_volume_in_an_ongoing_series}
+\begin{refsection}
+	\bibcitem{Caro:2012wy}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection individually_titled_volume_in_an_ongoing_series (end)
+\myparagraph{Individually titled and edited volume} % (fold)
+\label{ssub:individually_titled_and_edited_volume}
+\begin{refsection}
+	\bibcitem{Howells:1968wo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection individually_titled_and_edited_volume (end)
+\myparagraph{All volumes of the multivolume set} % (fold)
+\label{ssub:all_volumes_of_the_multivolume_set}
+\begin{refsection}
+	\bibcitem{Rampersad:2002va}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection all_volumes_of_the_multivolume_set (end)
+\myparagraph{One volume without an individual title} % (fold)
+\label{ssub:one_volume_without_an_individual_title}
+\begin{refsection}
+	\bibcitem{Wellek:1992ws}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection one_volume_without_an_individual_title (end)
+% subsection in_a_multivolume_set (end)
+\subsubsection{From Conference Proceedings} % (fold)
+\label{sub:from_conference_proceedings}
+\begin{refsection}
+	\bibcitem{Chang:2000uv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_conference_proceedings (end)
+\subsubsection{Published in an E-Book Version} % (fold)
+\label{sub:published_in_an_e_book_version}
+\begin{refsection}
+	\bibcitem{Handbook:2021aa}
+	\bibcitem{OConnor:2009un}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_an_e_book_version (end)
+\subsubsection{Published on a Website} % (fold)
+\label{sub:published_on_a_website}
+\begin{refsection}
+	\bibcitem{Gikandi:2000vz}
+	\bibcitem{Miller:2016vg}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_on_a_website (end)
+\subsubsection{Published in an App} % (fold)
+\label{sub:published_in_an_app_book}
+\begin{refsection}
+	\bibcitem{Bible:app:2016ab}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_an_app_book (end)
+\subsubsection{Published in Audiobook Format} % (fold)
+\label{sub:published_in_audiobook_format}
+\begin{refsection}
+	\bibcitem{Lee:2014vk}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_audiobook_format (end)
+\index{books|)}
+% section books (end)
 
-\subsection[Feedback]{Feedback}
-\label{int:feb}
+\subsection{Contributions to Books} % (fold)
+\label{sec:contributions_to_books}
+\index{books, contributions to|(}
+\subsubsection{Play} % (fold)
+\label{sub:play}\index{books, contributions to!play}\index{plays}
+\begin{refsection}
+	\bibcitem{Euripides:1998tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection play (end)
+\subsubsection{Translation} % (fold)
+\label{sub:translation}\index{translation}
+\begin{refsection}
+	\bibcitem{Fagih:2003uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection translation (end)
+\subsubsection{Poem} % (fold)
+\label{sub:poem}
+\begin{refsection}
+	\bibcitem{Marvell:1979tp}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection poem (end)
+\subsubsection{Short Story} % (fold)
+\label{sub:short_story}
+\begin{refsection}
+	\bibcitem{Poe:1902wd}
+	\bibcitem{Hopi:1986wu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection short_story (end)
+\subsubsection{Introduction, Preface, Foreword, or Afterword} % (fold)
+\label{sub:introduction_preface_foreword_or_afterword}
+\myparagraph{With a generic label in place of title} % (fold)
+\label{ssub:with_a_generic_label_in_place_of_title}
+\begin{refsection}
+	\bibcitem{Felstiner:2001aa}
+	\bibcitem{Gere:2021aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_generic_label_in_place_of_title (end)
+\myparagraph{With a unique title} % (fold)
+\label{ssub:with_a_unique_title}
+\begin{refsection}
+	\bibcitem{Seyhan:2008wz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_unique_title (end)
+\myparagraph{With a unique title and a generic label given as a supplemental element} % (fold)
+\label{ssub:with_a_unique_title_and_a_generic_label_given_as_a_supplemental_element}
+\begin{refsection}
+	\bibcitem{Wallach:2000we}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_unique_title_and_a_generic_label_given_as_a_supplemental_element (end)
+% subsection introduction_preface_foreword_or_afterword (end)
+\subsubsection{Essay} % (fold)
+\label{sub:essay}
+\begin{refsection}
+	\bibcitem{Dewar:2007wn}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection essay (end)
+\subsubsection{Republished Essay, with Original Publication Information} % (fold)
+\label{sub:republished_essay_with_original_publication_information}
+\begin{refsection}
+	\bibcitem{Johnson:2014ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection republished_essay_with_original_publication_information (end)
+\subsubsection{Republished Work, with Original Publication Date} % (fold)
+\label{sub:republished_work_with_original_publication_date}
+\begin{refsection}
+	\bibcitem{Franklin:1992vl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection republished_work_with_original_publication_date (end)
+\index{books, contributions to|)}
+% section contributions_to_books (end)
 
-If you have any questions, requests, or other feedback please email me or reach out on GitHub. If you end up improving the code to be more accurate to the \mla{} standard, please be kind to the rest of us and share; I'm very happy to incorporate improvements! If anything works differently than you feel it ought to work, please let me know. Apart from time and my willingness to write documentation, I'm limited only by the problems of which I'm unaware.
+\subsection{Contributions to Scholarly Journals} % (fold)
+\label{sec:contributions_to_scholarly_journals}
+\subsubsection{With a Volume Number and Issue Number} % (fold)
+\label{sub:with_a_volume_number_and_issue_number}
+\begin{refsection}
+	\bibcitem{Boggs:2016tp}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_volume_number_and_issue_number (end)
+\subsubsection{With an Issue Number} % (fold)
+\label{sub:with_an_issue_number}
+\begin{refsection}
+	\bibcitem{Kafka:2007tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_an_issue_number (end)
+\subsubsection{With a Season} % (fold)
+\label{sub:with_a_season}
+\begin{refsection}
+	\bibcitem{Belton:2008uo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_season (end)
+\subsubsection{By an Organization (Corporate Author)} % (fold)
+\label{sub:by_an_organization_corporate_author}
+\begin{refsection}
+	\bibcitem{MLA:Ad:Hoc:2007tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection by_an_organization_corporate_author (end)
+\subsubsection{With a Translator} % (fold)
+\label{sub:with_a_translator}\index{translation}
+\begin{refsection}
+	\bibcitem{Tibullus:2002ub}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_translator (end)
+\subsubsection{In a Language Other Than English} % (fold)
+\label{sub:in_a_language_other_than_english}
+\begin{refsection}
+	\bibcitem{Litvak:2006vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_language_other_than_english (end)
+\subsubsection{In a Journal with More Than One Series} % (fold)
+\label{sub:in_a_journal_with_more_than_one_series}
+\begin{refsection}
+	\bibcitem{Helmling:2006ug}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_journal_with_more_than_one_series (end)
+\subsubsection{In a Special Issue of a Journal} % (fold)
+\label{sub:in_a_special_issue_of_a_journal}
+\begin{refsection}
+	\bibcitem{Charney:2011wk}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_special_issue_of_a_journal (end)
+\subsubsection{In a Database, with a DOI} % (fold)
+\label{sub:in_a_database_with_a_doi}
+\begin{refsection}
+	\bibcitem{Bockelman:uu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_database_with_a_doi (end)
+\subsubsection{In a Database, with a Permalink} % (fold)
+\label{sub:in_a_database_with_a_permalink}
+\begin{refsection}
+	\bibcitem{Goldman:2010wd}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_database_with_a_permalink (end)
+\subsubsection{From an Online Journal} % (fold)
+\label{sub:from_an_online_journal}\index{online!scholarly article}
+\begin{refsection}
+	\bibcitem{Alpert:Abrams:2016wb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_an_online_journal (end)
+\subsubsection{PDF of an Online Journal Article} % (fold)
+\label{sub:pdf_of_an_online_journal_article}\index{online!scholarly article}
+\begin{refsection}
+	\bibcitem{Fisher:vu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection pdf_of_an_online_journal_article (end)
+\subsubsection{Supplementary Data for an Online Journal Article} % (fold)
+\label{sub:supplementary_data_for_an_online_journal_article}\index{online!supplementary data}
+\begin{refsection}
+	\bibcitem{Moskowitz:2021uw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection supplementary_data_for_an_online_journal_article (end)
+\subsubsection{Published Online ahead of Print} % (fold)
+\label{sub:published_online_ahead_of_print}\index{online!preprint}
+\begin{refsection}
+	\bibcitem{Erhardt:2020wl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_online_ahead_of_print (end)
+\subsubsection{Entire Special Issues of Journals} % (fold)
+\label{sub:entire_special_issues_of_journals}
+\begin{refsection}
+	\bibcitem{AppiahGates:1992uw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection entire_special_issues_of_journals (end)
+% section contributions_to_scholarly_journals (end)
+
+\subsection{Contributions to News Publications} % (fold)
+\label{sec:contributions_to_news_publications}
+\subsubsection{Opinion or Editorial} % (fold)
+\label{sub:opinion_or_editorial}
+\begin{refsection}
+	\bibcitem{Editorial:Board:vc}
+	\bibcitem{Gergen:un}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection opinion_or_editorial (end)
+\subsubsection{Reported by a News Service} % (fold)
+\label{sub:reported_by_a_news_service}
+\begin{refsection}
+	\bibcitem{Evacuation:wj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection reported_by_a_news_service (end)
+\subsubsection{One-Page Article} % (fold)
+\label{sub:one_page_article}
+\begin{refsection}
+	\bibcitem{Magra:ws}
+	\bibcitem{Perrier:vv}
+	\bibcitem{Soloski:wi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection one_page_article (end)
+\subsubsection{Consecutively Paginated Article} % (fold)
+\label{sub:consecutively_paginated_article}
+\begin{refsection}
+	\bibcitem{Sharpe:wa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection consecutively_paginated_article (end)
+\subsubsection{Nonconsecutively Paginated Article} % (fold)
+\label{sub:nonconsecutively_paginated_article}
+\begin{refsection}
+	\bibcitem{Haughney:ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection nonconsecutively_paginated_article (end)
+\subsubsection{Published Online, without Page Numbers} % (fold)
+\label{sub:published_online_without_page_numbers}\index{online!without page numbers}
+\begin{refsection}
+	\bibcitem{Parker:Pope:wm}
+	\bibcitem{Tribble:tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_online_without_page_numbers (end)
+\subsubsection{With City of Publication Given} % (fold)
+\label{sub:with_city_of_publication_given}
+\begin{refsection}
+	\bibcitem{Alaton:tc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_city_of_publication_given (end)
+\subsubsection{In a Series} % (fold)
+\label{sub:in_a_series}
+\begin{refsection}
+	\bibcitem{Glatter:wx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_series (end)
+% section contributions_to_news_publications (end)
+
+\subsection{Contributions to Magazines} % (fold)
+\label{sec:contributions_to_magazines}
+\subsubsection{With No Season, Volume Number, or Issue Number} % (fold)
+\label{sub:with_no_season_volume_number_or_issue_number}
+\begin{refsection}
+	\bibcitem{Deresiewicz:un}
+	\bibcitem{Giant:ta}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_no_season_volume_number_or_issue_number (end)
+\subsubsection{With Season, Volume Number, and Issue Number} % (fold)
+\label{sub:with_season_volume_number_and_issue_number}
+\begin{refsection}
+	\bibcitem{Riis:2017vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_season_volume_number_and_issue_number (end)
+% section contributions_to_magazines (end)
+
+\subsection{Reviews} % (fold)
+\label{sec:reviews}
+\subsubsection{Titled and Signed (by an Author)} % (fold)
+\label{sub:titled_and_signed_by_an_author}
+\begin{refsection}
+	\bibcitem{Tommasini:tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection titled_and_signed_by_an_author (end)
+\subsubsection{Untitled and Signed (by an Author)} % (fold)
+\label{sub:untitled_and_signed_by_an_author}
+\begin{refsection}
+	\bibcitem{Rohrbaugh:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection untitled_and_signed_by_an_author (end)
+\subsubsection{Titled and Unsigned (Anonymous)} % (fold)
+\label{sub:titled_and_unsigned_anonymous}
+\begin{refsection}
+	\bibcitem{Racial:vh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection titled_and_unsigned_anonymous (end)
+\subsubsection{Untitled and Unsigned (Anonymous)} % (fold)
+\label{sub:untitled_and_unsigned_anonymous}
+\begin{refsection}
+	\bibcitem{YouWill:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection untitled_and_unsigned_anonymous (end)
+% section reviews (end)
+
+\subsection{Websites} % (fold)
+\label{sec:websites}
+\subsubsection{Digital Monograph with Author and Publisher} % (fold)
+\label{sub:digital_monograph_with_author_and_publisher}
+\begin{refsection}
+	\bibcitem{Bauch:tb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection digital_monograph_with_author_and_publisher (end)
+\subsubsection{Site with Editors and No Publisher} % (fold)
+\label{sub:site_with_editors_and_no_publisher}
+\begin{refsection}
+	\bibcitem{BlakeArchive:uh}
+	\bibcitem{VisualizingEmancipation:uf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection site_with_editors_and_no_publisher (end)
+\subsubsection{Site with Editors and a Publisher} % (fold)
+\label{sub:site_with_editors_and_a_publisher}
+\begin{refsection}
+	\bibcitem{PiersPEA:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection site_with_editors_and_a_publisher (end)
+\subsubsection{Site Written and Published by an Organization} % (fold)
+\label{sub:site_written_and_published_by_an_organization}
+\begin{refsection}
+	\bibcitem{Folgerpedia:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection site_written_and_published_by_an_organization (end)
+\subsubsection{Jointly Published Site} % (fold)
+\label{sub:jointly_published_site}
+\begin{refsection}
+	\bibcitem{Manifold:aa}
+	Here's the citation to it \autocite{Manifold:aa}.
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection jointly_published_site (end)
+% section websites (end)
+
+\subsection{Works Contained on a Website} % (fold)
+\label{sec:works_contained_on_a_website}
+\subsubsection{From a Book} % (fold)
+\label{sub:from_a_book}
+\begin{refsection}
+	\bibcitem{Poe:1902aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_book (end)
+\subsubsection{From a Book, Contained in a Database} % (fold)
+\label{sub:from_a_book_contained_in_a_database}
+\begin{refsection}
+	\bibcitem{Toorn:2017ti}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_book_contained_in_a_database (end)
+\subsubsection{From a Scholarly Journal, Published Online} % (fold)
+\label{sub:from_a_scholarly_journal_published_online}\index{online!scholarly article}
+\begin{refsection}
+	\bibcitem{Fisek:te}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_scholarly_journal_published_online (end)
+\subsubsection{From a Scholarly Journal, Published in a Database} % (fold)
+\label{sub:from_a_scholarly_journal_published_in_a_database}
+\myparagraph{Originally published online} % (fold)
+\label{ssub:originally_published_online}\index{online!scholarly article}
+\begin{refsection}
+	\bibcitem{Chan:uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection originally_published_online (end)
+\myparagraph{Originally published in print} % (fold)
+\label{ssub:originally_published_in_print}
+\begin{refsection}
+	\bibcitem{Goldman:2010uv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection originally_published_in_print (end)
+% subsection from_a_scholarly_journal_published_in_a_database (end)
+\subsubsection{With Supplementary Material or Data Set} % (fold)
+\label{sub:with_supplementary_material_or_data_set}
+\myparagraph{Published separately} % (fold)
+\label{ssub:published_separately}
+\begin{refsection}
+	\bibcitem{ReplicationNonDemocratic:ws}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection published_separately (end)
+\myparagraph{Published alongside the work} % (fold)
+\label{ssub:published_alongside_the_work}
+\begin{refsection}
+	\bibcitem{Moskowitz:2021uw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection published_alongside_the_work (end)
+% subsection with_supplementary_material_or_data_set (end)
+\subsubsection{From a News Publication} % (fold)
+\label{sub:from_a_news_publication}
+\begin{refsection}
+	\bibcitem{Parker:Pope:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_news_publication (end)
+\subsubsection{From a Magazine} % (fold)
+\label{sub:from_a_magazine}
+\begin{refsection}
+	\bibcitem{Chou:vq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_magazine (end)
+\subsubsection{From a Blog} % (fold)
+\label{sub:from_a_blog}
+\begin{refsection}
+	\bibcitem{Hayes:vy}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_blog (end)
+\subsubsection{From the Comment Section} % (fold)
+\label{sub:from_the_comment_section}
+\begin{refsection}
+	\bibcitem{Max:the:Pen:ve}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_the_comment_section (end)
+\subsubsection{From a Discussion List} % (fold)
+\label{sub:from_a_discussion_list}
+\begin{refsection}
+	\bibcitem{Grooms:tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_discussion_list (end)
+\subsubsection{On Social Media} % (fold)
+\label{sub:on_social_media}
+\begin{refsection}
+	\bibcitem{Chaucer:Doth:Tweet:tx}
+	\bibcitem{Lilly:ui}
+	\bibcitem{MacLeod:wm}
+	\bibcitem{Modern:Language:Association:ub}
+	\bibcitem{Ng:wg}
+	\bibcitem{Thomas:vq}
+	\bibcitem{World:Wildlife:Fund:vz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection on_social_media (end)
+\subsubsection{On a Repository or Preprint Server} % (fold)
+\label{sub:on_a_repository_or_preprint_server}
+\begin{refsection}
+	\bibcitem{Wang:wj}
+	\bibcitem{Werner:vh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection on_a_repository_or_preprint_server (end)
+\subsubsection{Work with No Publication Date} % (fold)
+\label{sub:work_with_no_publication_date}
+\begin{refsection}
+	\bibcitem{Beaton:vx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection work_with_no_publication_date (end)
+% section works_contained_on_a_website (end)
+
+\subsection{Entries in Reference Works} % (fold)
+\label{sec:entries_in_reference_works}
+\subsubsection{Unsigned (Anonymous)} % (fold)
+\label{sub:unsigned_anonymous}
+\begin{refsection}
+	\bibcitem{Patanjali:1996wu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection unsigned_anonymous (end)
+\subsubsection{Signed (by an Author)} % (fold)
+\label{sub:signed_by_an_author}
+\begin{refsection}
+	\bibcitem{Botterill:2004tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection signed_by_an_author (end)
+\subsubsection{From a Dictionary} % (fold)
+\label{sub:from_a_dictionary}
+\begin{refsection}
+	\bibcitem{Content:2020tl}
+	\bibcitem{Content:2003ug}
+	\bibcitem{Emoticon:2003ur}
+	\bibcitem{Emoticon:2018ws}
+	\bibcitem{Heavy:2018ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection from_a_dictionary (end)
+% section entries_in_reference_works (end)
+
+\subsection{Films and Videos} % (fold)
+\label{sec:films_and_videos}
+\subsubsection{With One Publisher} % (fold)
+\label{sub:with_one_publisher}
+\begin{refsection}
+	\bibcitem{OpeningNight:tf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_one_publisher (end)
+\subsubsection{With Copublishers} % (fold)
+\label{sub:with_copublishers}
+\begin{refsection}
+	\bibcitem{Sairat:vz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_copublishers (end)
+\subsubsection{Foreign Language Film with Original Title Given Optionally} % (fold)
+\label{sub:foreign_language_film_with_original_title_given_optionally}
+\begin{refsection}
+	\bibcitem{LikeWater:1993:og}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection foreign_language_film_with_original_title_given_optionally (end)
+\subsubsection{With Original Release Date Given as Supplemental Element} % (fold)
+\label{sub:with_original_release_date_given_as_supplemental_element}
+\begin{refsection}
+	\bibcitem{BladeRunner::1992tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_original_release_date_given_as_supplemental_element (end)
+\subsubsection{Viewed through an App} % (fold)
+\label{sub:film_viewed_through_an_app}
+\begin{refsection}
+	\bibcitem{ET:1982:vj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection film_viewed_through_an_app (end)
+\subsubsection{Uploaded to a Sharing Site} % (fold)
+\label{sub:uploaded_to_a_sharing_site}
+\begin{refsection}
+	\bibcitem{WhatIsMLA:2016:wq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection uploaded_to_a_sharing_site (end)
+% section films_and_videos (end)
+\subsection{Television Episodes} % (fold)
+\label{sec:television_episodes}
+\subsubsection{Viewed as a Television Broadcast} % (fold)
+\label{sub:viewed_as_a_television_broadcast}
+\begin{refsection}
+	\bibcitem{Hush:1999:vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection viewed_as_a_television_broadcast (end)
+\subsubsection{Viewed on a Website} % (fold)
+\label{sub:tv_viewed_on_a_website}
+\begin{refsection}
+	\bibcitem{IBorg:1992:wz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection tv_viewed_on_a_website (end)
+\subsubsection{Viewed on Physical Media} % (fold)
+\label{sub:tv_viewed_on_physical_media}
+\begin{refsection}
+	\bibcitem{Hush:1999:vg}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection tv_viewed_on_physical_media (end)
+\subsubsection{Viewed through an App} % (fold)
+\label{sub:tv_viewed_through_an_app}
+\begin{refsection}
+	\bibcitem{NewNormal:2016:vi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection tv_viewed_through_an_app (end)
+\subsubsection{Without an Episode Title} % (fold)
+\label{sub:without_an_episode_title}
+\begin{refsection}
+	\bibcitem{Fleabag:2019:tq}
+	\bibcitem{Jeopardy:2019:td}
+	\bibcitem{SaturdayNight:2019:vu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection without_an_episode_title (end)
+% section television_episodes (end)
+
+\subsection{Audiovisual Works} % (fold)
+\label{sec:audiovisual_works}
+\subsubsection{Audiobook} % (fold)
+\label{sub:audiobook}
+\begin{refsection}
+	\bibcitem{Lee:2014aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection audiobook (end)
+\subsubsection{Musical Recording} % (fold)
+\label{sub:musical_recording}
+\myparagraph{Album} % (fold)
+\label{ssub:album}
+Either set a |booktitle| with no |title|, or set |title| with  |entrysubtype={album}|.
+\begin{refsection}
+	\bibcitem{Beatles:aa}
+	\bibcitem{SigurRos:vq}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection album (end)
+\myparagraph{Song} % (fold)
+\label{ssub:song}
+\begin{refsection}
+	\bibcitem{Beyonce:ta}
+	\bibcitem{Lopez:tu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection song (end)
+\myparagraph{With medium of publication given in final supplemental element} % (fold)
+\label{ssub:with_medium_of_publication_given_in_final_supplemental_element}
+\begin{refsection}
+	\bibcitem{Schubert:wm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_medium_of_publication_given_in_final_supplemental_element (end)
+\myparagraph{With original recording date given in middle supplemental element} % (fold)
+\label{ssub:with_original_recording_date_given_in_middle_supplemental_element}
+\begin{refsection}
+	\bibcitem{Beethoven:ui}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_original_recording_date_given_in_middle_supplemental_element (end)
+% subsection musical_recording (end)
+\subsubsection{Literary Reading, Spoken-Word Recording, or Podcast} % (fold)
+\label{sub:literary_reading_spoken_word_recording_or_podcast}
+\myparagraph{With the same author and narrator} % (fold)
+\label{ssub:with_the_same_author_and_narrator}
+\begin{refsection}
+	\bibcitem{Li:ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_the_same_author_and_narrator (end)
+\myparagraph{With a different author and narrator} % (fold)
+\label{ssub:with_a_different_author_and_narrator}
+\begin{refsection}
+	\bibcitem{Chaucer:uf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_a_different_author_and_narrator (end)
+\myparagraph{With podcast specified as the version} % (fold)
+\label{ssub:with_podcast_specified_as_the_version}
+% subsubsection with_podcast_specified_as_the_version (end)
+\begin{refsection}
+	\bibcitem{YiyunLiReads:ub}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection literary_reading_spoken_word_recording_or_podcast (end)
+\subsubsection{Live Radio Broadcast} % (fold)
+\label{sub:live_radio_broadcast}
+\begin{refsection}
+	\bibcitem{PoeMusic:wi}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection live_radio_broadcast (end)
+\subsubsection{Art Exhibition} % (fold)
+\label{sub:art_exhibition}
+\begin{refsection}
+	\bibcitem{Cave:wf}
+	\bibcitem{Unbound:wy}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection art_exhibition (end)
+\subsubsection{Sculpture or Other Object} % (fold)
+\label{sub:sculpture_or_other_object}
+\myparagraph{With format given in final supplemental element} % (fold)
+\label{ssub:with_format_given_in_final_supplemental_element}
+\begin{refsection}
+	\bibcitem{Rodin:uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection with_format_given_in_final_supplemental_element (end)
+\myparagraph{Untitled} % (fold)
+\label{ssub:untitled_sculpture}
+\begin{refsection}
+	\bibcitem{JarWithSerpent:xv}
+	\bibcitem{Mackintosh:wj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection untitled_sculpture (end)
+% subsection sculpture_or_other_object (end)
+\subsubsection{Painting} % (fold)
+\label{sub:painting}
+\myparagraph{Viewed firsthand} % (fold)
+\label{ssub:painting_viewed_firsthand}
+\begin{refsection}
+	\bibcitem{Bearden:vp}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection painting_viewed_firsthand (end)
+\myparagraph{Viewed online} % (fold)
+\label{ssub:painting_viewed_online}\index{online!artwork}
+\begin{refsection}\citereset
+	\bibcitem{Bearden:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection painting_viewed_online (end)
+\myparagraph{Viewed in a book} % (fold)
+\label{ssub:painting_viewed_in_a_book}
+\begin{refsection}\citereset
+	\bibcitem{Velazquez:2016ud}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection painting_viewed_in_a_book (end)
+% subsection painting (end)
+\subsubsection{Photograph} % (fold)
+\label{sub:photograph}
+\myparagraph{Viewed firsthand} % (fold)
+\label{ssub:photo_viewed_firsthand}
+\begin{refsection}
+	\bibcitem{Cameron:wo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection photo_viewed_firsthand (end)
+\myparagraph{Viewed online} % (fold)
+\label{ssub:photo_viewed_online}\index{online!artwork}
+\begin{refsection}
+	\bibcitem{Sheldon:tr}
+	\bibinclude{sheldon2014}% platypus - Something's messed up with this entry
+	\bibcitem{Silver:tj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection photo_viewed_online (end)
+% subsection photograph (end)
+\subsubsection{Illustrated Work or Cartoon} % (fold)
+\label{sub:illustrated_work_or_cartoon}
+\begin{refsection}
+	\bibcitem{Beaton:vx}
+	\bibcitem{Karasik:vt}
+	\bibcitem{Trudeau:tx}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection illustrated_work_or_cartoon (end)
+\subsubsection{Slides} % (fold)
+\label{sub:slides}
+\begin{refsection}
+	\bibcitem{Benton:wd}
+	\bibcitem{Monet:ug}
+	\bibcitem{SlideLinus:wh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection slides (end)
+% section audiovisual_works (end)
+
+\subsection{Text Accompanying Audio and Visual Works} % (fold)
+\label{sec:text_accompanying_audio_and_visual_works}
+\subsubsection{ Accompanying Audio Works (Including Liner Notes)} % (fold)
+\label{sub:_accompanying_audio_works_including_liner_notes}
+\begin{refsection}
+	\bibcitem{Beyonce:2013ta}
+	\printbibliography[heading=none]
+\end{refsection}
+\myparagraph{Titled, with format given in final supplemental element} % (fold)
+\label{ssub:titled_with_format_given_in_final_supplemental_element}
+\begin{refsection}
+	\bibcitem{Clapton:1990va}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection titled_with_format_given_in_final_supplemental_element (end)
+\myparagraph{Untitled} % (fold)
+\label{ssub:untitled}
+\begin{refsection}
+	\bibcitem{Race:1959aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection untitled (end)
+\myparagraph{Undated} % (fold)
+\label{ssub:undated}
+\begin{refsection}
+	\bibcitem{Lewiston:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection undated (end)
+\myparagraph{Unsigned (anonymous)} % (fold)
+\label{ssub:unsigned_anonymous}
+\begin{refsection}
+	\bibcitem{anon:1994ti}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection unsigned_anonymous (end)
+% subsection _accompanying_audio_works_including_liner_notes (end)
+\subsubsection{Museum Wall Text} % (fold)
+\label{sub:museum_wall_text}
+\begin{refsection}
+	\bibcitem{textWarrior:2016wb}
+	\bibcitem{textJarSerpent:tm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection museum_wall_text (end)
+% section text_accompanying_audio_and_visual_works (end)
+
+\subsection{Librettos and Musical Scores} % (fold)
+\label{sec:librettos_and_musical_scores}
+\begin{refsection}
+	\bibcitem{Clyne:2012td}
+	\bibcitem{Oakes:2004wa}
+	\printbibliography[heading=none]
+\end{refsection}
+% section librettos_and_musical_scores (end)
+
+\subsection{Performances} % (fold)
+\label{sec:performances}
+\subsubsection{Play} % (fold)
+\label{sub:play_performance}
+\begin{refsection}
+	\bibcitem{Shaw:2006vz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection play_performance (end)
+\subsubsection{Concert} % (fold)
+\label{sub:concert}
+\begin{refsection}
+	\bibcitem{Beyonce:2016vj}
+	\bibcitem{Lynn:2016wu}
+	\bibcitem{SingMe:2019vl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection concert (end)
+\subsubsection{Dance} % (fold)
+\label{sub:dance}
+\begin{refsection}
+	\bibcitem{Brown:2019uj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection dance (end)
+\subsubsection{Performance Art} % (fold)
+\label{sub:performance_art}
+\begin{refsection}
+	\bibcitem{Alys:2002un}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection performance_art (end)
+
+% section performances (end)
+
+\subsection{Live Presentations (Lectures, Talks, Conference Presentations, and Speeches)} % (fold)
+\label{sec:live_presentations_lectures_talks_conference_presentations_and_speeches}
+\begin{refsection}
+	\bibcitem{Atwood:1993tp}
+	\bibcitem{Ford:2016vm}
+	\printbibliography[heading=none]
+\end{refsection}
+\subsubsection{Video Recording of Live Presentation} % (fold)
+\label{sub:video_recording_of_live_presentation}
+\begin{refsection}
+	\bibcitem{Allende:2007vc}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection video_recording_of_live_presentation (end)
+\subsubsection{Transcript or Captioning of Live Presentation Accompanying Video Recording} % (fold)
+\label{sub:transcript_or_captioning_of_live_presentation_accompanying_video_recording}
+\citereset
+\begin{refsection}
+	\bibcitem{Allende:2007bw}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection transcript_or_captioning_of_live_presentation_accompanying_video_recording (end)
+\subsubsection{Transcript of Live Presentation Published without Accompanying Audio or Video} % (fold)
+\label{sub:transcript_of_live_presentation_published_without_accompanying_audio_or_video}
+\begin{refsection}
+	\bibcitem{Scholes:2005uk}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection transcript_of_live_presentation_published_without_accompanying_audio_or_video (end)
+% section live_presentations_lectures_talks_conference_presentations_and_speeches (end)
+
+\subsection{Interviews} % (fold)
+\label{sec:interviews}\index{interview|(}
+\subsubsection{Interviewer’s Name Not Given} % (fold)
+\label{sub:interviewer_s_name_not_given}
+\begin{refsection}
+	\bibcitem{Nguyen:un}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection interviewer_s_name_not_given (end)
+\subsubsection{Interviewer’s Name Given} % (fold)
+\label{sub:interviewer_s_name_given}
+\begin{refsection}
+	\bibcitem{Bacon:2016aa}
+	\bibcitem{SaroWiwa:2001wt}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection interviewer_s_name_given (end)
+\subsubsection{Unpublished} % (fold)
+\label{sub:unpublished_interview}\index{unpublished}
+\begin{refsection}
+	\bibcitem{Salter:uc}
+	\bibcitem{Wexler:wj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection unpublished_interview (end)
+\index{interview|)}
+% section interviews (end)
+
+\subsection{Personal Communications} % (fold)
+\label{sec:personal_communications}
+\begin{refsection}
+	\bibcitem{Santiago:to}
+	\printbibliography[heading=none]
+\end{refsection}
+% section personal_communications (end)
+
+\subsection{Letters} % (fold)
+\label{sec:letters}
+\subsubsection{Published} % (fold)
+\label{sub:published}
+\myparagraph{In a book} % (fold)
+\label{ssub:in_a_book}
+\begin{refsection}
+	\bibcitem{Woolf:1976wl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection in_a_book (end)
+\myparagraph{To the editor, published in a news publication} % (fold)
+\label{ssub:to_the_editor_published_in_a_news_publication}
+\begin{refsection}
+	\bibcitem{Malone:vp}
+	\bibcitem{Schlesinger:wm}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection to_the_editor_published_in_a_news_publication (end)
+% subsection published (end)
+\subsubsection{Unpublished} % (fold)
+\label{sub:unpublished_news}
+\myparagraph{In a personal collection} % (fold)
+\label{ssub:in_a_personal_collection}
+\begin{refsection}
+	\bibcitem{Apfelbaum:un}
+	\bibcitem{Murrow:vv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection in_a_personal_collection (end)
+\myparagraph{In an archive} % (fold)
+\label{ssub:in_an_archive}
+\begin{refsection}
+	\bibcitem{Benton:ve}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection in_an_archive (end)
+% subsection unpublished_news (end)
+% section letters (end)
+
+\subsection{E-mails and Text Messages} % (fold)
+\label{sec:e_mails_and_text_messages}
+\begin{refsection}
+	\bibcitem{Elahi:vi}
+	\bibcitem{Lemuelson:uu}
+	\bibcitem{Pierson:vf}
+	\bibcitem{Zamora:ui}
+	\printbibliography[heading=none]
+\end{refsection}
+% section e_mails_and_text_messages (end)
+
+\subsection{E-mail Newsletters} % (fold)
+\label{sec:e_mail_newsletters}
+\begin{refsection}
+	\bibcitem{MemberSuccess:ws}
+	\printbibliography[heading=none]
+\end{refsection}
+% section e_mail_newsletters (end)
+
+\subsection{Press Releases} % (fold)
+\label{sec:press_releases}
+\begin{refsection}
+	\bibcitem{splcJoins:ws}
+	\printbibliography[heading=none]
+\end{refsection}
+% section press_releases (end)
+
+\subsection{Advertisements} % (fold)
+\label{sec:advertisements}
+\subsubsection{Filmed Commercial} % (fold)
+\label{sub:filmed_commercial}
+\begin{refsection}
+	\bibcitem{AirCanada:us}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection filmed_commercial (end)
+\subsubsection{Print Advertisement} % (fold)
+\label{sub:print_advertisement}
+\begin{refsection}
+	\bibcitem{AdUpton:vl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection print_advertisement (end)
+\subsubsection{Billboard} % (fold)
+\label{sub:billboard}
+\begin{refsection}
+	\bibcitem{AdSchool:tv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection billboard (end)
+\subsubsection{Digital Advertisement} % (fold)
+\label{sub:digital_advertisement}
+\begin{refsection}
+	\bibcitem{AdNewYorker:ty}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection digital_advertisement (end)
+% section advertisements (end)
+
+\subsection{Reports} % (fold)
+\label{sec:reports}
+\subsubsection{Written and Published by the Same Organization} % (fold)
+\label{sub:written_and_published_by_the_same_organization}
+\begin{refsection}
+	\bibcitem{ReadingRisk:vu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection written_and_published_by_the_same_organization (end)
+\subsubsection{With a Different Author and Publisher} % (fold)
+\label{sub:with_a_different_author_and_publisher}
+\begin{refsection}
+	\bibcitem{Powell:wl}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_different_author_and_publisher (end)
+\subsubsection{Executive Summary} % (fold)
+\label{sub:executive_summary}
+\begin{refsection}
+	\bibcitem{ExecutiveSummary:we}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection executive_summary (end)
+% section reports (end)
+
+\subsection{Scripture} % (fold)
+\label{sec:scripture}
+\subsubsection{With a General Editor} % (fold)
+\label{sub:with_a_general_editor}
+\begin{refsection}
+	\bibcitem{NJBible:1985va}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_general_editor (end)
+\subsubsection{With a Translator Specified} % (fold)
+\label{sub:with_a_translator_specified}
+\begin{refsection}
+	\bibcitem{Quran:2015uz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection with_a_translator_specified (end)
+\subsubsection{In a Named Version} % (fold)
+\label{sub:in_a_named_version}
+\begin{refsection}
+	\bibcitem{KJVBible:1998wf}
+	\bibcitem{DRABible:1899wf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection in_a_named_version (end)
+\subsubsection{Published in an App} % (fold)
+\label{sub:published_in_an_app_script}
+\begin{refsection}
+	\bibcitem{TecartaBible:wf}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection published_in_an_app_script (end)
+% section scripture (end)
+
+\subsection{Dissertations and Theses} % (fold)
+\label{sec:dissertations_and_theses}
+\begin{refsection}
+	\AtNextBibliography{\renewbibmacro*{bbx:savehash}{}}
+	\bibcitem{Njus:2010vc}
+	\bibcitem{Njus:2010aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% \AtNextBibliography{\renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
+% section dissertations_and_theses (end)
+
+\subsection{Brochures and Pamphlets} % (fold)
+\label{sec:brochures_and_pamphlets}
+\begin{refsection}
+	\bibcitem{Language:vu}
+	\bibcitem{WashingtonDC:2000ti}
+	\printbibliography[heading=none]
+\end{refsection}
+% section brochures_and_pamphlets (end)
+
+\subsection{Maps, Charts, and Tables} % (fold)
+\label{sec:maps_charts_and_tables}
+\begin{refsection}
+	\bibcitem{JapaneseFundamentals:wy}
+	\bibcitem{Michigan:wk}
+	\bibcitem{TableCCCXI:vi}
+	\bibcitem{WesternBoundaries:vc}
+	\printbibliography[heading=none]
+\end{refsection}
+% section maps_charts_and_tables (end)
+
+\subsection{Unpublished Works} % (fold)
+\label{sec:unpublished_works}
+\subsubsection{Letter, Memo, or Other Written Communication} % (fold)
+\label{sub:letter_memo_or_other_written_communication}
+\begin{refsection}
+	\bibcitem{Benton:ve}
+	\bibcitem{Cahill:wq}
+	\bibcitem{Murrow:vv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection letter_memo_or_other_written_communication (end)
+\subsubsection{Interview} % (fold)
+\label{sub:interview}
+\begin{refsection}
+	\bibcitem{Sternberg:ta}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection interview (end)
+\subsubsection{Forthcoming Work} % (fold)
+\label{sub:forthcoming_work}
+\begin{refsection}
+	\bibcitem{Jespersen:wd}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection forthcoming_work (end)
+\subsubsection{Essay Manuscript} % (fold)
+\label{sub:essay_manuscript}
+\begin{refsection}
+	\bibcitem{Moskowitz:wb}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection essay_manuscript (end)
+\subsubsection{Book Manuscript} % (fold)
+\label{sub:book_manuscript}
+\begin{refsection}
+	\bibcitem{Jones:vh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection book_manuscript (end)
+\subsubsection{Manuscript in an Archive} % (fold)
+\label{sub:manuscript_in_an_archive}
+\begin{refsection}
+	\bibcitem{Auden:wg}
+	\bibcitem{Benton:ve}
+	\bibcitem{Dickinson:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection manuscript_in_an_archive (end)
+\subsubsection{Classroom Materials} % (fold)
+\label{sub:classroom_materials}
+\subsubsection{Syllabus} % (fold)
+\label{sub:syllabus}
+\begin{refsection}
+	\bibcitem{SocialNetworking:vj}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection syllabus (end)
+\myparagraph{On a learning management system} % (fold)
+\label{ssub:on_a_learning_management_system}
+\begin{refsection}
+	\bibcitem{DigitalMediaTheory:uo}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection on_a_learning_management_system (end)
+\myparagraph{In a printed course pack} % (fold)
+\label{ssub:in_a_printed_course_pack}
+\begin{refsection}
+	\bibcitem{Jackson:uh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection in_a_printed_course_pack (end)
+% subsection classroom_materials (end)
+
+% section unpublished_works (end)
+
+\subsection{Works Published Informally in a Repository or Preprint Server} % (fold)
+\label{sec:works_published_informally_in_a_repository_or_preprint_server}
+\begin{refsection}
+	\bibcitem{Glass:2018wx}
+	\bibcitem{Lawson:tw}
+	\bibcitem{Wang:wj}
+	\printbibliography[heading=none]
+\end{refsection}
+% section works_published_informally_in_a_repository_or_preprint_server (end)
+
+\subsection{Digital Media} % (fold)
+\label{sec:digital_media}
+\subsubsection{Video Game} % (fold)
+\label{sub:video_game}
+\begin{refsection}
+	\bibcitem{AngryBirds:2016vs}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection video_game (end)
+\subsubsection{Virtual Reality Experience} % (fold)
+\label{sub:virtual_reality_experience}
+\begin{refsection}
+	\bibcitem{VidaSystems:2020ua}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection virtual_reality_experience (end)
+% section digital_media (end)
+
+\subsection{Works Missing Publication Information} % (fold)
+\label{sec:works_missing_publication_information}
+\subsubsection{Without an Author} % (fold)
+\label{sub:without_an_author}
+\begin{refsection}
+	\bibcitem{Beowulf:2004th}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection without_an_author (end)
+\subsubsection{Untitled} % (fold)
+\label{sub:untitled}
+\myparagraph{Description in Title of Source element} % (fold)
+\label{ssub:description_in_title_of_source_element}
+\begin{refsection}
+	\bibcitem{Boyd:1992aa}
+	\bibcitem{YouWill:aa}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection description_in_title_of_source_element (end)
+\myparagraph{Poem with first line used as title} % (fold)
+\label{ssub:poem_with_first_line_used_as_title}
+\begin{refsection}
+	\bibcitem{Dickinson:1999uv}
+	\printbibliography[heading=none]
+\end{refsection}
+
+% subsubsection poem_with_first_line_used_as_title (end)
+% subsection untitled (end)
+\subsubsection{Without a Publisher} % (fold)
+\label{sub:without_a_publisher}
+\begin{refsection}
+	\bibcitem{Hocking:2010tz}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection without_a_publisher (end)
+\subsubsection{Without a Date of Publication} % (fold)
+\label{sub:without_a_date_of_publication}
+\begin{refsection}
+	\AtNextBibliography{\renewbibmacro*{bbx:savehash}{}}
+	\bibcitem{Bauer:ui}
+	\bibcitem{Bauer:1971ui}
+	\bibcitem{Language:vu}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection without_a_date_of_publication (end)
+\subsubsection{Without Page Numbers} % (fold)
+\label{sub:without_page_numbers}
+\begin{refsection}
+	\bibcitem{UnitedNationsGeneralAssembly:1948uv}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsection without_page_numbers (end)
+
+% section works_missing_publication_information (end)
+
+
+\subsection{Unfinished Entries from the \emph{Handbook}} % (fold)
+\label{sec:remaining_sections}
+
+This documentation is yet incomplete, when compared to the entries in Appendix 2 of the \emph{MLA Handbook}. Although not shown above, some source types below may already be supported in \texttt{biblatex-mla} by modifying existing example entries.
+
+\begin{multicols}{2}
+\begin{enumerate}
+	
+	\setcounter{enumi}{32}
+	\item Government Publications
+	\begin{itemize}
+		\item With Government Name as It Appears on Source
+		\item With Government Name Standardized to Consolidate Entries
+	\end{itemize}
+	
+	\item Legal Works
+	\begin{itemize}
+		\item United States Supreme Court
+		\begin{itemize}
+			\item Decisions
+			\item Dissenting opinions
+		\end{itemize}
+		\item Federal Statutes (United States Code)
+		\item Public Laws
+		\item Federal Appeals Court Decisions
+		\item Federal Bills
+		\item Hearings
+		\item Executive Orders
+		\item State Court of Appeals, Unpublished Decisions
+		\item State Senate Bills
+		\item Constitutions
+		\item Treaties
+		\item Resolutions of International Governing Bodies
+	\end{itemize}
+	
+\end{enumerate}
+\end{multicols}
+% subsection unfinished_entries (end)
+
+\subsection{Undocumented in the \emph{Handbook}} % (fold)
+\label{sub:undocumented_in_the_emph_handbook}
+\subsubsection{Patents} % (fold)
+\label{ssub:patents}
+\begin{refsection}
+	\bibcitem{almendro:1998fg}
+	\bibcitem{kowalik:1995qw}
+	\bibcitem{laufenberg:2006py}
+	\bibcitem{sorace:1997gh}
+	\printbibliography[heading=none]
+\end{refsection}
+% subsubsection patents (end)
+% subsection undocumented_in_the_emph_handbook (end)
+
+% section sample_bibtex_entries_and_output (end)
+
+%%%%%%%
 
 \end{document}

@@ -1,11 +1,11 @@
-% mla.cbx, v2.1 2021/10/31 * compatible with biblatex 3.16
+% mla.cbx, v2.1a 2022/02/22 * compatible with biblatex 3.16
 % Maintained at <https://github.com/jmclawson/biblatex-mla>.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements back to the project on GitHub or to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla.cbx}[2021/10/31 v2.1 biblatex citation style]
+\ProvidesFile{mla.cbx}[2022/02/22 v2.1a biblatex citation style]
 
 \RequireCitationStyle{mla-footnotes}
 
@@ -40,7 +40,7 @@
     \xdef\split@prev{\the\insertpenalties}%
   }}
 
-\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=comp,urldate=long,mancitepar=false,datezeros=false,datecirca=true,eprint=true}%
+\ExecuteBibliographyOptions{citetracker=true,ibidtracker=constrict,opcittracker=constrict,singletitle,autocite=inline,uniquename=init,hyperref=true,useprefix=true,firstlonghand,annotation=false,loccittracker=strict,noremoteinfo=true,date=comp,urldate=long,mancitepar=false,datezeros=false,datecirca=true,dateuncertain=true,eprint=true,abbreviate=false}%
 
 \newbool{cbx@named}%
 \newbool{cbx@mlafootnotes}%
@@ -66,7 +66,7 @@
      \blx@idemreset@force
      \blx@opcitreset@force
      \blx@loccitreset@force}
-	 \global\undef\bbx@lasthash}}% 2.1 last part added
+	 \global\undef\bbx@lasthash}% 2.1 last part added
 
 % 2.1 adding citeauthor tracking for full / partial names
 \newrobustcmd*{\cbx@nametracker@global}[1]{%
@@ -223,7 +223,9 @@
 	  {\printtext[bibhyperref]{\printfield[citetitle:\strfield{entrysubtype}]{labeltitle}}\clearfield{title}}%
 	  {\iffieldequalstr{entrysubtype}{untitled}%
 	    {\printtext[bibhyperref]{\printfield[noformat]{labeltitle}}}%
-		{\printtext[bibhyperref]{\printfield[citetitle:\strfield{entrytype}]{labeltitle}}}}}}
+		{\iffieldequalstr{entrytype}{online}% 2.1 format online titles by entrysubtype
+		  {\printtext[bibhyperref]{\printfield[citetitle:online:\strfield{entrysubtype}]{labeltitle}}}
+		  {\printtext[bibhyperref]{\printfield[citetitle:\strfield{entrytype}]{labeltitle}}}}}}}
 
 \newbibmacro*{cite:mla:title}{%
   \ifnameundef{labelname}%
@@ -307,21 +309,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareFieldFormat{citetitle:article}{\mkbibquote{#1}}
-\DeclareFieldFormat{citetitle:inreference}{\mkbibquote{#1}}
 \DeclareFieldFormat{citetitle:book}{\mkbibemph{#1}}
 \DeclareFieldFormat{citetitle:bookinbook}{\mkbibemph{#1}}% NEW in 2.0
 \DeclareFieldFormat{citetitle:booklet}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:collection}{\mkbibemph{#1}}%
-\DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}%
-\DeclareFieldFormat{citetitle:incollection}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:dataset}{\mkbibquote{#1}}% NEW in 2.1
+\DeclareFieldFormat{citetitle:image}{#1}% 2.1 finally styled right
 \DeclareFieldFormat{citetitle:inbook}{\mkbibquote{#1}}% NEW in 2.0
+\DeclareFieldFormat{citetitle:incollection}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:inproceedings}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:inreference}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:misc}{#1}% 2.1 finally styled right
 \DeclareFieldFormat{citetitle:mvbook}{\mkbibemph{#1}}% NEW in 2.0
 \DeclareFieldFormat{citetitle:online}{\mkbibquote{#1}}%
-\DeclareFieldFormat{citetitle:inproceedings}{\mkbibquote{#1}}
-\DeclareFieldFormat{citetitle:unpublished}{\mkbibquote{#1}}
-\DeclareFieldFormat{citetitle:thesis}{\mkbibquote{#1}}
-\DeclareFieldFormat{citetitle:video}{\mkbibemph{#1}}
+\DeclareFieldFormat{citetitle:online:website}{\mkbibemph{#1}}%
+\DeclareFieldFormat{citetitle:performance}{\mkbibemph{#1}}% NEW in 2.1
+\DeclareFieldFormat{citetitle:reference}{\mkbibemph{#1}}%
 \DeclareFieldFormat{citetitle:review}{\mkbibquote{#1}}%
+\DeclareFieldFormat{citetitle:software}{\mkbibemph{#1}}% NEW in 2.1
+\DeclareFieldFormat{citetitle:thesis}{\mkbibquote{#1}}
+\DeclareFieldFormat{citetitle:unpublished}{\mkbibquote{#1}}% fixme still needs work for unstyled types
+\DeclareFieldFormat{citetitle:video}{\mkbibemph{#1}}
 \DeclareFieldFormat{mla:lowercase}{\MakeLowercase{#1}}%
 \DeclareFieldFormat[mlasource]{mla:unstyled}{#1\unspace}%
 \DeclareFieldFormat[mlasource]{mla:complete}{\mkbibemph{#1}\unspace}%
@@ -550,11 +558,7 @@
   {\ifciteindex
      {\indexfield{indextitle}}
      {}%
-   \ifthenelse{\iffieldequalstr{entrytype}{unpublished}%
-   			   \AND\NOT%
-   			   \iffieldundef{entrysubtype}}%
-     {\printfield[citetitle:\strfield{entrysubtype}]{labeltitle}}%
-	 {\printfield[citetitle]{labeltitle}}}
+   \usebibmacro{just:title:it}}% 2.1 simplified
   {\multicitedelim}
   {\usebibmacro{postnote}}
 
@@ -565,11 +569,7 @@
   {\ifciteindex
      {\indexfield{indextitle}}
      {}%
-   \ifthenelse{\iffieldequalstr{entrytype}{unpublished}%
-   			   \AND\NOT%
-   			   \iffieldundef{entrysubtype}}%
-     {\printfield[citetitle:\strfield{entrysubtype}]{title}}%
-	 {\printfield[citetitle]{title}}}%
+   \usebibmacro{just:title:it}}% 2.1 simplified
   {\multicitedelim}
   {\usebibmacro{postnote}}
 

@@ -1,6 +1,6 @@
-% english-mla.lbx v2.1 2021/10/31
+% english-mla.lbx v2.1a 2022/02/22
 
-\ProvidesFile{english-mla.lbx}[2021/10/31 v2.1 biblatex style localization] 
+\ProvidesFile{english-mla.lbx}[2022/02/22 v2.1a biblatex style localization] 
 \InheritBibliographyExtras{english}
 
 \DeclareBibliographyExtras{%
@@ -32,129 +32,130 @@
       {\mkmonthzeros{\thefield{#2}}%
        \iffieldundef{#1}{}{/}}%
     \mkyearzeros{\thefield{#1}}}%
+    \blx@kv@setkeys{blx@opt@pre}{time=12h}%
 }
+
+% \ExecuteBibliographyOptions{time=12h}
 
 \DeclareBibliographyStrings{% 
   inherit          = {english},
+  % bycompiler       = {{compiled by}{comp\adddotspace by}},% 2.1 accept provided definitions where possible
+  % byeditor         = {{edited by}{edited by}},% 
+  % byeditoran       = {{edited and annotated by}{edited and annotated by}},
+  % circa            = {{circa}{ca\adddot}},
+  % composedby       = {{composed~by}{composed~by}},
+  % editor           = {{editor}{editor}},
+  % editors           = {{editors}{editors}},
+  % newseries        = {{new series}{new series}}, 
+  % oldseries        = {{old series}{old series}},
+  % reprintof        = {{reprint of}{rpt\adddotspace of}},
+  % reviewof         = {{review of}{review of}},
+  % translator        = {{translator}{translator}},%
+  % translators       = {{translators}{translators}},%
+  % transof          = {{translation of}{translation of}}, 2.1 replace with translationof
+  adaptation       = {{adapt\adddot}{adapt\adddot}},
+  adaptor          = {{adapt\adddot}{adapt\adddot}},
+  am               = {{a.m\adddot}{a.m\adddot}},% changed in 2.1
   bibliography     = {{Works Cited}{Works Cited}},
-  references       = {{Works Cited}{Works Cited}},
-  editor           = {{editor}{editor}},% 2.1
-  editors           = {{editors}{editors}},% 2.1
-  translator        = {{translator}{translator}},% 2.1
-  translators       = {{translators}{translators}},% 2.1
-  bycompiler = {{compiled~by}{compiled~by}},% 2.1
-  compilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},% 0.95
-  bycompilerandeditor = {{compiled and edited by}{compiled and edited by}},% 0.95
-  % typecompilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},% 0.7
-  % bytypecompilerandeditor = {{compiled and edited by}{comp\adddotspace and ed\adddot}},% 0.7
-  % typegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
-  % bytypegeneraleditor = {{general editor}{gen\adddotspace ed\adddot}},% 0.7.1
-  generaleditor    = {{gen\adddot ed\adddot}{general editor}},
-  bytranslator     = {{translated by}{translated by}},
-  byeditor         = {{edited by}{edited by}},
-  bydirector       = {{directed by}{directed by}},
-  byscreenplay     = {{screenplay by}{screenplay by}},%2.1
-  bycreator        = {{created by}{created by}},%2.1
-  byconductor      = {{conducted by}{conducted by}},%2.1
-  byhost           = {{hosted by}{hosted by}},%2.1
-  % byserieseditor   = {{general editor}{general editor}},% not used?
-  % page             = {{\unskip}{\unskip}},
-  % pages            = {{\unskip}{\unskip}},
-  byeditortr       = {{ed\adddotspace and trans\adddot}{edited and translated by}},% 2.1 FIXME: probably change ALL by* types
-  byeditorco       = {{ed\adddotspace and comm\adddot}{ed\adddotspace and comm\adddot}},
-  byeditoran       = {{ed\adddotspace and annot\adddot}{ed\adddotspace and annot\adddot}},
-  byeditorin       = {{ed\adddotspace and introd\adddot}{edited and introduced by}},
-  byeditorfo       = {{ed\adddotspace and forew\adddot}{ed\adddotspace and forew\adddot}},
-  byeditoraf       = {{ed\adddotspace and afterw\adddot}{ed\adddotspace and afterw\adddot}},
-  byeditortrco     = {{ed, trans\adddot, and comm\adddot}{ed, trans\adddot, and comm\adddot}},
-  byeditortran     = {{ed, trans\adddot, and annot\adddot}{ed, trans\adddot, and annot\adddot}},
-  byeditortrin     = {{ed, trans\adddot, and introd\adddot}{ed, trans\adddot, and introd\adddot}},
-  byeditortrfo     = {{ed, trans\adddot, and forew\adddot}{ed, trans\adddot, and forew\adddot}},
-  byeditortraf     = {{ed, trans\adddot, and afterw\adddot}{ed, trans\adddot, and afterw\adddot}},
-  byeditorcoin     = {{ed, comm\adddot, and introd\adddot}{ed, comm\adddot, and introd\adddot}},
-  byeditorcofo     = {{ed, comm\adddot, and forew\adddot}{ed, comm\adddot, and forew\adddot}},
-  byeditorcoaf     = {{ed, comm\adddot, and afterw\adddot}{ed, comm\adddot, and afterw\adddot}},
-  byeditoranin     = {{ed, annot\adddot, and introd\adddot}{ed, annot\adddot, and introd\adddot}},
-  byeditoranfo     = {{ed, annot\adddot, and forew\adddot}{ed, annot\adddot, and forew\adddot}},
-  byeditoranaf     = {{ed, annot\adddot, and afterw\adddot}{ed, annot\adddot, and afterw\adddot}},
-  byeditortrcoin   = {{ed, trans\adddot, comm\adddot, and introd\adddot}{ed, trans\adddot, comm\adddot, and introd\adddot}},
-  byeditortrcofo   = {{ed, trans\adddot, comm\adddot, and forew\adddot}{ed, trans\adddot, comm\adddot, and forew\adddot}},
-  byeditortrcoaf   = {{ed, trans\adddot, comm\adddot, and afterw\adddot}{ed, trans\adddot, comm\adddot, and afterw\adddot}},
-  byeditortranin   = {{ed, trans\adddot, annot\adddot, and introd\adddot}{ed, trans\adddot, annot\adddot, and introd\adddot}},
-  byeditortranfo   = {{ed, trans\adddot, annot\adddot, and forew\adddot}{ed, trans\adddot, annot\adddot, and forew\adddot}},
-  byeditortranaf   = {{ed, trans\adddot, annot\adddot, and afterw\adddot}{ed, trans\adddot, annot\adddot, and afterw\adddot}},
-  bytranslatorco   = {{trans\adddotspace and comm\adddot}{trans\adddotspace and comm\adddot}},
-  bytranslatoran   = {{trans\adddotspace and annot\adddot}{trans\adddotspace and annot\adddot}},
-  bytranslatorin   = {{trans\adddotspace and introd\adddot}{trans\adddotspace and introd\adddot}},
-  bytranslatorfo   = {{trans\adddotspace and forew\adddot}{trans\adddotspace and forew\adddot}},
-  bytranslatoraf   = {{trans\adddotspace and afterw\adddot}{trans\adddotspace and afterw\adddot}},
-  bytranslatorcoin = {{trans\adddot, comm\adddot, and introd\adddot}{trans\adddot, comm\adddot, and introd\adddot}},
-  bytranslatorcofo = {{trans\adddot, comm\adddot, and forew\adddot}{trans\adddot, comm\adddot, and forew\adddot}},
-  bytranslatorcoaf = {{trans\adddot, comm\adddot, and afterw\adddot}{trans\adddot, comm\adddot, and afterw\adddot}},
-  bytranslatoranin = {{trans\adddot, annot\adddot, and introd\adddot}{trans\adddot, annot\adddot, and introd\adddot}},
-  bytranslatoranfo = {{trans\adddot, annot\adddot, and forew\adddot}{trans\adddot, annot\adddot, and forew\adddot}},
-  bytranslatoranaf = {{trans\adddot, annot\adddot, and afterw\adddot}{trans\adddot, annot\adddot, and afterw\adddot}},
-  circa            = {{ca\adddot}{circa}},
-  am               = {{a.m\adddot}{a.m\adddot}},% 2.1
-  pm               = {{p.m\adddot}{p.m\adddot}},% 2.1
-  newseries        = {{new series}{new series}},% 2.1
-  oldseries        = {{old series}{old series}},% 2.1
-  recorded         = {{recorded}{recorded}},% 2.1
-  reprintof        = {{reprint of}{rpt\adddotspace of}},% 0.7.1 fixed
-  phdthesis        = {{PhD dissertation}{PhD dissertation}},
-  reviewof         = {{review of}{review of}},
-  specissue        = {{special issue of}{special issue of}},
-  section          = {{sec\adddot}{sec\adddot}},
-  withcommentator  = {{comm\adddot}{comm\adddot}},
-  withannotator    = {{annot\adddot}{annot\adddot}},
-  withintroduction = {{introd\adddot}{introd\adddot}},
-  withforeword     = {{forew\adddot}{forew\adddot}},
-  withafterword    = {{afterw\adddot}{afterw\adddot}},
-  phd              = {{PhD dissertation}{PhD dissertation}},
-  dphil            = {{DPhil dissertation}{DPhil dissertation}},
+  bycompilerandeditor = {{compiled and edited by}{comp\adddotspace and ed\adddotspace by}},
+  bycomposer       = {{composed by}{composed by}},% new in 2.1
+  byconductor      = {{conducted by}{conduct\adddotspace by}},% new in 2.1
+  bycreator        = {{created by}{created by}},% new in 2.1
+  bydirector       = {{directed by}{dir\adddotspace by}},% new in 2.1
+  byeditoraf       = {{edited and with an afterword by}{ed\adddotspace and with an afterw\adddotspace by}},% changed in 2.1
+  byeditoranaf     = {{edited, annotated, and with an afterword by}{ed., annot., and afterw\adddotspace by}},% changed in 2.1
+  byeditoranfo     = {{edited, annotated, and with a foreword by}{ed., annot., and forew\adddotspace by}},% changed in 2.1
+  byeditoranin     = {{edited, annotated, and with an introduction by}{ed., annot., and introd\adddotspace by}},% changed in 2.1
+  byeditorco       = {{edited and with commentary by}{ed\adddotspace and with commentary by}},% changed in 2.1
+  byeditorcoaf     = {{edited and with commentary and afterword by}{ed\adddotspace and with commentary and afterw\adddotspace by}},% changed in 2.1
+  byeditorcofo     = {{edited and with foreword and commentary by}{ed\adddotspace and with commentary and forew\adddotspace by}},% changed in 2.1
+  byeditorcoin     = {{edited and with introduction and commentary by}{ed., introd., and with commentary by}},% changed in 2.1
+  byeditorfo       = {{edited and with a foreword by}{ed\adddotspace and forew\adddotspace by}},% changed in 2.1
+  byeditorin       = {{edited and with an introduction by}{edi\adddotspace and introd\adddotspace by}},% changed in 2.1
+  byeditortr       = {{edited and translated by}{ed\adddotspace and trans\adddotspace by}},% changed in 2.1
+  byeditortraf     = {{edited, translated, and with an afterword by}{ed., trans., and with afterw\adddotspace by}},% changed in 2.1
+  byeditortran     = {{edited, translated, and annotated by}{ed., trans., and annot\adddotspace by}},% changed in 2.1
+  byeditortranaf   = {{edited, translated, annotated, and with an afterword by}{ed., trans., annot., and with afterw\adddotspace by}},% changed in 2.1
+  byeditortranfo   = {{edited, translated, annotated, and with a foreword by}{ed., trans., annot., and with a forew\adddotspace by}},% changed in 2.1
+  byeditortranin   = {{edited, translated, annotated, and with an introduction by}{ed., trans., annot., and introd\adddotspace by}},% changed in 2.1
+  byeditortrco     = {{edited, translated, and with commentary by}{ed., trans., and with commentary by}},% changed in 2.1
+  byeditortrcoaf   = {{edited, translated, and with commentary and afterword by}{ed., trans., and with afterw\adddotspace and commentary by}},% changed in 2.1
+  byeditortrcofo   = {{edited, translated, and with a foreword and commentary by}{ed., trans., and with forew\adddotspace and commentary by}},% changed in 2.1
+  byeditortrcoin   = {{edited, translated, and with an introduction and commentary by}{ed., trans., introd., and with commentary by}},% changed in 2.1
+  byeditortrfo     = {{edited, translated, and with a foreword by}{ed., trans., and with forew\adddotspace by}},% changed in 2.1
+  byeditortrin     = {{edited, translated, and with an introduction by}{ed., trans., and introd\adddotspace by}},% changed in 2.1
+  byhost           = {{hosted by}{hosted by}},% new in 2.1
+  byinterviewer    = {{interview by}{interview by}},% new in 2.1
+  bynarrator       = {{narrated by}{narr\adddotspace by}},% new in 2.1
+  byperformer      = {{performed by}{perf\adddotspace by}},% new in 2.1
+  byscreenplay     = {{screenplay by}{screenplay by}},% new in 2.1
+  bytranslator     = {{translated by}{trans\adddotspace by}},
+  bytranslatoraf   = {{translated and with an afterword by}{trans\adddotspace and with afterw\adddotspace by}},% changed in 2.1
+  bytranslatoran   = {{translated and annotated by}{trans\adddotspace and annot\adddotspace by}},% changed in 2.1
+  bytranslatoranaf = {{translated, annotated, and with an afterword by}{trans., annot., and with afterw\adddotspace by}},% changed in 2.1
+  bytranslatoranfo = {{translated, annotated, and with a foreword by}{trans., annot., and with forew\adddotspace by}},% changed in 2.1
+  bytranslatoranin = {{translated, annotated, and with an introduction by}{trans., annot., and introd\adddotspace by}},% changed in 2.1
+  bytranslatorco   = {{translated and with commentary by}{trans\adddotspace and with commentary by}},% changed in 2.1
+  bytranslatorcoaf = {{translated and with an afterword and commentary by}{trans\adddotspace and with afterw\adddotspace and commentary by}},% changed in 2.1
+  bytranslatorcofo = {{translated and with a foreword and commentary by}{trans\adddotspace and with forew\adddotspace and commentary by}},% changed in 2.1
+  bytranslatorcoin = {{translated and with introduction and commentary by}{trans., introd., and with commentary by}},% changed in 2.1
+  bytranslatorfo   = {{translated and with a foreword by}{trans\adddotspace and forew\adddotspace by}},% changed in 2.1
+  bytranslatorin   = {{translated and with an introduction by}{trans\adddotspace and introd\adddotspace by}},% changed in 2.1
+  compilerandeditor = {{compiler and editor}{comp\adddotspace and ed\adddot}},
+  composer         = {{composer}{comp\adddot}},% changed in 2.1
+  conductor        = {{conductor}{cond\adddot}},% new in 2.1
+  creator          = {{creator}{creator}},% new in 2.1
+  director         = {{director}{dir\adddot}},% changed in 2.1
+  dphil            = {{DPhil dissertation}{DPhil diss\adddot}},
+  edition          = {{ed\adddot}{ed\adddot}},
+  generaleditor    = {{general editor}{general editor}},
+  host             = {{host}{host}},% new in 2.1
+  interviewer      = {{interviewer}{interviewer}},% new in 2.1
   lic              = {{Licentiate thesis}{Licentiate thesis}},
-  ma               = {{{MA} thesis}{{MA} thesis}},
-  ms               = {{{MS} thesis}{{MS} thesis}},
-  msc              = {{{MS}c thesis}{{MS}c thesis}},
-  mphil            = {{{MP}hil thesis}{{MP}hil thesis}},
-  mlitt            = {{{ML}itt thesis}{{ML}itt thesis}},
+  ma               = {{MA\addabbrvspace thesis}{MA\addabbrvspace thesis}},
   manuscript       = {{manuscript}{manuscript}},
+  mlitt            = {{MLitt\addabbrvspace thesis}{MLitt\addabbrvspace thesis}},
+  mphil            = {{MPhil\addabbrvspace thesis}{MPhil\addabbrvspace thesis}},
+  ms               = {{MS\addabbrvspace thesis}{MS\addabbrvspace thesis}},
+  msc              = {{MSc\addabbrvspace thesis}{MSc\addabbrvspace thesis}},
+  narrator         = {{narrator}{narr\adddot}},% new in 2.1
+  number           = {{no\adddot}{no\adddot}},% changed in 2.1
+  numbers          = {{nos\adddot}{nos\adddot}},% changed in 2.1
+  page             = {{p\adddot}{p\adddot}},
+  pages            = {{pp\adddot}{pp\adddot}},
   patentde         = {{Deutsches Patent- und Markenamt}{DE}},
   patenteu         = {{European Patent Office}{EU}},
   patentfr         = {{Institut National de la Propriété Industrielle}{FR}},
   patentuk         = {{The Intellectual Property Office of the United Kingdom}{UK}},
   patentus         = {{United States Patent and Trademark Office}{US}},
-  % patreq           = {{patent request}{pat\adddot\ req\adddot}},
-  % patreqde         = {{German patent request}{German pat\adddot\ req\adddot}},
-  % patreqeu         = {{European patent request}{European pat\adddot\ req\adddot}},
   patreqfr         = {{Institut National de la Propriété Industrielle}{FR pat\adddot req\adddot}},
-  % patrequk         = {{British patent request}{British pat\adddot\ req\adddot}},
-  % patrequs         = {{U.S\adddotspace patent request}{U.S\adddotspace pat\adddot\ req\adddot}},
-  typescript       = {{typescript}{typescript}},
-  director         = {{director}{director}},% 2.1
-  conductor        = {{conductor}{conductor}},% 2.1
-  creator          = {{creator}{creator}},% 2.1
-  host             = {{host}{host}},% 2.1
-  narrator         = {{narrator}{narrator}},% 2.1
-  screenplay       = {{screenplay}{screenplay}},
-  tvseason         = {{season}{season}},% 2.1
-  tvepisode        = {{episode}{episode}},% 2.1
-  adaptation       = {{adapt\adddot}{adapt\adddot}},
-  adaptor          = {{adapt\adddot}{adapt\adddot}},
-  performer        = {{perf\adddot}{perf\adddot}},
-  performers       = {{perf\adddot}{perf\adddot}},
-  composer         = {{composer}{composer}},
-  composedby       = {{composed~by}{composed~by}},
-  bynarrator       = {{narrated~by}{narrated~by}},% 2.1
-  numbers          = {{nos\adddot}{nos\adddot}},% 2.1
-  producer         = {{prod\adddot}{prod\adddot}},
-  with             = {{with}{with}},
+  performer        = {{performer}{perf\adddot}},% changed in 2.1
+  performers       = {{performers}{perf\adddot}},% changed in 2.1
+  phd              = {{PhD\addabbrvspace dissertation}{PhD\addabbrvspace diss\adddot}},
+  phdthesis        = {{PhD\addabbrvspace dissertation}{PhD\addabbrvspace diss\adddot}},
+  pm               = {{p.m\adddot}{p.m\adddot}},% changed in 2.1
+  print            = {{print}{print}},
   proceedings      = {{proc\adddot}{proc\adddot}},
-  transof          = {{translation of}{trans\adddotspace of}},% 0.7
-  volstodate       = {{volumes to date}{vols\adddotspace to date}},% 0.7.1
-  supptotitle      = {{to}{to}},% 0.7.1
-  print            = {{print}{print}},% 0.9
-  web              = {{web}{web}},% 0.9
+  producer         = {{prod\adddot}{prod\adddot}},
+  recorded         = {{recorded}{recorded}},% new in 2.1
+  references       = {{Works Cited}{Works Cited}},
+  screenplay       = {{screenplay}{screenplay}},
+  section          = {{sec\adddot}{sec\adddot}},
+  specissue        = {{special issue of}{special issue of}},% changed in 2.1
+  supptotitle      = {{to}{to}},
+  tvepisode        = {{episode}{episode}},% new in 2.1
+  tvseason         = {{season}{season}},% new in 2.1
+  typescript       = {{typescript}{typescript}},
+  urlseen          = {{accessed}{accessed}},% changed in 2.1
+  volstodate       = {{vols\adddotspace to date}{vols\adddotspace to date}},
+  volume           = {{vol\adddot}{vol\adddot}},% changed in 2.1
+  web              = {{web}{web}},
+  with             = {{with}{with}},
+  withafterword    = {{afterword by}{afterw\adddot}},% changed in 2.1
+  withannotator    = {{annotations by}{annot\adddot}},% changed in 2.1
+  withcommentator  = {{commentary by}{comm\adddot}},% changed in 2.1
+  withforeword     = {{foreword by}{forew\adddot}},% changed in 2.1
+  withintroduction = {{introduction by}{introd\adddot}},% changed in 2.1
 }%
 
 \protected\gdef\lbx@us@mkbibrangetrunc@long#1#2{%
@@ -174,10 +175,3 @@
 	    {\csuse{mkbibdate#1}{#2endyear}{#2endmonth}{#2endday}}}}}}
 
 \endinput
-
-% ignore the below. It's a reference for me so I don't continually need to 
-% teach myself regular expressions. -JC
-% 
-% regex for find and replace (moving from mla.bbx to localized modules)
-% find: {(.*?)},
-% replace: {{$1}{$1}},

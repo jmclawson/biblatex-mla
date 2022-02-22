@@ -1,12 +1,118 @@
-% spanish-mla.lbx v0.2.5 2013/03/24
+% spanish-mla.lbx v2.1a 2022/02/22
 % 
 % Spanish localization in this file provided by Ivan Fernandez.
 % Abbreviations taken, whenever possible, from Appendix 2 of the
 % Diccionario Panhispánico de Dudas, http://buscon.rae.es/dpdI/
 
-\ProvidesFile{spanish-mla.lbx}[2013/03/24 v0.2.5 biblatex style localization]
+\ProvidesFile{spanish-mla.lbx}[2022/02/22 v2.1a biblatex style localization]
 
 \InheritBibliographyExtras{spanish}
+
+\DeclareBibliographyStrings{%
+  inherit          = {spanish},
+  % andothers        = {{et~al\adddot}{et~al\adddot}},
+  % byeditor         = {{ed\adddot}{ed\adddot}},% 
+  % byeditoraf       = {{ed\adddotspace y ep\'{i}l\adddot}{ed\adddotspace y ep\'{i}l\adddot}},
+  % byeditoran       = {{ed\adddotspace y anot\adddot}{ed\adddotspace y anot\adddot}},
+  % byeditoranaf     = {{ed\adddot, anot\adddotspace y ep\'{i}l\adddot}{ed\adddot, anot\adddotspace y ep\'{i}l\adddot}},
+  % byeditoranfo     = {{ed\adddot, anot\adddotspace y pr\'{o}l\adddot}{ed\adddot, anot\adddotspace y pr\'{o}l\adddot}},
+  % byeditoranin     = {{ed\adddot, anot\adddotspace e introd\adddot}{ed\adddot, anot\adddotspace e introd\adddot}},
+  % byeditorco       = {{ed\adddotspace y com\adddot}{ed\adddotspace y com\adddot}},
+  % byeditorcoaf     = {{ed\adddot, com\adddotspace y ep\'{i}l\adddot}{ed\adddot, com\adddotspace y ep\'{i}l\adddot}},
+  % byeditorcofo     = {{ed\adddot, com\adddotspace y pr\'{o}l\adddot}{ed\adddot, com\adddotspace y pr\'{o}l\adddot}},
+  % byeditorcoin     = {{ed\adddot, com\adddotspace e introd\adddot}{ed\adddot, com\adddotspace e introd\adddot}},
+  % byeditorfo       = {{ed\adddotspace y pr\'{o}l\adddot}{ed\adddotspace y pr\'{o}l\adddot}},
+  % byeditorin       = {{ed\adddotspace y introd\adddot}{ed\adddotspace y introd\adddot}},
+  % byeditortr       = {{ed\adddotspace y trad\adddot}{ed\adddotspace y trad\adddot}},
+  % byeditortraf     = {{ed\adddot, trad\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddotspace y ep\'{i}l\adddot}},
+  % byeditortran     = {{ed\adddot, trad\adddotspace y anot\adddot}{ed\adddot, trad\adddotspace y anot\adddot}},
+  % byeditortranaf   = {{ed\adddot, trad\adddot, anot\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddot, anot\adddotspace y ep\'{i}l\adddot}},
+  % byeditortranfo   = {{ed\adddot, trad\adddot, anot\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddot, anot\adddotspace y pr\'{o}l\adddot}},
+  % byeditortranin   = {{ed\adddot, trad\adddot, anot\adddotspace e introd\adddot}{ed\adddot, trad\adddot, anot\adddotspace e introd\adddot}},
+  % byeditortrco     = {{ed\adddot, trad\adddotspace y com\adddot}{ed\adddot, trad\adddotspace y com\adddot}},
+  % byeditortrcoaf   = {{ed\adddot, trad\adddot, com\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddot, com\adddotspace y ep\'{i}l\adddot}},
+  % byeditortrcofo   = {{ed\adddot, trad\adddot, com\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddot, com\adddotspace y pr\'{o}l\adddot}},
+  % byeditortrcoin   = {{ed\adddot, trad\adddot, com\adddotspace e introd\adddot}{ed\adddot, trad\adddot, com\adddotspace e introd\adddot}},
+  % byeditortrfo     = {{ed\adddot, trad\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddotspace y pr\'{o}l\adddot}},
+  % byeditortrin     = {{ed\adddot, trad\adddotspace e introd\adddot}{ed\adddot, trad\adddotspace e introd\adddot}},
+  % bygeneraleditor  = {{editor general}{ed\adddotspace gen\adddot}},% 
+  % bytranslator     = {{trad\adddot}{trad\adddot}},% FIXME to read "trans. by" in the first instance
+  % bytranslatoraf   = {{trad\adddotspace y ep\'{i}l\adddot}{trad\adddotspace y ep\'{i}l\adddot}},
+  % bytranslatoran   = {{trad\adddotspace y anot\adddot}{trad\adddotspace y anot\adddot}},
+  % bytranslatoranaf = {{trad\adddot, anot\adddotspace y ep\'{i}l\adddot}{trad\adddot, anot\adddotspace y ep\'{i}l\adddot}},
+  % bytranslatoranfo = {{trad\adddot, anot\adddotspace y pr\'{o}l\adddot}{trad\adddot, anot\adddotspace y pr\'{o}l\adddot}},
+  % bytranslatoranin = {{trad\adddot, anot\adddotspace e introd\adddot}{trad\adddot, anot\adddotspace e introd\adddot}},
+  % bytranslatorco   = {{trad\adddotspace y com\adddot}{trad\adddotspace y com\adddot}},
+  % bytranslatorcoaf = {{trad\adddot, com\adddotspace y ep\'{i}l\adddot}{trad\adddot, com\adddotspace y ep\'{i}l\adddot}},
+  % bytranslatorcofo = {{trad\adddot, com\adddotspace y pr\'{o}l\adddot}{trad\adddot, com\adddotspace y pr\'{o}l\adddot}},
+  % bytranslatorcoin = {{trad\adddot, com\adddotspace e introd\adddot}{trad\adddot, com\adddotspace e introd\adddot}},
+  % bytranslatorfo   = {{trad\adddotspace y pr\'{o}l\adddot}{trad\adddotspace y pr\'{o}l\adddot}},
+  % bytranslatorin   = {{trad\adddotspace e introd\adddot}{trad\adddotspace e introd\adddot}},
+  % compiler         = {{recopilador}{rec\adddot}},% unverified
+  % compilers        = {{recopiladors}{recs\adddot}},% unverified
+  % composedby       = {{compuesto por}{compuesto por}},
+  % reviewof         = {{rese\~{n}a de}{rese\~{n}a de}},
+  % transof          = {{traducci\'{o}n~de}{traducci\'{o}n~de}},
+  % volume           = {{Vol\adddot}{Vol\adddot}},
+  adaptation       = {{adapt\adddot}{adapt\adddot}},
+  adaptor          = {{adapt\adddot}{adapt\adddot}},
+  bibliography     = {{Obras citadas}{Obras citadas}},
+  composer         = {{comp\adddot}{comp\adddot}},
+  director         = {{dir\adddot}{dir\adddot}},
+  dphil            = {{Tesis}{Tesis}},%
+  lic              = {{Lic\adddotspace tesis}{Lic\adddotspace tesis}},
+  ma               = {{MA\addabbrvspace tesis}{MA\addabbrvspace tesis}},
+  manuscript       = {{manuscrito}{manuscrito}},
+  mlitt            = {{MLitt\addabbrvspace tesis}{MLitt\addabbrvspace tesis}},
+  mphil            = {{MPhil\addabbrvspace tesis}{MPhil\addabbrvspace tesis}},
+  ms               = {{MS\addabbrvspace tesis}{MS\addabbrvspace tesis}},
+  msc              = {{MSc\addabbrvspace tesis}{MSc\addabbrvspace tesis}},
+  page             = {{p\'ag\adddot}{p\'ag\adddot}},
+  pages            = {{p\'ags\adddot}{p\'ags\adddot}},
+  patentde         = {{Deutsches Patent- und Markenamt}{DE}},% patent offices presented by local names
+  patenteu         = {{Oficina Europea de Patentes}{EU}},% Hmmm...
+  patentfr         = {{Institut National de la Propri\'{e}t\'{e} Industrielle}{FR}},% patent offices presented by local names
+  patentuk         = {{The Intellectual Property Office of the United Kingdom}{UK}},% patent offices presented by local names
+  patentus         = {{United States Patent and Trademark Office}{US}},% patent offices presented by local names
+  patreqfr         = {{Institut National de la Propri\'{e}t\'{e} Industrielle}{FR pat\adddot req\adddot}},
+  performer        = {{ejecutante}{ejecutante}},
+  performers       = {{ejecutantes}{ejecutantes}},
+  phd              = {{Tesis}{Tesis}},%
+  phdthesis        = {{Tesis}{Tesis}},
+  print            = {{impresi\'{o}n}{impresi\'{o}n}},
+  proceedings      = {{actas}{actas}},
+  producer         = {{prod\adddot}{prod\adddot}},
+  references       = {{Obras citadas}{Obras citadas}},
+  screenplay       = {{adapt\adddot}{adapt\adddot}},
+  supptotitle      = {{a}{a}},
+  typescript       = {{mecanografiado}{mecanografiado}},
+  volstodate       = {{vol\'{u}menes hasta ahora}{vol\'{u}menes hasta ahora}},
+  web              = {{web}{web}},  
+  with             = {{con}{con}},
+  %%%%%%%%%%%%%%%%%%%%%%% The following translations still need to be verified
+  bycompilerandeditor = {{compilado y editado por}{comp\adddotspace y ed\adddotspace por}},% unverified 
+  bycomposer       = {{comp\adddotspace por}{comp\adddotspace por}},% unverified
+  byconductor      = {{dir\adddotspace por}{dir\adddotspace por}},% unverified
+  bycreator        = {{creado por}{creado por}},% unverified
+  bydirector       = {{dirigido por}{dirigido por}},% unverified
+  byhost           = {{organizado por}{organizado por}},% unverified
+  byinterviewer    = {{entrevista por}{entrevista por}},% unverified
+  bynarrator       = {{narrado por}{narr\adddotspace por}},% unverified
+  byperformer       = {{interpretado por}{interpretado por}},% unverified
+  byscreenplay     = {{gui\'on de}{gui\'on de}},% unverified
+  compilerandeditor = {{compilaci\'{o}n y edici\'on}{comp\adddotspace y ed\adddot}},% unverified
+  conductor        = {{direct\adddot}{direct\adddot}},% 2.1 unverified
+  creator          = {{cread\adddot}{cread\adddot}},% 2.1 unverified
+  generaleditor    = {{edici\'on general}{ed\adddotspace gen\adddot}},% unverified
+  host             = {{anfit\adddot}{anfit\adddot}},% 2.1 unverified
+  interviewer      = {{entrevist\adddot}{entrevist\adddot}},% 2.1 unverified
+  narrator         = {{narr\adddot}{narr\adddot}},% 2.1 unverified
+  numbers          = {{n\'umeros}{n\'umeros}},% 2.1 unverified
+  recorded         = {{grabado}{grabado}},% 2.1 unverified
+  specissue        = {{n\'umero especial}{n\'umero especial}},% unverified
+  tvepisode        = {{episodio}{episodio}},% 2.1 unverified
+  tvseason         = {{temporada}{temporada}},% 2.1 unverified
+}
 
 \DeclareBibliographyExtras{%
   \protected\def\mkbibdatelong#1#2#3{%
@@ -28,99 +134,7 @@
       {}
       {\mkmonthzeros{\thefield{#2}}%
        \iffieldundef{#1}{}{/}}%
-    \mkyearzeros{\thefield{#1}}}%
-}
+    \mkyearzeros{\thefield{#1}}}}
 
-\DeclareBibliographyStrings{%
-  inherit          = {spanish},
-  bibliography     = {{Obras citadas}{Obras citadas}},
-  references       = {{Obras citadas}{Obras citadas}},
-  typecompiler     = {{recopilador}{rec\adddot}}, % FIXME: is this right?
-  typecompilers    = {{recopiladors}{recs\adddot}}, % FIXME: is this right?
-  typecompilerandeditor = {{rec\adddotspace y ed\adddot}{rec\adddotspace y ed\adddot}},% 0.7 FIXME: is this right?
-  bytranslator     = {{trad\adddot}{trad\adddot}},% FIXME to read "trans. by" in the first instance
-  byeditor         = {{ed\adddot}{ed\adddot}},% FIXME "ed. by" in first instance
-  typegeneraleditor = {{editor general}{ed\adddotspace gen\adddot}},% 0.7.1 FIXME?
-  bytypegeneraleditor = {{editor general}{ed\adddotspace gen\adddot}},% 0.7.1 FIXME?
-  % byserieseditor   = {editor general},
-  page             = {{\unskip}{\unskip}},
-  pages            = {{\unskip}{\unskip}},
-  andothers        = {{et~al\adddot}{et~al\adddot}},
-  byeditortr       = {{ed\adddotspace y trad\adddot}{ed\adddotspace y trad\adddot}},
-  byeditorco       = {{ed\adddotspace y com\adddot}{ed\adddotspace y com\adddot}},
-  byeditoran       = {{ed\adddotspace y anot\adddot}{ed\adddotspace y anot\adddot}},
-  byeditorin       = {{ed\adddotspace y introd\adddot}{ed\adddotspace y introd\adddot}},
-  byeditorfo       = {{ed\adddotspace y pr\'{o}l\adddot}{ed\adddotspace y pr\'{o}l\adddot}},
-  byeditoraf       = {{ed\adddotspace y ep\'{i}l\adddot}{ed\adddotspace y ep\'{i}l\adddot}},
-  byeditortrco     = {{ed\adddot, trad\adddotspace y com\adddot}{ed\adddot, trad\adddotspace y com\adddot}},
-  byeditortran     = {{ed\adddot, trad\adddotspace y anot\adddot}{ed\adddot, trad\adddotspace y anot\adddot}},
-  byeditortrin     = {{ed\adddot, trad\adddotspace e introd\adddot}{ed\adddot, trad\adddotspace e introd\adddot}},
-  byeditortrfo     = {{ed\adddot, trad\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddotspace y pr\'{o}l\adddot}},
-  byeditortraf     = {{ed\adddot, trad\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddotspace y ep\'{i}l\adddot}},
-  byeditorcoin     = {{ed\adddot, com\adddotspace e introd\adddot}{ed\adddot, com\adddotspace e introd\adddot}},
-  byeditorcofo     = {{ed\adddot, com\adddotspace y pr\'{o}l\adddot}{ed\adddot, com\adddotspace y pr\'{o}l\adddot}},
-  byeditorcoaf     = {{ed\adddot, com\adddotspace y ep\'{i}l\adddot}{ed\adddot, com\adddotspace y ep\'{i}l\adddot}},
-  byeditoranin     = {{ed\adddot, anot\adddotspace e introd\adddot}{ed\adddot, anot\adddotspace e introd\adddot}},
-  byeditoranfo     = {{ed\adddot, anot\adddotspace y pr\'{o}l\adddot}{ed\adddot, anot\adddotspace y pr\'{o}l\adddot}},
-  byeditoranaf     = {{ed\adddot, anot\adddotspace y ep\'{i}l\adddot}{ed\adddot, anot\adddotspace y ep\'{i}l\adddot}},
-  byeditortrcoin   = {{ed\adddot, trad\adddot, com\adddotspace e introd\adddot}{ed\adddot, trad\adddot, com\adddotspace e introd\adddot}},
-  byeditortrcofo   = {{ed\adddot, trad\adddot, com\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddot, com\adddotspace y pr\'{o}l\adddot}},
-  byeditortrcoaf   = {{ed\adddot, trad\adddot, com\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddot, com\adddotspace y ep\'{i}l\adddot}},
-  byeditortranin   = {{ed\adddot, trad\adddot, anot\adddotspace e introd\adddot}{ed\adddot, trad\adddot, anot\adddotspace e introd\adddot}},
-  byeditortranfo   = {{ed\adddot, trad\adddot, anot\adddotspace y pr\'{o}l\adddot}{ed\adddot, trad\adddot, anot\adddotspace y pr\'{o}l\adddot}},
-  byeditortranaf   = {{ed\adddot, trad\adddot, anot\adddotspace y ep\'{i}l\adddot}{ed\adddot, trad\adddot, anot\adddotspace y ep\'{i}l\adddot}},
-  bytranslatorco   = {{trad\adddotspace y com\adddot}{trad\adddotspace y com\adddot}},
-  bytranslatoran   = {{trad\adddotspace y anot\adddot}{trad\adddotspace y anot\adddot}},
-  bytranslatorin   = {{trad\adddotspace e introd\adddot}{trad\adddotspace e introd\adddot}},
-  bytranslatorfo   = {{trad\adddotspace y pr\'{o}l\adddot}{trad\adddotspace y pr\'{o}l\adddot}},
-  bytranslatoraf   = {{trad\adddotspace y ep\'{i}l\adddot}{trad\adddotspace y ep\'{i}l\adddot}},
-  bytranslatorcoin = {{trad\adddot, com\adddotspace e introd\adddot}{trad\adddot, com\adddotspace e introd\adddot}},
-  bytranslatorcofo = {{trad\adddot, com\adddotspace y pr\'{o}l\adddot}{trad\adddot, com\adddotspace y pr\'{o}l\adddot}},
-  bytranslatorcoaf = {{trad\adddot, com\adddotspace y ep\'{i}l\adddot}{trad\adddot, com\adddotspace y ep\'{i}l\adddot}},
-  bytranslatoranin = {{trad\adddot, anot\adddotspace e introd\adddot}{trad\adddot, anot\adddotspace e introd\adddot}},
-  bytranslatoranfo = {{trad\adddot, anot\adddotspace y pr\'{o}l\adddot}{trad\adddot, anot\adddotspace y pr\'{o}l\adddot}},
-  bytranslatoranaf = {{trad\adddot, anot\adddotspace y ep\'{i}l\adddot}{trad\adddot, anot\adddotspace y ep\'{i}l\adddot}},
-  phdthesis        = {{Tesis}{Tesis}},
-  reviewof         = {{rese\~{n}a de}{rese\~{n}a de}},
-  volume           = {{{Vol\adddot}}{{Vol\adddot}}}, % for correct capitalization of volume reference
-  phd              = {{Tesis}{Tesis}},% 0.6
-  dphil            = {{Tesis}{Tesis}},% 0.6
-  lic              = {{Lic\adddotspace tesis}{Lic\adddotspace tesis}},% 0.6
-  ma               = {{MA\addabbrvspace tesis}{MA\addabbrvspace tesis}},% 0.6
-  ms               = {{MS\addabbrvspace tesis}{MS\addabbrvspace tesis}},% 0.6
-  msc              = {{MSc\addabbrvspace tesis}{MSc\addabbrvspace tesis}},% 0.6
-  mphil            = {{MPhil\addabbrvspace tesis}{MPhil\addabbrvspace tesis}},% 0.6
-  mlitt            = {{MLitt\addabbrvspace tesis}{MLitt\addabbrvspace tesis}},% 0.6
-  % FIXME 2.0 check the following for quality of Spanish translation
-  manuscript       = {{manuscrito}{manuscrito}},
-  patentde         = {{Deutsches Patent- und Markenamt}{DE}},% localised in German
-  patenteu         = {{Oficina Europea de Patentes}{EU}},
-  patentfr         = {{Institut National de la Propriété Industrielle}{FR}},% localised in French
-  patentuk         = {{The Intellectual Property Office of the United Kingdom}{UK}},% localised in English
-  patentus         = {{United States Patent and Trademark Office}{US}},% localised in English
-  % patreq           = {{patent request}{pat\adddot\ req\adddot}},
-  % patreqde         = {{German patent request}{German pat\adddot\ req\adddot}},
-  % patreqeu         = {{European patent request}{European pat\adddot\ req\adddot}},
-  patreqfr         = {{Institut National de la Propriété Industrielle}{FR pat\adddot req\adddot}},
-  % patrequk         = {{British patent request}{British pat\adddot\ req\adddot}},
-  % patrequs         = {{U.S\adddotspace patent request}{U.S\adddotspace pat\adddot\ req\adddot}},
-  typescript       = {{mecanografiado}{mecanografiado}},
-  director         = {{dir\adddot}{dir\adddot}},
-  screenplay       = {{adapt\adddot}{adapt\adddot}},
-  adaptation       = {{adapt\adddot}{adapt\adddot}},
-  adaptor          = {{adapt\adddot}{adapt\adddot}},
-  performer        = {{ejecutante}{ejecutante},
-  performers       = {{ejecutantes}{ejecutantes},
-  composer         = {{comp\adddot}{comp\adddot}},
-  composedby       = {{compuesto~por}{compuesto~por}},
-  producer         = {{prod\adddot}{prod\adddot}},
-  with             = {{con}{con}},
-  proceedings      = {{actas}{actas}},
-  transof          = {{traducción~de}{traducción~de}},
-  volstodate       = {{volúmenes hasta ahora}{volúmenes hasta ahora}},
-  supptotitle      = {{a}{a}},
-  print            = {{impresión}{impresión}},
-  web              = {{web}{web}},
-}
 
 \endinput

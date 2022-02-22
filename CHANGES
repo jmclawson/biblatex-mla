@@ -1,4 +1,12 @@
-Changelog for version 2.1 (Oct 31)
+Changelog for version 2.1a
+- Fix an error in documentation, which was mistakenly typeset with Italian
+  localizations. 
+- Correct the discrepency in license references between README and manual.
+
+Changelog for version 2.1
+- Improved documentation, recreating more than 200 examples from an appendix 
+  of the ninth edition of the MLA Handbook (2021).
+- Added support for @dataset, @performance, and @software entrytypes.
 - Added internal counter for delaying certain elements of multivolume books, 
   along with a three-way option toggle (auto, true, false) for bibliography and 
   entry. The MLA allows for a few different ways to display the information for 
@@ -13,43 +21,49 @@ Changelog for version 2.1 (Oct 31)
   individual work, rather than to a larger collection in which it is included. 
   This option makes it possible to show, for instance, that the director of a 
   single episode of a TV show is not responsible for the whole series.
-- Changed the display of page ranges to match MLA guidelines, compressing them 
-  accordingly: 250-258 now displays as 250-58, dropping the redundant hundreds 
-  digit; additionally, 101-108 displays as 101-08, deliberately retaining 
-  leading zeroes. FIXME: This feature is not yet correctly applied to date 
-  ranges, as for the eventdate field.
-- Add pluralization to number marker, showing "nos. 3-4" instead of "no. 3-4."
+- Changed the display of numeric ranges in pages and some dates to match MLA 
+  guidelines, compressing them accordingly: 250-258 now displays as 250-58, 
+  dropping the redundant hundreds digit; additionally, 101-108 displays as 
+  101-08, deliberately retaining leading zeroes. FIXME: This feature is not yet 
+  correctly applied to some date ranges, as for the eventdate field.
+- Added pluralization to number marker, showing "nos. 3-4" instead of "no. 3-4."
+- Added missing support for subtitles in some entry types.
 - Added "website" entrysubtype to @online entries to display a title in 
   italics.
+- Added datebrackets entry option to support showing date as something added.
+- Fixed some repeating fields.
+- Fixed the format of some titles presented with \citetitle differing from how 
+  they're shown in citations.
+- Fixed the ordering of name suffixes like "Jr" in the bibliography.
 - In citations, support the "totalnames" entry option to allow citations to 
   match bibliography entries beyond the typical maximum number.
-- Print only the last name of book editor / book translator who is also the 
-  author of the entry.
+- In the bibliography, print only the last name of book editor / book translator 
+  who is also the author of the entry (e.g., an editor's foreword).
 - Added support for named issues of periodicals that aren't special issues 
-  (i.e., for comic books).
+  (e.g., for comic books).
 - Added support for automatic combining of editor and translator without needing 
   to call the editor before the translator and without needing to set 
   "editortype = {editortr}".
 - Defined revsdnamedelim as comma and improved spacing around slash when 
-  multiple publishers.
+  crediting multiple publishers.
 - Added context shifting for comma before et al: When names are "Last, First" 
   the phrase should now be preceded by a comma, and when names are "First Last" 
   it should not be.
 - Added support for including a url in a book entry.
 - Fixed placement of named series.
-- Defined and edited various bibstrings: Defined "editor", "editors", 
-  "byeditor", "translator", "translators", and "numbers" in language file; 
-  defined "compiled by" in language file; changed "newseries" from "ns" to "new 
-  series" in the language files; corrected "screenplay" and added "byscreenplay" 
-  in language file; added "tvseason" and "tvepisode" to language file. FIXME: 
-  These strings have yet to be added or modified for for non-English languages.
+- Uodated the bibstrings for English, Spanish, Italian, and Portuguese. (The 
+  non-English strings should still be verified by someone with knowledge of these 
+  languages.) By default, Biblatex-mla adopts the unabbreviated bibstrings 
+  provided by Biblatex. A number of bibstrings have been newly added or modified 
+  in this release where needed. See the english-mla.lbx file for details of 
+  additions and changes.
 - BREAKING: @video and @movie are no longer aliases for each other. The first of 
   these is now reserved for shorter videos with titles that should be placed in 
   quotation marks (e.g., a YouTube video or a TV episode), while the latter is 
   reserved for works with titles that belong in italics (e.g., a feature-length 
   film).
-- BREAKING: Dropped styling for proceedings titles; bib files should use 
-  "booktitle" field for proceedings published as books.
+- BREAKING: Dropped styling for @proceedings titles. Define the "booktitle" 
+  field for @proceedings published as books.
 
 Changelog for version 2.0
 - changes for compatibility with the 9th edition of the MLA handbook, which is 

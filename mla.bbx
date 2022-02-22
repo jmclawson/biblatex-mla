@@ -1,5 +1,5 @@
 % These sourcemap declarations allow for .bib file oddities. Additionally, to comport with MLA expectations, they modify strings in publisher fields, drop unneeded parts of URLs, and look for patterns in a URL field to fill in missing eprint fields. If the choices here seem to do too much, use "style=mla-strict", which makes fewer accommodations and more exactly prints entries as they're defined in a given bibtex file.
-\ProvidesFile{mla.bbx}[2021/10/31 v2.1 biblatex bibliography style]
+\ProvidesFile{mla.bbx}[2022/02/22 v2.1a biblatex bibliography style]
 
 \RequireBibliographyStyle{mla-strict}
 
@@ -39,6 +39,11 @@
 		    \step[fieldsource=addendum, notmatch=\regexp{mkbibemph}, final]
 		    \step[fieldsource=addendum, match=\regexp{(.+)\s+app$}, replace={\\mkbibemph\{$1\} app}]
 	  }
+	  \map{% Add italics to app names for software
+	      \pertype{software}
+		    \step[fieldsource=maintitle, notmatch=\regexp{mkbibemph}, final]
+		    \step[fieldsource=maintitle, match=\regexp{(.+)\s+app$}, replace={$1 \\mkbibemph\{app\}}]
+	  }
 	  \map{% Accommodate music albums defined simply
 	      \pertype{music}
 		    \step[notfield=title, final]
@@ -69,6 +74,7 @@
           }
       \map{% abbreviate and drop unneeded parts of institutions
            \step[fieldsource=institution, match={University}, replace={U}]
+           \step[fieldsource=school, match={University}, replace={U}]
           }
       \map{% JSTOR url to eprint
 		   \step[fieldsource=url, match={jstor.org}, final]
@@ -131,6 +137,9 @@
            \step[fieldsource=doi, final]
            \step[fieldset=url, null]
            \step[fieldset=urldate, null]
+          }
+      \map[overwrite]{ % clean url + urldate field from all entries that have a doi field
+		   \step[fieldsource=url, match=\regexp{http(s)?://}, replace={}]
           }
     }      
 }

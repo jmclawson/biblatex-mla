@@ -1,0 +1,79 @@
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\let\oldaddbibresource\addbibresource
+\renewcommand{\addbibresource}[1]{%
+  \oldaddbibresource{#1}%
+  \expandafter\newcommand\csname thebibfile\endcsname{#1}%
+}
+
+% \makeatletter
+% \patchcmd{\lst@Init}{\par\penalty -50\relax}{\relax}
+% \makeatother
+
+% from the impressive biblatex-sbl package
+\lstdefinelanguage{BibTeX}{%
+  % keywordsprefix={@}%
+  keywords={%
+	@artwork,@audio,@book,@bookinbook,@booklet,@collection,@dataset,@image,%
+	@incollection,@inproceedings,@letter,@manual,@misc,@mlasource,@movie,@music,%
+	@mvbook,@online,@patent,@performance,@periodical,@phdthesis,@proceedings,%
+	@reference,@report,@software,@suppbook,@thesis,@unpublished,@video,@article,%
+	@inbook,@inreference,@mvcollection,@review%
+  },
+  emph={%
+	nameb,supplementala,addendum,address,author,authortype,bookauthor,bookeditor,%
+	booksubtitle,booktitle,chapter,crossref,date,datea,doi,edition,editor,%
+	editora,editoratype,editorb,editorbtype,editorc,editorctype,editortype,%
+	entrysubtype,eprint,eprintclass,eprintdate,eprinttype,eventdate,eventtitle,%
+	file,holder,indextitle,institution,issue,issuetitle,journal,journaltitle,%
+	langid,langidopts,library,location,locationa,maineditor,mainsubtitle,%
+	maintitle,maintitleaddon,namea,nameaddon,nameatype,namebtype,namec,namectype,%
+	note,number,options,organization,origdate,origlanguage,origlocation,%
+	origpublisher,origyear,pages,part,preface,publisher,publishera,pubstate,%
+	related,relatedoptions,relatedtype,revdauthor,revdeditor,revdtitle,school,%
+	season,series,seriesseries,shortauthor,shorthand,shortjournal,shortmaintitle,%
+	shortseries,shorttitle,sorttitle,subtitle,supplemental,supplementalb,title,%
+	titlea,titleaddon,titletype,translator,type,type,url,urldate,venue,version,%
+	versiona,versionb,volume,volumes,xref,year%
+  },
+  sensitive=false,
+  breaklines=true,
+  breakatwhitespace=false,
+  morecomment=[l][basicstyle]{=\ \{}
+}
+
+\definecolor{faint}{RGB}{240,240,240}
+
+\lstset{%
+ language=BibTeX,
+ frame=single,
+ % backgroundcolor=\color{faint},
+ % backgroundcolor=\color{gray!5},
+ % backgroundcolor=\color{white},
+ % basicstyle=\ttfamily\small,
+ basicstyle=\ttfamily,
+ keywordstyle=\color{orange},
+ emphstyle=\color{teal}
+}
+
+\lstset{rangeprefix=\%\[\[\ ,% percent + double left square brace + space 
+        rangesuffix=\ \]\]}% space + double right square bracket
+
+\newcommand{\mylabel}[1]{
+    \ifcsname c@#1\endcsname%
+    \else%
+        \newcounter{#1}\label{#1}%
+    \fi%
+}
+
+\newcommand{\bibinclude}[1]{%
+  \mylabel{#1}%
+  \lstinputlisting[%
+    linerange=#1-end,%
+    emptylines=0,%
+    includerangemarker=false,%
+    breaklines=true,%
+    postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space}]%
+  {\thebibfile}}
+\newcommand{\bibcitem}[1]{\bibinclude{#1}\nocite{#1}}
