@@ -1,11 +1,11 @@
-% mla.cbx, v2.1a 2022/02/22 * compatible with biblatex 3.16
+% mla.cbx, v2.2preview 2022/03/12 * compatible with biblatex 3.16
 % Maintained at <https://github.com/jmclawson/biblatex-mla>.
 %
 % Feel free to improve, redistribute, and adapt to your own ends. Please share improvements back to the project on GitHub or to James Clawson: <clawson@gmail.com>.
 %
 % This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that license.
 
-\ProvidesFile{mla.cbx}[2022/02/22 v2.1a biblatex citation style]
+\ProvidesFile{mla.cbx}[2022/03/12 v2.2preview biblatex citation style]
 
 \RequireCitationStyle{mla-footnotes}
 
@@ -282,12 +282,12 @@
 
 \renewcommand*{\postnotedelim}{\addspace}%
 
-\renewbibmacro*{postnote}{%
+\renewbibmacro*{postnote}{% 2.2 - simplified prefix format handling
   \iffieldundef{postnote}%
     {}%
 	{\ifbool{cbx@hyperpages}%
-      {\printtext[bibhyperref]{\printfield[ibidpostnote]{postnote}}}%
-      {\printfield[ibidpostnote]{postnote}}}}%
+      {\printtext[bibhyperref]{\printfield{postnote}}}%
+      {\printfield{postnote}}}}%
 
 \newbibmacro*{locpostnote}{%
   \ifbool{cbx@mladraft}%
@@ -334,11 +334,20 @@
 \DeclareFieldFormat[mlasource]{mla:unstyled}{#1\unspace}%
 \DeclareFieldFormat[mlasource]{mla:complete}{\mkbibemph{#1}\unspace}%
 \DeclareFieldFormat[mlasource]{mla:part}{\mkbibquote{#1}}%
-\DeclareFieldFormat{ibidpostnote}{#1}%
+\DeclareFieldFormat{ibidpostnote}{\mkcomprangezero{#1}}% 2.2 - added MLA-style range shortening
 \DeclareFieldFormat{footpostnote}{#1}%
 \DeclareFieldFormat{mlarepeatedcites}{\fbox{#1}%
   \marginpar{\hfill\footnotesize{$\clubsuit$}}}%
 
+\DeclareFieldFormat{postnote}{\mkpageprefix[pagination][\mkcomprangezero]{#1}}% 2.2 - use pagination for postnote prefix and compress ranges while keeping 0 in tens digit
+\AtEveryCitekey{% 2.2 
+  \ifciteseen% only show the prefix the first time citing a work
+    {\DeclareFieldFormat{postnote}{\mkcomprangezero{#1}}}
+	{}%
+  \iffieldequalstr{pagination}{page}% don't show the prefix for page ranges (which are assumed)
+    {\DeclareFieldFormat{postnote}{\mkcomprangezero{#1}}}
+	{}%
+}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% Cite Commands %%%%%%%%%%%%%%%%%%%%%
