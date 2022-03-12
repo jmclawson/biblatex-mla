@@ -1,13 +1,13 @@
 % This bbx file is provided for minimal compatibility with bibliographic entries described by the 7th edition of the MLA Handbook (2009). This style was superseded by a major redesign in the 8th edition in 2016, which was further clarified by the 9th edition in 2021. To use this older version, set "style=mla7" in the biblatex package options. To use the current version of the handbook, set "style=mla" for best outcomes. Biblatex-mla support and updates will prioritize the most recent edition of the MLA Handbook. 
 
-\ProvidesFile{mla7.bbx}[2022/02/22 v2.1a biblatex bibliography style]
+\ProvidesFile{mla7.bbx}[2022/03/12 v2.2preview biblatex bibliography style]
 
 \RequireBibliographyStyle{standard}
 \DeclareLanguageMapping{american}{american-mla}
 \DeclareLanguageMapping{english}{english-mla}
 
 \NewBibliographyString{byserieseditor}
-\NewBibliographyString{reviewof}
+% \NewBibliographyString{reviewof}% ---- 2.2 remove in favor of provided string reviewof
 \NewBibliographyString{specissue}
 \NewBibliographyString{phd}
 \NewBibliographyString{dphil}
@@ -32,12 +32,32 @@
 \NewBibliographyString{proceedings}
 \NewBibliographyString{compilerandeditor}%
 \NewBibliographyString{bycompilerandeditor}%
-\NewBibliographyString{transof}%
+% \NewBibliographyString{transof}% 2.2 changed to translationof
 \NewBibliographyString{volstodate}%
 \NewBibliographyString{supptotitle}%
 \NewBibliographyString{print}%
 \NewBibliographyString{web}%
 \NewBibliographyString{generaleditor}%
+% 2.2 catching mla7.bbx up to mla.bbx for bibstrings
+\NewBibliographyString{bycomposer}% 2.2
+\NewBibliographyString{byconductor}% 2.2
+\NewBibliographyString{bycreator}% 2.2
+\NewBibliographyString{bydirector} % 2.2
+\NewBibliographyString{byhost}% 2.2
+\NewBibliographyString{byinterviewer}% 2.2
+\NewBibliographyString{bynarrator}% 2.2
+\NewBibliographyString{byperformer}% 2.2
+\NewBibliographyString{byscreenplay}% 2.2
+\NewBibliographyString{conductor}% 2.2
+\NewBibliographyString{creator}% 2.2
+\NewBibliographyString{host}% 2.2
+\NewBibliographyString{interviewer}% 2.2
+\NewBibliographyString{narrator}% 2.2
+\NewBibliographyString{numbers}% 2.2
+\NewBibliographyString{recorded}% 2.2
+\NewBibliographyString{tvepisode}% 2.2
+\NewBibliographyString{tvseason}% 2.2
+
 
 \setlength{\bibitemsep}{0pt}
 \renewcommand*{\mkbibnamesuffix}[1]{\addcomma\addlowpenspace#1}
@@ -430,7 +450,7 @@
     {\newunit}%
     {\iffieldundef{origlanguage}
       {\setunit{\newunitpunct\bibstring{reprintof}\addspace}}%
-      {\setunit{\newunitpunct\bibstring{transof}\addspace}}%
+      {\setunit{\newunitpunct\bibstring{translationof}\addspace}}% 2.2 changed from transof
 }%
   \printfield[title:\strfield{entrytype}]{origtitle}%
   \newunit\newblock%
