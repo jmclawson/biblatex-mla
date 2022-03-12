@@ -88,12 +88,12 @@
 	  % mkcomprangezero changes start here
 	  \ifnum\blx@tempc<10
 	    \ifnum\blx@tempb<10
-		  \blx@range@out@item@process{\blx@tempc}
+		  \blx@range@out@item@process{\blx@tempc}%
 		\else
 	      \blx@range@out@item@process{0\blx@tempc}% force leading zero
 		\fi
 	  \else
-	    \blx@range@out@item@process{\blx@tempc}
+	    \blx@range@out@item@process{\blx@tempc}%
 	  \fi}}% mkcomprangezero changes end here
   \blx@tempb}
 \def\blx@comprange@comp@div{%
