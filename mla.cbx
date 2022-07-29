@@ -344,7 +344,7 @@
   \ifciteseen% only show the prefix the first time citing a work
     {\DeclareFieldFormat{postnote}{\mkcomprangezero{#1}}}
 	{}%
-  \iffieldequalstr{pagination}{page}% don't show the prefix for page ranges (which are assumed)
+  \iffieldequalstr{pagination}{page}\or\iffieldundef{pagination}% don't show the prefix for page ranges (which are assumed)
     {\DeclareFieldFormat{postnote}{\mkcomprangezero{#1}}}
 	{}%
 }%
